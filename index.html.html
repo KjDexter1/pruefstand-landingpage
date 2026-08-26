@@ -1,0 +1,1069 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<title>Prüfstand</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+  /* ============ Tokens (shared brand: Prüfstand) ============ */
+  :root {
+    --bg: #EAEEF1;
+    --surface: #FFFFFF;
+    --surface-2: #F4F6F8;
+    --surface-3: #EDF0F3;
+    --ink: #171B20;
+    --ink-soft: #333B43;
+    --muted: #5C6773;
+    --faint: #8B96A2;
+    --border: #DCE2E7;
+    --border-strong: #C6CED5;
+
+    --accent: #C96A12;
+    --accent-strong: #A2560D;
+    --accent-bg: #FBEEDF;
+    --accent-ink: #FFFFFF;
+
+    --success: #1F8A54;
+    --success-strong: #166B41;
+    --success-bg: #E3F5EA;
+    --success-border: #B8E2C8;
+
+    --shadow-sm: 0 1px 2px rgba(23, 27, 32, 0.07);
+    --shadow-md: 0 10px 28px -10px rgba(23, 27, 32, 0.22);
+    --shadow-lg: 0 26px 60px -16px rgba(23, 27, 32, 0.32);
+    --radius: 12px;
+    --radius-sm: 7px;
+
+    /* fixed band tokens: deliberate inverted section, same in both themes */
+    --band-bg: #171B20;
+    --band-bg-2: #1F252C;
+    --band-ink: #F4F1E9;
+    --band-muted: #A9B2BB;
+    --band-border: #333C45;
+
+    --font-display: "IBM Plex Sans Condensed", "Arial Narrow", sans-serif;
+    --font-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+    --font-mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #11151A;
+      --surface: #181D23;
+      --surface-2: #1E252C;
+      --surface-3: #242C34;
+      --ink: #E9ECEF;
+      --ink-soft: #C7CED5;
+      --muted: #93A0AC;
+      --faint: #6B7680;
+      --border: #2A323B;
+      --border-strong: #384049;
+
+      --accent: #E29A4E;
+      --accent-strong: #F0B36E;
+      --accent-bg: rgba(226, 154, 78, 0.14);
+      --accent-ink: #171200;
+
+      --success: #49BE83;
+      --success-strong: #6ED09D;
+      --success-bg: rgba(73, 190, 131, 0.13);
+      --success-border: rgba(73, 190, 131, 0.35);
+
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.45);
+      --shadow-md: 0 10px 28px -10px rgba(0, 0, 0, 0.6);
+      --shadow-lg: 0 26px 60px -16px rgba(0, 0, 0, 0.65);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #11151A;
+    --surface: #181D23;
+    --surface-2: #1E252C;
+    --surface-3: #242C34;
+    --ink: #E9ECEF;
+    --ink-soft: #C7CED5;
+    --muted: #93A0AC;
+    --faint: #6B7680;
+    --border: #2A323B;
+    --border-strong: #384049;
+
+    --accent: #E29A4E;
+    --accent-strong: #F0B36E;
+    --accent-bg: rgba(226, 154, 78, 0.14);
+    --accent-ink: #171200;
+
+    --success: #49BE83;
+    --success-strong: #6ED09D;
+    --success-bg: rgba(73, 190, 131, 0.13);
+    --success-border: rgba(73, 190, 131, 0.35);
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.45);
+    --shadow-md: 0 10px 28px -10px rgba(0, 0, 0, 0.6);
+    --shadow-lg: 0 26px 60px -16px rgba(0, 0, 0, 0.65);
+  }
+
+  /* ============ Base ============ */
+  * { box-sizing: border-box; }
+  html { color-scheme: light dark; scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { font-family: var(--font-display); text-transform: uppercase; letter-spacing: 0.01em; text-wrap: balance; margin: 0; }
+  p { margin: 0; }
+  .tabular { font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1; }
+  a { color: inherit; }
+  button { font-family: inherit; }
+  ::selection { background: var(--accent-bg); color: var(--accent-strong); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+  }
+
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-mono); font-size: 12px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent-strong);
+  }
+  .eyebrow::before { content: ""; width: 7px; height: 7px; background: var(--accent); border-radius: 1px; transform: rotate(45deg); }
+
+  /* hazard divider — the one signature motif, used sparingly */
+  .hazard {
+    height: 8px;
+    background: repeating-linear-gradient(-45deg, var(--accent) 0 14px, var(--ink) 14px 28px);
+    opacity: 0.9;
+  }
+  :root[data-theme="dark"] .hazard, @media (prefers-color-scheme: dark) { }
+
+  /* reveal-on-scroll */
+  .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 13px 22px; border-radius: var(--radius-sm);
+    border: 1.5px solid var(--border-strong); background: var(--surface);
+    color: var(--ink); font-size: 14.5px; font-weight: 600;
+    cursor: pointer; text-decoration: none;
+    transition: border-color .15s ease, background .15s ease, transform .1s ease, box-shadow .15s ease;
+  }
+  .btn:hover { border-color: var(--faint); background: var(--surface-2); }
+  .btn:active { transform: translateY(1px); }
+  .btn-primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); box-shadow: var(--shadow-sm); }
+  .btn-primary:hover { background: var(--accent-strong); border-color: var(--accent-strong); }
+  .btn-lg { padding: 15px 26px; font-size: 15.5px; }
+  .btn svg { width: 16px; height: 16px; }
+  .btn-ghost-inverse { border-color: var(--band-border); background: transparent; color: var(--band-ink); }
+  .btn-ghost-inverse:hover { background: rgba(255,255,255,0.06); }
+
+  /* ============ Nav ============ */
+  .nav {
+    position: sticky; top: 0; z-index: 20;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; }
+  .nav-brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; text-decoration: none; color: var(--ink); }
+  .nav-mark {
+    width: 30px; height: 30px; border-radius: 7px; flex: none;
+    background: linear-gradient(155deg, var(--accent), var(--accent-strong));
+    display: flex; align-items: center; justify-content: center;
+  }
+  .nav-mark svg { width: 16px; height: 16px; }
+  .nav-links { display: flex; align-items: center; gap: 22px; font-size: 13.5px; font-weight: 500; color: var(--muted); }
+  .nav-links a { text-decoration: none; }
+  .nav-links a:hover { color: var(--ink); }
+  @media (max-width: 720px) { .nav-links a.hide-sm { display: none; } }
+
+  /* ============ Hero ============ */
+  .hero { padding: 76px 0 56px; }
+  .hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 48px; align-items: center; }
+  @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } }
+  .hero h1 {
+    font-size: clamp(34px, 5.4vw, 54px);
+    font-weight: 700; line-height: 1.04; margin-top: 14px;
+  }
+  .hero-sub {
+    margin-top: 18px; font-size: 17.5px; color: var(--muted); max-width: 46ch; line-height: 1.6;
+  }
+  .hero-ctas { display: flex; gap: 12px; margin-top: 28px; flex-wrap: wrap; }
+  .hero-note { margin-top: 14px; font-size: 12.5px; color: var(--faint); }
+
+  /* hero visual: stylized invoice card, same language as the product */
+  .hero-visual { position: relative; display: flex; justify-content: center; }
+  .hv-card {
+    width: 100%; max-width: 380px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    padding: 26px 26px 22px;
+    transform: rotate(-2.5deg);
+    position: relative;
+  }
+  .hv-head { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid var(--ink); padding-bottom: 12px; }
+  .hv-brand { font-weight: 700; font-size: 14px; }
+  .hv-brand-sub { font-size: 11px; color: var(--muted); margin-top: 3px; }
+  .hv-meta { text-align: right; font-family: var(--font-mono); font-size: 10.5px; color: var(--muted); }
+  .hv-rows { margin-top: 14px; display: flex; flex-direction: column; gap: 8px; }
+  .hv-row { display: flex; justify-content: space-between; font-size: 12px; }
+  .hv-row span:first-child { color: var(--muted); }
+  .hv-row span:last-child { font-family: var(--font-mono); }
+  .hv-total { display: flex; justify-content: space-between; margin-top: 14px; padding-top: 12px; border-top: 2px solid var(--ink); font-weight: 700; font-size: 15px; }
+  .hv-stamp {
+    position: absolute; top: 64px; right: 18px; width: 92px; height: 92px;
+    border: 2.5px solid var(--success); border-radius: 50%;
+    color: var(--success-strong); display: flex; align-items: center; justify-content: center;
+    transform: rotate(-14deg); text-align: center; padding: 6px;
+  }
+  .hv-stamp svg { width: 16px; height: 16px; }
+  .hv-stamp-text { font-family: var(--font-display); font-size: 8.5px; font-weight: 700; line-height: 1.15; text-transform: uppercase; margin-top: 2px; }
+  .hv-chip {
+    position: absolute; left: -14px; bottom: 34px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 999px;
+    box-shadow: var(--shadow-md); padding: 8px 14px; font-size: 11.5px; font-weight: 600;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .hv-chip svg { width: 13px; height: 13px; color: var(--success); }
+
+  /* ============ Section shells ============ */
+  section { padding: 68px 0; }
+  .section-head { max-width: 62ch; }
+  .section-head h2 { font-size: clamp(26px, 3.4vw, 36px); margin-top: 12px; line-height: 1.12; }
+  .section-head p { margin-top: 14px; font-size: 16px; color: var(--muted); }
+
+  /* ============ Problem cards ============ */
+  .problem-grid { margin-top: 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 860px) { .problem-grid { grid-template-columns: 1fr; } }
+  .problem-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 24px 22px; box-shadow: var(--shadow-sm);
+    border-top: 3px solid var(--accent);
+  }
+  .problem-icon { width: 34px; height: 34px; color: var(--accent-strong); }
+  .problem-card h3 { font-size: 16.5px; margin-top: 14px; letter-spacing: 0.005em; }
+  .problem-card p { margin-top: 8px; font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+  .proof-row {
+    margin-top: 22px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;
+  }
+  @media (max-width: 600px) { .proof-row { grid-template-columns: 1fr; } }
+  .proof-stat {
+    background: var(--accent-bg); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 18px 20px;
+  }
+  .proof-num { font-family: var(--font-display); font-size: 30px; font-weight: 700; color: var(--accent-strong); line-height: 1; }
+  .proof-label { margin-top: 6px; font-size: 13px; color: var(--ink-soft); line-height: 1.45; }
+  .proof-source { margin-top: 14px; font-size: 11.5px; color: var(--faint); }
+  .proof-source a { color: var(--accent-strong); text-decoration: none; }
+  .proof-source a:hover { text-decoration: underline; }
+
+  .calc-box {
+    margin-top: 22px; background: var(--surface-2); border: 1px dashed var(--border-strong);
+    border-radius: var(--radius); padding: 20px 22px; display: flex; gap: 18px; align-items: flex-start; flex-wrap: wrap;
+  }
+  .calc-label { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--faint); font-weight: 600; }
+  .calc-formula { font-family: var(--font-mono); font-size: 13.5px; color: var(--ink-soft); margin-top: 6px; }
+  .calc-result { font-family: var(--font-mono); font-size: 22px; font-weight: 700; color: var(--accent-strong); white-space: nowrap; }
+  .calc-result-label { font-size: 11.5px; color: var(--muted); margin-top: 2px; }
+
+  /* ============ Vergleich (comparison bars) ============ */
+  .compare-grid { margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 860px) { .compare-grid { grid-template-columns: 1fr; } }
+  .compare-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 26px 24px; box-shadow: var(--shadow-sm);
+  }
+  .compare-card h3 { font-size: 15px; letter-spacing: 0.01em; }
+  .compare-card .compare-sub { margin-top: 4px; font-size: 12.5px; color: var(--muted); text-transform: none; letter-spacing: normal; font-family: var(--font-body); }
+  .compare-rows { margin-top: 22px; display: flex; flex-direction: column; gap: 16px; }
+  .compare-row-label { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; font-weight: 600; }
+  .compare-row-label .compare-val { font-family: var(--font-mono); font-weight: 700; color: var(--ink-soft); }
+  .compare-row.is-winner .compare-row-label .compare-val { color: var(--accent-strong); }
+  .compare-row.is-winner .compare-row-label { color: var(--accent-strong); }
+  .compare-track { margin-top: 6px; height: 10px; border-radius: 999px; background: var(--surface-3); overflow: hidden; }
+  .compare-fill { height: 100%; border-radius: 999px; background: var(--border-strong); min-width: 4px; }
+  .compare-row.is-winner .compare-fill { background: linear-gradient(90deg, var(--accent-strong), var(--accent)); }
+  .compare-badge {
+    display: inline-block; margin-top: 4px; font-family: var(--font-mono); font-size: 10.5px;
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--success-strong);
+    background: var(--success-bg); border: 1px solid var(--success-border); border-radius: 999px; padding: 2px 9px;
+  }
+  .compare-foot { margin-top: 22px; font-size: 12px; color: var(--faint); line-height: 1.6; }
+
+  /* ============ Ablauf (3-step visual explainer) ============ */
+  .steps-strip { margin-top: 44px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; position: relative; }
+  @media (max-width: 860px) { .steps-strip { grid-template-columns: 1fr; gap: 28px; } }
+  .step-item { position: relative; padding: 0 20px; text-align: center; }
+  .step-item::before {
+    content: ""; position: absolute; top: 34px; left: -50%; width: 100%; height: 2px;
+    background: repeating-linear-gradient(90deg, var(--border-strong) 0 6px, transparent 6px 12px);
+    z-index: 0;
+  }
+  .step-item:first-child::before { display: none; }
+  @media (max-width: 860px) { .step-item::before { display: none; } }
+  .step-circle {
+    position: relative; z-index: 1; width: 68px; height: 68px; margin: 0 auto; border-radius: 50%;
+    background: var(--surface); border: 2px solid var(--accent); color: var(--accent-strong);
+    display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-sm);
+  }
+  .step-circle svg { width: 28px; height: 28px; }
+  .step-num {
+    position: absolute; top: -6px; right: -6px; width: 22px; height: 22px; border-radius: 50%;
+    background: var(--accent); color: var(--accent-ink); font-family: var(--font-mono); font-size: 11px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .step-title { margin-top: 16px; font-weight: 700; font-size: 15.5px; }
+  .step-desc { margin-top: 6px; font-size: 13.5px; color: var(--muted); line-height: 1.55; max-width: 30ch; margin-left: auto; margin-right: auto; }
+  .step-time {
+    display: inline-flex; align-items: center; gap: 5px; margin-top: 10px;
+    font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--success-strong);
+    background: var(--success-bg); border: 1px solid var(--success-border); border-radius: 999px; padding: 3px 10px;
+  }
+
+  /* ============ Solution ============ */
+  .solution-grid { margin-top: 40px; display: grid; grid-template-columns: 1fr; gap: 14px; }
+  .check-row {
+    display: grid; grid-template-columns: 64px 1fr; gap: 18px;
+    padding: 22px 6px; border-top: 1px solid var(--border);
+  }
+  .check-row:first-child { border-top: none; }
+  .check-num { font-family: var(--font-mono); font-size: 13px; font-weight: 700; color: var(--faint); padding-top: 3px; }
+  .check-num b { color: var(--accent-strong); font-size: 22px; display: block; font-family: var(--font-display); letter-spacing: 0; }
+  .check-title { font-size: 17px; font-weight: 700; }
+  .check-desc { margin-top: 6px; font-size: 14.5px; color: var(--muted); max-width: 62ch; line-height: 1.6; }
+
+  /* product visual mockup */
+  .mock {
+    margin-top: 46px; border: 1px solid var(--border); border-radius: var(--radius);
+    overflow: hidden; box-shadow: var(--shadow-md); background: var(--surface);
+  }
+  .mock-bar { display: flex; align-items: center; gap: 8px; padding: 11px 14px; background: var(--surface-2); border-bottom: 1px solid var(--border); }
+  .mock-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--border-strong); }
+  .mock-url { margin-left: 10px; font-family: var(--font-mono); font-size: 11.5px; color: var(--faint); }
+  .mock-body { display: grid; grid-template-columns: 220px 1fr; }
+  @media (max-width: 720px) { .mock-body { grid-template-columns: 1fr; } }
+  .mock-side { border-right: 1px solid var(--border); padding: 14px; display: flex; flex-direction: column; gap: 8px; background: var(--surface-2); }
+  @media (max-width: 720px) { .mock-side { border-right: none; border-bottom: 1px solid var(--border); flex-direction: row; overflow-x: auto; } }
+  .mock-inv { border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 9px 10px; background: var(--surface); font-size: 11.5px; flex: none; min-width: 168px; }
+  .mock-inv-top { display: flex; justify-content: space-between; gap: 6px; }
+  .mock-inv-name { font-weight: 600; }
+  .mock-chip { display: inline-block; padding: 2px 7px; border-radius: 999px; font-size: 9.5px; font-weight: 700; }
+  .mock-chip.ok { background: var(--success-bg); color: var(--success-strong); }
+  .mock-inv-amt { font-family: var(--font-mono); color: var(--muted); margin-top: 4px; }
+  .mock-main { padding: 22px; display: flex; flex-direction: column; align-items: center; }
+  .mock-kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 100%; max-width: 420px; margin-bottom: 18px; }
+  .mock-kpi { border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; background: var(--surface-2); }
+  .mock-kpi-label { font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--faint); font-weight: 600; }
+  .mock-kpi-val { font-family: var(--font-mono); font-weight: 700; font-size: 16px; margin-top: 3px; }
+  .mock-link { margin-top: 18px; font-size: 13px; font-weight: 600; color: var(--accent-strong); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+  .mock-link:hover { text-decoration: underline; }
+  .mock-link svg { width: 13px; height: 13px; }
+
+  /* ============ Roadmap ============ */
+  .roadmap-grid { margin-top: 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 860px) { .roadmap-grid { grid-template-columns: 1fr; } }
+  .roadmap-card {
+    background: var(--surface-2); border: 1px dashed var(--border-strong); border-radius: var(--radius);
+    padding: 22px 20px;
+  }
+  .roadmap-tag {
+    display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 10px;
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted);
+    background: var(--surface-3); border: 1px solid var(--border); border-radius: 999px; padding: 3px 9px; margin-bottom: 12px;
+  }
+  .roadmap-tag::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--faint); }
+  .roadmap-card h3 { font-size: 15.5px; }
+  .roadmap-card p { margin-top: 8px; font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+
+  /* ============ Pricing band (fixed inverted section) ============ */
+  .band { background: var(--band-bg); color: var(--band-ink); }
+  .band .eyebrow { color: var(--accent-strong); }
+  .band .section-head p { color: var(--band-muted); }
+  .price-card {
+    margin-top: 40px; max-width: 460px;
+    background: var(--band-bg-2); border: 1px solid var(--band-border); border-radius: var(--radius);
+    padding: 34px 32px; box-shadow: 0 30px 70px -20px rgba(0,0,0,0.5);
+  }
+  .price-top { display: flex; align-items: baseline; gap: 10px; }
+  .price-amount { font-family: var(--font-display); font-size: 52px; font-weight: 700; }
+  .price-period { font-size: 15px; color: var(--band-muted); }
+  .price-vat { margin-top: 4px; font-size: 12.5px; color: var(--band-muted); }
+  .price-list { list-style: none; margin: 26px 0 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+  .price-list li { display: flex; gap: 10px; font-size: 14px; align-items: flex-start; }
+  .price-list svg { width: 16px; height: 16px; color: var(--accent-strong); flex: none; margin-top: 2px; }
+  .price-card .btn-primary { margin-top: 28px; width: 100%; }
+  .price-fine { margin-top: 12px; font-size: 12px; color: var(--band-muted); text-align: center; }
+
+  /* ============ CTA form ============ */
+  .cta-grid { margin-top: 40px; display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 40px; align-items: start; }
+  @media (max-width: 860px) { .cta-grid { grid-template-columns: 1fr; } }
+  .cta-points { display: flex; flex-direction: column; gap: 18px; }
+  .cta-point { display: flex; gap: 12px; }
+  .cta-point svg { width: 18px; height: 18px; color: var(--accent-strong); flex: none; margin-top: 2px; }
+  .cta-point div { font-size: 14.5px; color: var(--muted); }
+  .cta-point b { color: var(--ink); font-weight: 600; }
+
+  .form-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow-md); }
+  .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+  .field label { font-size: 12.5px; font-weight: 600; color: var(--ink-soft); }
+  .field input, .field select {
+    font-family: inherit; font-size: 14.5px; padding: 11px 12px;
+    border: 1.5px solid var(--border-strong); border-radius: var(--radius-sm);
+    background: var(--surface); color: var(--ink); width: 100%;
+  }
+  .field input:focus, .field select:focus { outline: none; border-color: var(--accent); }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 480px) { .field-row { grid-template-columns: 1fr; } }
+  .form-submit { width: 100%; margin-top: 4px; }
+  .form-legal { margin-top: 12px; font-size: 11.5px; color: var(--faint); line-height: 1.5; }
+  .hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+  .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+  .field label { font-size: 12.5px; font-weight: 600; color: var(--ink-soft); }
+  .field input, .field select, .field textarea {
+    font-family: inherit; font-size: 14.5px; padding: 11px 12px;
+    border: 1.5px solid var(--border-strong); border-radius: var(--radius-sm);
+    background: var(--surface); color: var(--ink);
+  }
+  .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--accent); }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 480px) { .field-row { grid-template-columns: 1fr; } }
+  .form-submit { width: 100%; margin-top: 4px; }
+  .form-status { margin-top: 14px; font-size: 13px; padding: 12px 14px; border-radius: var(--radius-sm); display: none; }
+  .form-status.show { display: block; }
+  .form-status.ok { background: var(--success-bg); color: var(--success-strong); border: 1px solid var(--success-border); }
+  .form-status.err { background: var(--accent-bg); color: var(--accent-strong); border: 1px solid var(--accent); }
+  .form-legal { margin-top: 12px; font-size: 11.5px; color: var(--faint); line-height: 1.5; }
+
+  .success-panel { text-align: center; padding: 20px 6px 8px; }
+  .success-icon {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: var(--success-bg); border: 1.5px solid var(--success-border); color: var(--success-strong);
+    display: flex; align-items: center; justify-content: center; margin: 0 auto 18px;
+  }
+  .success-icon svg { width: 24px; height: 24px; }
+  .success-panel h3 { font-family: var(--font-body); text-transform: none; letter-spacing: normal; font-size: 18px; font-weight: 700; }
+  .success-panel p { margin-top: 10px; font-size: 14.5px; color: var(--muted); line-height: 1.6; max-width: 40ch; margin-left: auto; margin-right: auto; }
+
+  .copy-panel { text-align: center; padding: 20px 6px 8px; }
+  .copy-panel h3 { font-family: var(--font-body); text-transform: none; letter-spacing: normal; font-size: 18px; font-weight: 700; }
+  .copy-panel p { margin-top: 10px; font-size: 14.5px; color: var(--muted); line-height: 1.6; }
+  .copy-panel strong { color: var(--ink); font-family: var(--font-mono); font-weight: 600; }
+  .copy-textarea {
+    display: block; width: 100%; margin-top: 16px; resize: vertical;
+    font-family: var(--font-mono); font-size: 13px; line-height: 1.6;
+    padding: 12px 14px; border: 1.5px solid var(--border-strong); border-radius: var(--radius-sm);
+    background: var(--surface-2); color: var(--ink-soft);
+  }
+  .copy-textarea:focus { outline: none; border-color: var(--accent); }
+  .copy-actions { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 14px; }
+  .copy-status { font-size: 12.5px; font-weight: 600; color: var(--success-strong); min-height: 1em; }
+
+  /* ============ Footer ============ */
+  footer { border-top: 1px solid var(--border); padding: 32px 0; }
+  .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; font-size: 12.5px; color: var(--faint); }
+  .footer-inner .nav-brand { font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="nav">
+  <div class="wrap nav-inner">
+    <a class="nav-brand" href="#top">
+      <span class="nav-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6l1 4H8l1-4Z"/><path d="M7 7h10l1 13H6L7 7Z"/><path d="M10 12h4"/></svg></span>
+      Prüfstand
+    </a>
+    <div class="nav-links">
+      <a class="hide-sm" href="#problem">Das Problem</a>
+      <a class="hide-sm" href="#vergleich">Vergleich</a>
+      <a class="hide-sm" href="#ablauf">Ablauf</a>
+      <a class="hide-sm" href="#loesung">Lösung</a>
+      <a class="hide-sm" href="#roadmap">Roadmap</a>
+      <a class="hide-sm" href="funktionsweise.html">Bildlich erklärt</a>
+      <a class="hide-sm" href="test.html" style="color:var(--accent-strong); font-weight:700;">Jetzt testen</a>
+      <a class="hide-sm" href="#preis">Preis</a>
+      <a class="btn" href="#demo" style="padding:8px 16px;">Demo anfragen</a>
+    </div>
+  </div>
+</div>
+
+<div id="top"></div>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Für Elektro-, SHK- &amp; Baubetriebe</span>
+      <h1>Schluss mit dem XML-Chaos im Postfach.</h1>
+      <p class="hero-sub">Prüfstand prüft, visualisiert und übergibt jede E-Rechnung automatisch an euren Steuerberater — bevor der nächste Skonto verfällt.</p>
+      <div class="hero-ctas">
+        <a href="#demo" class="btn btn-primary btn-lg">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"/></svg>
+          10-Minuten-Demo sichern
+        </a>
+        <a href="https://claude.ai/code/artifact/5e9e2d9a-d1de-4b43-800b-15eb146e33e7" target="_blank" rel="noopener" class="btn btn-lg">
+          Live-Dashboard ansehen
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
+        </a>
+      </div>
+      <div class="hero-note">Keine Kreditkarte nötig für die Demo. Setup mit eurem Steuerberater in einem Termin. <a href="funktionsweise.html" style="color:var(--accent-strong); text-decoration:underline;">So funktioniert Prüfstand im Detail →</a></div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hv-card">
+        <div class="hv-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> Schema geprüft</div>
+        <div class="hv-head">
+          <div>
+            <div class="hv-brand">Nordmann Baustoffhandel</div>
+            <div class="hv-brand-sub">RE-2026-08214 · XRechnung</div>
+          </div>
+          <div class="hv-meta">18.08.2026<br>fällig 17.09.2026</div>
+        </div>
+        <div class="hv-rows">
+          <div class="hv-row"><span>Trockenbeton C25/30, 120 Sack</span><span>774,00 €</span></div>
+          <div class="hv-row"><span>Dachziegel, 850 Stk.</span><span>1.088,00 €</span></div>
+          <div class="hv-row"><span>Dämmplatte, 6 Pal.</span><span>1.137,00 €</span></div>
+        </div>
+        <div class="hv-total"><span>Gesamt</span><span class="tabular">5.741,75 €</span></div>
+        <div class="hv-stamp">
+          <div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
+            <div class="hv-stamp-text">GoBD<br>validiert</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="hazard" role="presentation"></div>
+
+<section id="problem">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Das Problem</span>
+      <h2>Jede liegen gebliebene E-Rechnung kostet doppelt: Zeit und Skonto.</h2>
+      <p>Seit E-Rechnungen im B2B-Bereich zum Standard werden, landen XRechnung- und ZUGFeRD-Dateien im Posteingang jedes Handwerksbetriebs — meist ohne dass jemand im Büro sie ohne Zusatzsoftware lesen kann.</p>
+    </div>
+
+    <div class="problem-grid">
+      <div class="problem-card reveal">
+        <svg class="problem-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 8.5h1a1.5 1.5 0 0 1 0 3h-1a1.5 1.5 0 0 0 0 3h1M12 7v1.5M12 15.5V17M15 8.5l-6 7"/></svg>
+        <h3>Skonto-Verlust</h3>
+        <p>2 % Skonto sind schnell verschenkt, wenn eine Rechnung erst nach zehn Tagen erfasst wird. Über ein Jahr summiert sich das spürbar.</p>
+      </div>
+      <div class="problem-card reveal">
+        <svg class="problem-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 3.5"/></svg>
+        <h3>Zeitverschwendung im Büro</h3>
+        <p>Summen gegenprüfen, Positionen abtippen, Belege sortieren: Das bindet Bürozeit, die im Tagesgeschäft an anderer Stelle fehlt.</p>
+      </div>
+      <div class="problem-card reveal">
+        <svg class="problem-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"/><path d="M14 3v5h5M9 13h6M9 16.5h4"/></svg>
+        <h3>Unleserliche Dateiformate</h3>
+        <p>XRechnung ist reiner XML-Code ohne Layout, ZUGFeRD versteckt die Daten in einer PDF. Ohne passende Software sieht das niemand auf einen Blick.</p>
+      </div>
+    </div>
+
+    <div class="proof-row reveal">
+      <div class="proof-stat">
+        <div class="proof-num tabular">≈ 50 %</div>
+        <div class="proof-label">der Handwerksbetriebe empfinden Empfang und Verarbeitung von E-Rechnungen als belastender als klassische PDF-Rechnungen.</div>
+      </div>
+      <div class="proof-stat">
+        <div class="proof-num tabular">Ø 3.000 €</div>
+        <div class="proof-label">einmalige Einführungskosten pro Betrieb für E-Rechnungs-Fähigkeit — plus laufende Software- und IT-Kosten.</div>
+      </div>
+    </div>
+    <div class="proof-source">Quelle: <a href="https://www.zdh.de/presse/veroeffentlichungen/pressemitteilungen/e-rechnung-fuer-betriebe-noch-mehr-aufwand-statt-entlastung/" target="_blank" rel="noopener">ZDH-Umfrage zur E-Rechnung, 2025/2026, ca. 2.000 befragte Handwerksbetriebe</a></div>
+
+    <div class="calc-box reveal">
+      <div style="flex:1; min-width:220px;">
+        <div class="calc-label">Rechenbeispiel · Skonto-Verlust pro Jahr</div>
+        <div class="calc-formula">25 Rechnungen/Monat · ⌀ 480 € · 2 % Skonto · jede dritte Rechnung wird zu spät erfasst</div>
+      </div>
+      <div>
+        <div class="calc-result tabular">≈ 950 € / Jahr</div>
+        <div class="calc-result-label">nur durch verspätete Bearbeitung — illustrative Rechnung, kein Erfahrungswert</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="vergleich">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Der Vergleich</span>
+      <h2>Wie schneidet Prüfstand gegen den heutigen Arbeitsalltag ab?</h2>
+      <p>Rechenbeispiel für einen typischen Betrieb mit rund 50 Eingangsrechnungen im Monat, Bürozeit mit 35 €/Std. kalkuliert. Illustrative Beispielrechnung, kein individuelles Versprechen für euren Betrieb.</p>
+    </div>
+
+    <div class="compare-grid">
+      <div class="compare-card reveal">
+        <h3>Zeitaufwand pro Monat<div class="compare-sub">für die Prüfung von 50 Eingangsrechnungen</div></h3>
+        <div class="compare-rows">
+          <div class="compare-row">
+            <div class="compare-row-label"><span>Manuelle Prüfung</span><span class="compare-val tabular">7,5 Std.</span></div>
+            <div class="compare-track"><div class="compare-fill" style="width:100%"></div></div>
+          </div>
+          <div class="compare-row">
+            <div class="compare-row-label"><span>Generische XML-Viewer</span><span class="compare-val tabular">5,8 Std.</span></div>
+            <div class="compare-track"><div class="compare-fill" style="width:77%"></div></div>
+          </div>
+          <div class="compare-row">
+            <div class="compare-row-label"><span>DATEV / sevDesk / lexoffice</span><span class="compare-val tabular">1,7 Std.</span></div>
+            <div class="compare-track"><div class="compare-fill" style="width:23%"></div></div>
+          </div>
+          <div class="compare-row is-winner">
+            <div class="compare-row-label"><span>Prüfstand</span><span class="compare-val tabular">0,4 Std.</span></div>
+            <div class="compare-track"><div class="compare-fill" style="width:5%"></div></div>
+          </div>
+        </div>
+        <span class="compare-badge">≈ 95 % weniger Zeit als manuell</span>
+      </div>
+
+      <div class="compare-card reveal">
+        <h3>Gesamtkosten pro Monat<div class="compare-sub">Bürozeit + ggf. Softwarekosten, 35 €/Std.</div></h3>
+        <div class="compare-rows">
+          <div class="compare-row">
+            <div class="compare-row-label"><span>Manuelle Prüfung</span><span class="compare-val tabular">263 €</span></div>
+            <div class="compare-track"><div class="compare-fill" style="width:100%"></div></div>
+          </div>
+          <div class="compare-row">
+            <div class="compare-row-label"><span>Generische XML-Viewer</span><span class="compare-val tabular">204 €</span></div>
+            <div class="compare-track"><div class="compare-fill" style="width:78%"></div></div>
+          </div>
+          <div class="compare-row">
+            <div class="compare-row-label"><span>DATEV / sevDesk / lexoffice</span><span class="compare-val tabular">118 €</span></div>
+            <div class="compare-track"><div class="compare-fill" style="width:45%"></div></div>
+          </div>
+          <div class="compare-row is-winner">
+            <div class="compare-row-label"><span>Prüfstand (inkl. 49 € Abo)</span><span class="compare-val tabular">64 €</span></div>
+            <div class="compare-track"><div class="compare-fill" style="width:24%"></div></div>
+          </div>
+        </div>
+        <span class="compare-badge">≈ 76 % weniger Kosten als manuell</span>
+      </div>
+    </div>
+
+    <div class="compare-foot">Annahmen: 50 Eingangsrechnungen/Monat, 35 €/Std. Bürokraft-Kostensatz, ø Prüfzeit manuell 9 Min./Rechnung, mit XML-Viewer 7 Min., mit Buchhaltungssuite 2 Min. zzgl. Software ab ca. 60 €/Monat, mit Prüfstand 0,5 Min. Kontrollzeit zzgl. 49 €/Monat Abo. Werte sind eine Beispielrechnung zur Orientierung, keine Zusicherung für euren konkreten Betrieb.</div>
+  </div>
+</section>
+
+<section id="ablauf">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">So einfach geht's</span>
+      <h2>Kein Einlernen, keine Schulung — drei Klicks bis zur geprüften Rechnung.</h2>
+      <p>So läuft's für eure Bürokraft ab, egal ob Elektro-, SHK- oder Baubetrieb — vom Erhalt der Rechnung bis zur Übergabe an den Steuerberater.</p>
+    </div>
+
+    <div class="steps-strip">
+      <div class="step-item reveal">
+        <div class="step-circle">
+          <span class="step-num">1</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M7 8l5-5 5 5"/><path d="M20 15v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-4"/></svg>
+        </div>
+        <div class="step-title">Rechnung reinziehen</div>
+        <div class="step-desc">XRechnung- oder ZUGFeRD-Datei per Drag &amp; Drop hochladen — genau wie einen Anhang in einer E-Mail.</div>
+        <span class="step-time">≈ 5 Sekunden</span>
+      </div>
+      <div class="step-item reveal">
+        <div class="step-circle">
+          <span class="step-num">2</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/><path d="M8.5 11l2 2 4-4"/></svg>
+        </div>
+        <div class="step-title">Prüfstand prüft automatisch</div>
+        <div class="step-desc">Schema, Rechenprobe, IBAN und USt-IdNr. werden im Hintergrund geprüft — ohne dass jemand mitrechnen muss.</div>
+        <span class="step-time">≈ 3 Sekunden</span>
+      </div>
+      <div class="step-item reveal">
+        <div class="step-circle">
+          <span class="step-num">3</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"/><path d="M14 3v5h5"/><path d="m9 15 2 2 4-4"/></svg>
+        </div>
+        <div class="step-title">Fertig für den Steuerberater</div>
+        <div class="step-desc">Geprüfte Rechnung ist archiviert und bereit zur gesammelten Übergabe — ein Klick statt zehn Anhänge.</div>
+        <span class="step-time">Kein weiterer Aufwand</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="loesung">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Die Lösung</span>
+      <h2>Prüfstand macht aus dem XML-Wust eine Rechnung, die jeder lesen kann.</h2>
+      <p>Ihr ladet die Belege hoch — Prüfstand prüft, stellt sie verständlich dar und bereitet sie für die Übergabe an den Steuerberater vor. Genau wie im echten Dashboard, das ihr euch unten live ansehen könnt.</p>
+    </div>
+
+    <div class="solution-grid">
+      <div class="check-row reveal">
+        <div class="check-num"><b>01</b>Prüfung</div>
+        <div>
+          <div class="check-title">Automatische Prüfung</div>
+          <div class="check-desc">Jede eingehende Rechnung wird in Sekunden gegen die XRechnung- und ZUGFeRD-Vorgaben geprüft — Schema, Rechenprobe, IBAN, USt-IdNr. GoBD-konform archiviert, ohne dass jemand manuell draufschauen muss.</div>
+        </div>
+      </div>
+      <div class="check-row reveal">
+        <div class="check-num"><b>02</b>Vorschau</div>
+        <div>
+          <div class="check-title">Klare visuelle Vorschau</div>
+          <div class="check-desc">Aus dem XML-Code wird eine Rechnung, wie man sie kennt: Lieferant, Positionen, Summen — alles auf einen Blick, inklusive Prüf-Stempel für den schnellen Überblick.</div>
+        </div>
+      </div>
+      <div class="check-row reveal">
+        <div class="check-num"><b>03</b>Übergabe</div>
+        <div>
+          <div class="check-title">Direkt zum Steuerberater</div>
+          <div class="check-desc">Geprüfte Rechnungen werden gesammelt und strukturiert bereitgestellt — statt zehn einzelne Anhänge zu verschicken oder ins Portal zu laden.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mock reveal">
+      <div class="mock-bar">
+        <span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-dot"></span>
+        <span class="mock-url">pruefstand.app · Posteingang</span>
+      </div>
+      <div class="mock-body">
+        <div class="mock-side">
+          <div class="mock-inv">
+            <div class="mock-inv-top"><span class="mock-inv-name">Nordmann Baustoffhandel</span><span class="mock-chip ok">Validiert</span></div>
+            <div class="mock-inv-amt tabular">5.741,75 €</div>
+          </div>
+          <div class="mock-inv">
+            <div class="mock-inv-top"><span class="mock-inv-name">Elektro Voss GmbH</span><span class="mock-chip ok">Validiert</span></div>
+            <div class="mock-inv-amt tabular">2.183,65 €</div>
+          </div>
+          <div class="mock-inv">
+            <div class="mock-inv-top"><span class="mock-inv-name">Malerbedarf Rombach</span><span class="mock-chip ok">Validiert</span></div>
+            <div class="mock-inv-amt tabular">312,90 €</div>
+          </div>
+        </div>
+        <div class="mock-main">
+          <div class="mock-kpis">
+            <div class="mock-kpi"><div class="mock-kpi-label">Geprüft</div><div class="mock-kpi-val tabular">5</div></div>
+            <div class="mock-kpi"><div class="mock-kpi-label">Volumen</div><div class="mock-kpi-val tabular">13.659 €</div></div>
+            <div class="mock-kpi"><div class="mock-kpi-label">Validiert</div><div class="mock-kpi-val tabular">40 %</div></div>
+          </div>
+          <a class="mock-link" href="https://claude.ai/code/artifact/5e9e2d9a-d1de-4b43-800b-15eb146e33e7" target="_blank" rel="noopener">
+            Original-Dashboard live öffnen
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="roadmap">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Roadmap</span>
+      <h2>Was als Nächstes kommt</h2>
+      <p>Prüfstand befindet sich im aktiven Aufbau. Diese Funktionen sind in Entwicklung und noch nicht Teil des heutigen Demo-Stands — Early-Access-Betriebe können ihre Prioritäten direkt mitgestalten.</p>
+    </div>
+
+    <div class="roadmap-grid">
+      <div class="roadmap-card reveal">
+        <span class="roadmap-tag">In Entwicklung</span>
+        <h3>KI-Abgleich mit Lieferscheinen</h3>
+        <p>Automatischer Abgleich zwischen Rechnungspositionen und begleitenden Lieferschein-Dokumenten — zeigt auf einen Blick, ob nur berechnet wurde, was auch geliefert wurde.</p>
+      </div>
+      <div class="roadmap-card reveal">
+        <span class="roadmap-tag">In Entwicklung</span>
+        <h3>Ampel-Ergebnis mit Prüfprotokoll</h3>
+        <p>Grün: Datensatz fehlerfrei und EN-16931-konform. Rot: Prüfbericht mit konkreten Korrekturhinweisen, direkt verwendbar für die Rückfrage beim Lieferanten.</p>
+      </div>
+      <div class="roadmap-card reveal">
+        <span class="roadmap-tag">In Entwicklung</span>
+        <h3>Direkter DATEV-Export</h3>
+        <p>Validierte Rechnungsdaten fließen automatisiert und ohne Tippfehler in gängige DATEV-Formate — statt manuell zusammengestellter Sammel-Anhänge.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="preis" class="band">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Geplanter Preis · Early Access</span>
+      <h2>Ein Preis. Keine Überraschungen.</h2>
+      <p>Prüfstand befindet sich aktuell im Aufbau. Wer sich jetzt für die Demo einträgt, sichert sich diesen Preis dauerhaft, sobald der reguläre Betrieb startet — unverbindlich und ohne Zahlung heute.</p>
+    </div>
+
+    <div class="price-card reveal">
+      <div class="price-top">
+        <span class="price-amount tabular">49 €</span>
+        <span class="price-period">/ Monat</span>
+      </div>
+      <div class="price-vat">geplanter Preis zum Marktstart · zzgl. gesetzlicher MwSt. · keine Zahlung, kein Vertrag heute</div>
+      <ul class="price-list">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> Unbegrenzte Rechnungsprüfungen</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> XRechnung &amp; ZUGFeRD in einer Ansicht</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> GoBD-konforme Archivierung, 10 Jahre</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> Gesammelte Übergabe an den Steuerberater</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> Persönlicher E-Mail-Support</li>
+      </ul>
+      <a href="#demo" class="btn btn-primary">Early-Access-Platz sichern</a>
+      <div class="price-fine">Ein Betrieb, ein Preis — für zusätzliche Standorte sprecht uns einfach an. Kein automatischer Vertragsabschluss durch die Demo-Anfrage.</div>
+    </div>
+  </div>
+</section>
+
+<section id="demo">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Live-Demo</span>
+      <h2>In 10 Minuten sehen, wie viel Zeit ihr sparen könnt.</h2>
+      <p>Wir zeigen euch Prüfstand live an echten Rechnungen aus eurem Gewerk — ohne Vorbereitung eurerseits.</p>
+    </div>
+
+    <div class="cta-grid">
+      <div class="cta-points reveal">
+        <div class="cta-point">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"/></svg>
+          <div><b>10 Minuten, per Bildschirmfreigabe.</b> Kein Verkaufsgespräch — wir zeigen das Dashboard an euren eigenen Beleg-Typen.</div>
+        </div>
+        <div class="cta-point">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4.5 5-6 8-6s6.5 1.5 8 6"/></svg>
+          <div><b>Für Inhaber und Büro gemeinsam.</b> Wir gehen auf beide Perspektiven ein — Kosten und Kontrolle, Ablauf und Zeitersparnis.</div>
+        </div>
+        <div class="cta-point">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          <div><b>Unverbindlich.</b> Das Formular geht direkt bei uns ein — kein Konto, keine Verpflichtung.</div>
+        </div>
+      </div>
+
+      <div class="form-card reveal" id="demoFormCard">
+        <form class="native-form" id="demoForm">
+          <input type="hidden" name="access_key" value="edca9e91-0c0e-4652-a765-bbb9488ca28d" />
+          <input type="hidden" name="subject" value="Neue Demo-Anfrage über Prüfstand" />
+          <input type="hidden" name="from_name" value="Prüfstand Landingpage" />
+          <input type="checkbox" name="botcheck" class="hp-field" tabindex="-1" autocomplete="off" />
+
+          <div class="field-row">
+            <div class="field">
+              <label for="f-name">Name*</label>
+              <input id="f-name" name="name" type="text" required autocomplete="name" placeholder="Vorname Nachname" />
+            </div>
+            <div class="field">
+              <label for="f-email">E-Mail*</label>
+              <input id="f-email" name="email" type="email" required autocomplete="email" placeholder="name@betrieb.de" />
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="f-firma">Betrieb / Gewerk*</label>
+              <input id="f-firma" name="firma_gewerk" type="text" required autocomplete="organization" placeholder="z. B. Kessler Dach & Fassade GmbH · Bau" />
+            </div>
+            <div class="field">
+              <label for="f-zeit">Wunschzeitraum</label>
+              <select id="f-zeit" name="zeitraum">
+                <option>Diese Woche</option>
+                <option>Nächste Woche</option>
+                <option>Flexibel — bitte Vorschlag machen</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" id="submitBtn" class="btn btn-primary form-submit">10-Minuten-Demo anfragen</button>
+          <div class="form-status" id="formStatus"></div>
+          <div class="form-legal">Mit dem Absenden meldet ihr euch für eine 10-minütige Live-Demo an. Wir melden uns per E-Mail an die angegebene Adresse.</div>
+        </form>
+
+        <div class="success-panel" id="successPanel" hidden>
+          <div class="success-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+          <h3>Vielen Dank! Ihre Demo-Anfrage wurde übermittelt.</h3>
+        </div>
+
+        <div class="copy-panel" id="copyPanel" hidden>
+          <div class="success-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+          <h3>Fast geschafft — Anfrage senden</h3>
+          <p>Automatischer Versand hat nicht geklappt. Text kopieren, in eine neue E-Mail an <strong>farukpolat@mail.de</strong> einfügen und abschicken.</p>
+          <textarea id="copyText" class="copy-textarea" readonly rows="7"></textarea>
+          <div class="copy-actions">
+            <button type="button" id="copyTextBtn" class="btn btn-primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Text kopieren
+            </button>
+            <span id="copyStatus" class="copy-status"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-inner">
+    <a class="nav-brand" href="#top">
+      <span class="nav-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6l1 4H8l1-4Z"/><path d="M7 7h10l1 13H6L7 7Z"/><path d="M10 12h4"/></svg></span>
+      Prüfstand
+    </a>
+    <span>Der E-Rechnungs-Hub für Handwerker · XRechnung &amp; ZUGFeRD · GoBD-konform</span>
+    <span><a href="impressum.html" style="color:var(--faint); text-decoration:underline;">Impressum</a> · <a href="datenschutz.html" style="color:var(--faint); text-decoration:underline;">Datenschutz</a></span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  /* Demo form -> Web3Forms via fetch(), fully inline, no navigation,
+     no redirect, no new tab. This ONLY works on a real host (this
+     file is not meant to run inside the claude.ai Artifact sandbox,
+     which blocks outbound requests entirely — see the exported
+     version's history). If the request still fails for some reason
+     (offline, ad-blocker, Web3Forms outage), we fall back to the same
+     copy-to-clipboard panel as a safety net so a visitor's request is
+     never just lost. */
+  var demoForm = document.getElementById("demoForm");
+  var submitBtn = document.getElementById("submitBtn");
+  var formStatus = document.getElementById("formStatus");
+  var successPanel = document.getElementById("successPanel");
+  var copyPanel = document.getElementById("copyPanel");
+  var copyText = document.getElementById("copyText");
+  var copyTextBtn = document.getElementById("copyTextBtn");
+  var copyStatus = document.getElementById("copyStatus");
+
+  function buildRequestText(data) {
+    return [
+      "An: farukpolat@mail.de",
+      "Betreff: Demo-Anfrage: " + data.firma_gewerk,
+      "",
+      "Name: " + data.name,
+      "E-Mail: " + data.email,
+      "Betrieb / Gewerk: " + data.firma_gewerk,
+      "Wunschzeitraum: " + data.zeitraum
+    ].join("\n");
+  }
+
+  function copyToClipboard(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text);
+    }
+    copyText.focus();
+    copyText.select();
+    var ok = false;
+    try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+    return ok ? Promise.resolve() : Promise.reject(new Error("copy unsupported"));
+  }
+
+  function showCopyFallback(data) {
+    demoForm.hidden = true;
+    copyPanel.hidden = false;
+    copyText.value = buildRequestText(data);
+    copyText.focus();
+    copyText.select();
+    copyToClipboard(copyText.value).then(function () {
+      if (copyStatus) copyStatus.textContent = "In Zwischenablage kopiert.";
+    }).catch(function () { /* still selected for manual copy */ });
+  }
+
+  if (demoForm && submitBtn) {
+    demoForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (!demoForm.checkValidity()) { demoForm.reportValidity(); return; }
+
+      var fd = new FormData(demoForm);
+      var payload = {
+        name: (fd.get("name") || "").toString().trim(),
+        email: (fd.get("email") || "").toString().trim(),
+        firma_gewerk: (fd.get("firma_gewerk") || "").toString().trim(),
+        zeitraum: (fd.get("zeitraum") || "").toString().trim()
+      };
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Wird gesendet …";
+      if (formStatus) { formStatus.className = "form-status"; formStatus.textContent = ""; }
+
+      /* Zusätzlich (fire-and-forget, unabhängig vom Web3Forms-Ergebnis):
+         Lead-Daten an Make.com senden für automatisches Follow-up
+         (Sheet-Eintrag, Benachrichtigung etc.). Ein Fehlschlag hier darf
+         die eigentliche Anfrage nie blockieren, daher eigener try/catch
+         ohne Auswirkung auf den restlichen Ablauf. */
+      try {
+        fetch("https://hook.eu1.make.com/o1rrcc587bbfd38gwklrdq4zqe6exgk3", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: payload.name,
+            email: payload.email,
+            firma_gewerk: payload.firma_gewerk,
+            zeitraum: payload.zeitraum,
+            quelle: "pruefstand-landingpage"
+          })
+        }).catch(function () { /* bewusst ignoriert */ });
+      } catch (e) { /* bewusst ignoriert */ }
+
+      fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: fd.get("access_key"),
+          subject: fd.get("subject"),
+          from_name: fd.get("from_name"),
+          name: payload.name,
+          email: payload.email,
+          firma_gewerk: payload.firma_gewerk,
+          zeitraum: payload.zeitraum,
+          botcheck: fd.get("botcheck") ? "true" : ""
+        })
+      })
+        .then(function (res) { return res.json().then(function (json) { return { ok: res.ok, json: json }; }); })
+        .then(function (result) {
+          if (result.ok && result.json && result.json.success) {
+            demoForm.hidden = true;
+            successPanel.hidden = false;
+          } else {
+            showCopyFallback(payload);
+          }
+        })
+        .catch(function () {
+          showCopyFallback(payload);
+        })
+        .then(function () {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "10-Minuten-Demo anfragen";
+        });
+    });
+  }
+
+  if (copyTextBtn) {
+    copyTextBtn.addEventListener("click", function () {
+      copyText.focus();
+      copyText.select();
+      copyToClipboard(copyText.value).then(function () {
+        if (copyStatus) copyStatus.textContent = "Kopiert!";
+      }).catch(function () {
+        if (copyStatus) copyStatus.textContent = "Bitte manuell markieren und kopieren (Strg/Cmd+C).";
+      });
+    });
+  }
+
+  /* scroll reveal */
+  var els = Array.prototype.slice.call(document.querySelectorAll(".reveal"));
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    els.forEach(function (el) { io.observe(el); });
+  } else {
+    els.forEach(function (el) { el.classList.add("in"); });
+  }
+})();
+</script>
+</body>
+</html>
