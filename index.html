@@ -263,6 +263,30 @@
   .calc-result { font-family: var(--font-mono); font-size: 22px; font-weight: 700; color: var(--accent-strong); white-space: nowrap; }
   .calc-result-label { font-size: 11.5px; color: var(--muted); margin-top: 2px; }
 
+  /* ============ Vergleich (comparison bars) ============ */
+  .compare-grid { margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 860px) { .compare-grid { grid-template-columns: 1fr; } }
+  .compare-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 26px 24px; box-shadow: var(--shadow-sm);
+  }
+  .compare-card h3 { font-size: 15px; letter-spacing: 0.01em; }
+  .compare-card .compare-sub { margin-top: 4px; font-size: 12.5px; color: var(--muted); text-transform: none; letter-spacing: normal; font-family: var(--font-body); }
+  .compare-rows { margin-top: 22px; display: flex; flex-direction: column; gap: 16px; }
+  .compare-row-label { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; font-weight: 600; }
+  .compare-row-label .compare-val { font-family: var(--font-mono); font-weight: 700; color: var(--ink-soft); }
+  .compare-row.is-winner .compare-row-label .compare-val { color: var(--accent-strong); }
+  .compare-row.is-winner .compare-row-label { color: var(--accent-strong); }
+  .compare-track { margin-top: 6px; height: 10px; border-radius: 999px; background: var(--surface-3); overflow: hidden; }
+  .compare-fill { height: 100%; border-radius: 999px; background: var(--border-strong); min-width: 4px; }
+  .compare-row.is-winner .compare-fill { background: linear-gradient(90deg, var(--accent-strong), var(--accent)); }
+  .compare-badge {
+    display: inline-block; margin-top: 4px; font-family: var(--font-mono); font-size: 10.5px;
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--success-strong);
+    background: var(--success-bg); border: 1px solid var(--success-border); border-radius: 999px; padding: 2px 9px;
+  }
+  .compare-foot { margin-top: 22px; font-size: 12px; color: var(--faint); line-height: 1.6; }
+
   /* ============ Solution ============ */
   .solution-grid { margin-top: 40px; display: grid; grid-template-columns: 1fr; gap: 14px; }
   .check-row {
@@ -400,6 +424,7 @@
     </a>
     <div class="nav-links">
       <a class="hide-sm" href="#problem">Das Problem</a>
+      <a class="hide-sm" href="#vergleich">Vergleich</a>
       <a class="hide-sm" href="#loesung">Lösung</a>
       <a class="hide-sm" href="#preis">Preis</a>
       <a class="btn" href="#demo" style="padding:8px 16px;">Demo anfragen</a>
@@ -493,6 +518,66 @@
         <div class="calc-result-label">nur durch verspätete Bearbeitung — illustrative Rechnung, kein Erfahrungswert</div>
       </div>
     </div>
+  </div>
+</section>
+
+<section id="vergleich">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Der Vergleich</span>
+      <h2>Wie schneidet Prüfstand gegen den heutigen Arbeitsalltag ab?</h2>
+      <p>Rechenbeispiel für einen typischen Betrieb mit rund 50 Eingangsrechnungen im Monat, Bürozeit mit 35 €/Std. kalkuliert. Illustrative Beispielrechnung, kein individuelles Versprechen für euren Betrieb.</p>
+    </div>
+
+    <div class="compare-grid">
+      <div class="compare-card reveal">
+        <h3>Zeitaufwand pro Monat<div class="compare-sub">für die Prüfung von 50 Eingangsrechnungen</div></h3>
+        <div class="compare-rows">
+          <div class="compare-row">
+            <div class="compare-row-label"><span>Manuelle Prüfung</span><span class="compare-val tabular">7,5 Std.</span></div>
+            <div class="compare-track"><div class="compare-fill" style="width:100%"></div></div>
+          </div>
+          <div class="compare-row">
+            <div class="compare-row-label"><span>Generische XML-Viewer</span><span class="compare-val tabular">5,8 Std.</span></div>
+            <div class="compare-track"><div class="compare-fill" style="width:77%"></div></div>
+          </div>
+          <div class="compare-row">
+            <div class="compare-row-label"><span>DATEV / sevDesk / lexoffice</span><span class="compare-val tabular">1,7 Std.</span></div>
+            <div class="compare-track"><div class="compare-fill" style="width:23%"></div></div>
+          </div>
+          <div class="compare-row is-winner">
+            <div class="compare-row-label"><span>Prüfstand</span><span class="compare-val tabular">0,4 Std.</span></div>
+            <div class="compare-track"><div class="compare-fill" style="width:5%"></div></div>
+          </div>
+        </div>
+        <span class="compare-badge">≈ 95 % weniger Zeit als manuell</span>
+      </div>
+
+      <div class="compare-card reveal">
+        <h3>Gesamtkosten pro Monat<div class="compare-sub">Bürozeit + ggf. Softwarekosten, 35 €/Std.</div></h3>
+        <div class="compare-rows">
+          <div class="compare-row">
+            <div class="compare-row-label"><span>Manuelle Prüfung</span><span class="compare-val tabular">263 €</span></div>
+            <div class="compare-track"><div class="compare-fill" style="width:100%"></div></div>
+          </div>
+          <div class="compare-row">
+            <div class="compare-row-label"><span>Generische XML-Viewer</span><span class="compare-val tabular">204 €</span></div>
+            <div class="compare-track"><div class="compare-fill" style="width:78%"></div></div>
+          </div>
+          <div class="compare-row">
+            <div class="compare-row-label"><span>DATEV / sevDesk / lexoffice</span><span class="compare-val tabular">118 €</span></div>
+            <div class="compare-track"><div class="compare-fill" style="width:45%"></div></div>
+          </div>
+          <div class="compare-row is-winner">
+            <div class="compare-row-label"><span>Prüfstand (inkl. 49 € Abo)</span><span class="compare-val tabular">64 €</span></div>
+            <div class="compare-track"><div class="compare-fill" style="width:24%"></div></div>
+          </div>
+        </div>
+        <span class="compare-badge">≈ 76 % weniger Kosten als manuell</span>
+      </div>
+    </div>
+
+    <div class="compare-foot">Annahmen: 50 Eingangsrechnungen/Monat, 35 €/Std. Bürokraft-Kostensatz, ø Prüfzeit manuell 9 Min./Rechnung, mit XML-Viewer 7 Min., mit Buchhaltungssuite 2 Min. zzgl. Software ab ca. 60 €/Monat, mit Prüfstand 0,5 Min. Kontrollzeit zzgl. 49 €/Monat Abo. Werte sind eine Beispielrechnung zur Orientierung, keine Zusicherung für euren konkreten Betrieb.</div>
   </div>
 </section>
 
