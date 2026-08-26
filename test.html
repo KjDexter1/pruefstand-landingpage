@@ -181,7 +181,7 @@
 
 <script>
   // ACHTUNG: Diese URL muss nach dem Einrichten des Make-Szenarios ersetzt werden.
-  const CHECK_WEBHOOK_URL = "https://hook.eu1.make.com/REPLACE_ME_PRUEFUNG";
+  const CHECK_WEBHOOK_URL = "https://hook.eu1.make.com/x18nl5lqcv41w6887f0fbnpkur5sx6c5";
 
   const dropzone = document.getElementById("dropzone");
   const fileInput = document.getElementById("fileInput");
@@ -263,7 +263,7 @@
 
       const resp = await fetch(CHECK_WEBHOOK_URL, {
         method: "POST",
-        headers: { "Content-Type": "text/plain" },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ filename: selectedFile.name, xml: xmlText })
       });
 
@@ -280,11 +280,11 @@
   });
 
   function renderResult(data) {
-    const valid = !!data.valid;
+    const checks = Array.isArray(data.checks) ? data.checks : [];
+    const valid = checks.length > 0 && checks.every(c => c.ok);
     resultHead.className = "result-head " + (valid ? "ok" : "fail");
     resultIcon.innerHTML = valid ? ICON_OK_BIG : ICON_FAIL_BIG;
     resultTitle.textContent = valid ? "Alle Pflichtfelder gefunden" : "Es fehlen Pflichtangaben";
-    const checks = Array.isArray(data.checks) ? data.checks : [];
     const passCount = checks.filter(c => c.ok).length;
     resultSub.textContent = checks.length ? (passCount + " von " + checks.length + " Prüfpunkten erfüllt") : "";
 
