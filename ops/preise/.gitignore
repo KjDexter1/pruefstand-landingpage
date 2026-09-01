@@ -1,0 +1,5 @@
+# Echte Kundenrechnungen gehoeren nicht ins Repository.
+# Der Beispielordner ist ausdruecklich ausgenommen.
+rechnungen/
+*.pdf
+!beispiel/*
