@@ -3,3 +3,5 @@
 rechnungen/
 *.pdf
 !beispiel/*
+__pycache__/
+*.pyc
