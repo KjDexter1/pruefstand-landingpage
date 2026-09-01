@@ -1,0 +1,19 @@
+# Was hier steht, wird nicht auf die Website ausgeliefert.
+# Die Dateien bleiben im Repository, sind aber nicht öffentlich abrufbar.
+
+# Interne Strategieunterlagen
+strategie/
+
+# Werkzeuge, Kataloge, Risikonotizen — und die Ordner, in denen später
+# echte Kundendaten liegen
+ops/
+
+# Entwurf: Fördermittel-Modul. Kernmechanismus ungeklärt (Antrag muss vor
+# Vorhabenbeginn gestellt werden, gefundene Rechnungen sind bereits bezahlt)
+# und rechtlich nicht freigegeben. Zeile entfernen, um die Seite wieder
+# auszuliefern.
+foerdermittel-check.html
+
+# Sonstiges, das nicht auf die Website gehört
+.github/
+README.md
