@@ -20,19 +20,35 @@ Die Mappe entsteht als HTML — im Browser öffnen und mit Strg+P als PDF
 speichern. Bewusst kein automatisches Einreichen: Ämter haben dafür keine
 Schnittstellen, und die Verantwortung für den Antrag bleibt beim Betrieb.
 
-## Der Katalog
+## Der Katalog: zwei Stufen
 
-`foerdermittel.json` wird von Hand gepflegt. Jeder Eintrag hat
-`geprueft_am` und `geprueft_von`.
+`foerdermittel.json` wird von Hand gepflegt und kennt zwei Zustände:
 
-**Solange diese Felder leer sind, gilt der Eintrag als unverifiziert.** Das
-Skript weist das bei jedem Lauf aus, und die Vorbereitungsmappe trägt einen
-Warnkasten. Derzeit ist kein Eintrag verifiziert — die enthaltenen Programme
-sind Startpunkte für die Recherche, keine belastbaren Angaben.
+| Feld | Bedeutung |
+|---|---|
+| `recherchiert_am` + `quelle` + `quelle_typ` | Die Angabe stammt aus dieser Quelle von diesem Tag. `quelle_typ` ist `offiziell` (Trägerseite) oder `sekundaer` (Fachportal, Blog). |
+| `freigegeben_am` + `freigegeben_von` | Ein Mensch hat die Angabe beim Träger bestätigt. **Erst jetzt darf sie einem Betrieb vorgelegt werden.** |
 
-Beim Prüfen eines Eintrags: Seite des Trägers aufrufen, Quote, Frist,
-Voraussetzungen und vor allem die Frage „Antrag vor Vorhabenbeginn?"
-abgleichen, dann Datum und Namen eintragen.
+Der Unterschied ist nicht formal. Recherche sagt, was auf einer Seite stand.
+Freigabe sagt, dass jemand dafür geradesteht. Förderprogramme ändern sich
+mehrmals im Jahr, und eine falsche Quote in einer Kundenmappe ist ein
+Haftungsfall.
+
+Das Skript weist bei jedem Lauf aus, welche Einträge nicht freigegeben sind,
+welche ganz ohne Recherche dastehen und welche Freigabe älter als sechs
+Monate ist. Die Vorbereitungsmappe trägt pro nicht freigegebenem Programm
+einen Warnkasten.
+
+**Derzeit ist kein Eintrag freigegeben.** Alle fünf sind recherchiert.
+
+### Vor der Freigabe abgleichen
+
+1. `quelle` aufrufen und die Angaben Zeile für Zeile vergleichen
+2. Besonders: **Antrag vor Vorhabenbeginn?** Trifft das zu, ist eine bereits
+   bezahlte Rechnung nicht mehr förderfähig — dann bringt der Fund nichts
+   und darf im Kundengespräch nicht als Chance dargestellt werden.
+3. Bei `quelle_typ: sekundaer` zusätzlich beim Träger selbst nachfragen
+4. `freigegeben_am` und `freigegeben_von` setzen
 
 ## Fristen-Radar
 

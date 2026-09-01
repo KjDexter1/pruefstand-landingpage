@@ -169,24 +169,31 @@ ul{margin:8px 0 8px 18px} li{margin-bottom:5px}
 
     for f in funde:
         p = f["programm"]
-        ungeprueft = not p.get("geprueft_am")
+        ungeprueft = not p.get("freigegeben_am")
         teile.append("<h2>%s</h2>" % html.escape(p["name"]))
         if ungeprueft:
-            teile.append('<div class="warn"><b>Katalogeintrag nicht verifiziert.</b> '
-                         'Angaben zu diesem Programm wurden noch nicht beim Träger gegengeprüft '
-                         'und dürfen so nicht an einen Betrieb weitergegeben werden.</div>')
+            teile.append('<div class="warn"><b>Katalogeintrag nicht freigegeben.</b> '
+                         'Die Angaben stammen aus der genannten Quelle, wurden aber noch nicht '
+                         'beim Träger bestätigt. Sie dürfen so nicht an einen Betrieb '
+                         'weitergegeben werden.</div>')
         teile.append("<table><tr><th>Träger</th><td>%s</td></tr>"
+                     "<tr><th>Art der Förderung</th><td>%s</td></tr>"
+                     "<tr><th>Konditionen</th><td>%s</td></tr>"
                      "<tr><th>Kategorie</th><td>%s</td></tr>"
                      "<tr><th>Erkannte Investition</th><td>%s in %d Position(en)</td></tr>"
                      "<tr><th>Frist</th><td>%s</td></tr>"
                      "<tr><th>Antrag vor Investition</th><td>%s</td></tr>"
-                     "<tr><th>Quelle</th><td>%s</td></tr></table>"
-                     % (html.escape(p["traeger"]), html.escape(f["kategorie_name"]),
+                     "<tr><th>Quelle, Stand</th><td>%s<br>recherchiert am %s</td></tr></table>"
+                     % (html.escape(p["traeger"]),
+                        html.escape(p.get("foerderart", "unbekannt")),
+                        html.escape(p.get("quote_hinweis", "nicht angegeben")),
+                        html.escape(f["kategorie_name"]),
                         euro(f["summe"]), len(f["positionen"]),
                         html.escape(str(p.get("frist") or "unbekannt")),
                         "ja — bereits bezahlte Rechnungen sind dann nicht mehr förderfähig"
                         if p.get("antrag_vor_investition") else "unbekannt",
-                        html.escape(p.get("quelle", ""))))
+                        html.escape(p.get("quelle", "")),
+                        html.escape(p.get("recherchiert_am", "nicht recherchiert"))))
         if p.get("notiz"):
             teile.append("<p>%s</p>" % html.escape(p["notiz"]))
         teile.append("<table><tr><th>Rechnung</th><th>Datum</th><th>Position</th><th>Betrag</th></tr>")
@@ -239,11 +246,27 @@ def main():
     if not positionen:
         sys.exit("Keine auswertbaren Positionen gefunden.")
 
-    ungeprueft = [p["id"] for p in katalog["programme"] if not p.get("geprueft_am")]
-    if ungeprueft:
-        print("\n  ACHTUNG: %d von %d Katalogeintraegen sind nicht verifiziert (%s)."
-              % (len(ungeprueft), len(katalog["programme"]), ", ".join(ungeprueft)))
-        print("  Diese Ergebnisse duerfen so keinem Betrieb vorgelegt werden.\n")
+    offen = [p for p in katalog["programme"] if not p.get("freigegeben_am")]
+    ohne_recherche = [p for p in katalog["programme"] if not p.get("recherchiert_am")]
+    if offen:
+        print("\n  NICHT FREIGEGEBEN: %d von %d Eintraegen (%s)."
+              % (len(offen), len(katalog["programme"]), ", ".join(p["id"] for p in offen)))
+        print("  Recherchiert heisst nicht bestaetigt. Diese Angaben duerfen keinem")
+        print("  Betrieb vorgelegt werden, bevor sie beim Traeger gegengeprueft sind.")
+    if ohne_recherche:
+        print("  Davon ohne jede Recherche: %s" % ", ".join(p["id"] for p in ohne_recherche))
+    veraltet = []
+    for p in katalog["programme"]:
+        if p.get("freigegeben_am"):
+            try:
+                alter = (dt.date.today() - dt.datetime.strptime(p["freigegeben_am"], "%Y-%m-%d").date()).days
+                if alter > 180:
+                    veraltet.append("%s (%d Tage)" % (p["id"], alter))
+            except ValueError:
+                pass
+    if veraltet:
+        print("  Freigabe aelter als sechs Monate: %s" % ", ".join(veraltet))
+    print()
 
     treffer, ohne = kategorisiere(positionen, katalog["kategorien"])
     print("%d Positionen gelesen, %d einer Kategorie zugeordnet, %d ohne Zuordnung"
@@ -272,8 +295,19 @@ def main():
                 hinweis = "Frist abgelaufen"
             else:
                 hinweis = "noch %d Tage" % tage
-            marke = "" if prog.get("geprueft_am") else "   [NICHT VERIFIZIERT]"
-            print("      %s  (%s)%s" % (prog["name"][:66], hinweis, marke))
+            if prog.get("freigegeben_am"):
+                marke = ""
+            elif prog.get("recherchiert_am"):
+                marke = "   [recherchiert %s, nicht freigegeben]" % prog["recherchiert_am"]
+            else:
+                marke = "   [OHNE RECHERCHE]"
+            art = prog.get("foerderart", "")
+            quote = ("%s %%" % prog["quote_prozent"]) if prog.get("quote_prozent") else ""
+            zusatz = " · ".join(x for x in (art, quote) if x)
+            print("      %s" % prog["name"][:78])
+            print("        %s%s%s" % (zusatz + "  " if zusatz else "", hinweis, marke))
+            if prog.get("antrag_vor_investition"):
+                print("        Antrag vor Vorhabenbeginn — bereits bezahlte Rechnungen sind dann raus")
             if tage is not None:
                 for stufe in WARNUNG_TAGE:
                     if 0 < tage <= stufe:
