@@ -1,0 +1,8 @@
+Lieferant;Rechnung;Datum;Pruefpunkt;Soll;Ist;Differenz;Status
+Nordmann Baustoffe;RE-08214;18.08.2026;Preis still erhöht;6,20 €;6,45 €;30,00;sicher
+Nordmann Baustoffe;RE-07588;24.07.2026;Preis still erhöht;6,20 €;6,45 €;15,00;sicher
+Nordmann Baustoffe;RE-07022;09.07.2026;Menge über Lieferschein;810 Stk.;850 Stk.;51,20;sicher
+Nordmann Baustoffe;RE-06377;27.06.2026;Palettenpfand ohne Gutschrift;Gutschrift;keine;96,00;sicher
+Elektro Voss;RE-4471;12.08.2026;Rabattstaffel nicht gewährt;8 %;5 %;214,00;sicher
+Elektro Voss;RE-4390;02.08.2026;Position doppelt berechnet;1 ×;2 ×;168,00;sicher
+Malerbedarf Rombach;RE-2211;21.07.2026;Mindermengenzuschlag;nicht vereinbart;berechnet;45,00;zu klären

@@ -1,0 +1,13 @@
+{
+  "name": "pruefstand-berichtsgenerator",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Erzeugt den Prüfbericht als Word-Datei aus funde.csv und bericht.json",
+  "scripts": {
+    "bericht": "node erzeuge-bericht.js",
+    "muster": "node erzeuge-bericht.js --muster"
+  },
+  "dependencies": {
+    "docx": "^9.5.1"
+  }
+}

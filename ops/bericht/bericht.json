@@ -1,0 +1,32 @@
+{
+  "betrieb": "Muster Elektrotechnik GmbH, Oberursel",
+  "zeitraum": "Juni bis August 2026",
+  "erstellt_am": "04.09.2026",
+  "geprueft_von": "Faruk Polat",
+
+  "lieferanten": [
+    { "name": "Nordmann Baustoffe",  "rechnungen": 62, "volumen": 34910, "tiefe": "alle Prüfpunkte" },
+    { "name": "Elektro Voss",        "rechnungen": 38, "volumen": 19640, "tiefe": "alle Prüfpunkte" },
+    { "name": "Malerbedarf Rombach", "rechnungen": 24, "volumen": 11180, "tiefe": "Preis, Menge, Rabatt, Dopplung, Zuschläge, Gutschrift" },
+    { "name": "übrige 7 Lieferanten","rechnungen": 26, "volumen":  5750, "tiefe": "Preis, Menge, Dopplung, Gutschrift" }
+  ],
+
+  "muster": [
+    { "lieferant": "Nordmann Baustoffe", "text": "Der Sackpreis für Trockenbeton wurde zum 24.07. ohne Ankündigung von 6,20 € auf 6,45 € erhöht. Betroffen sind bislang zwei Rechnungen; bei gleichbleibender Abnahme sind das rund 360 € im Jahr." },
+    { "lieferant": "Elektro Voss", "text": "Die vereinbarte Rabattstaffel von 8 % wurde in einer von drei Rechnungen nur mit 5 % angesetzt. Das deutet auf einen Fehler in der Stammdatenpflege hin, nicht auf Absicht." },
+    { "lieferant": "Malerbedarf Rombach", "text": "Mindermengenzuschläge tauchen unregelmäßig auf. Ob sie vereinbart sind, lässt sich ohne eure Konditionsvereinbarung nicht beurteilen." }
+  ],
+
+  "nicht_geprueft": [
+    "Zu 31 Rechnungen lag kein Lieferschein vor — die Mengen konnten dort nicht gegengeprüft werden.",
+    "Ohne Zahlungsnachweise war nicht feststellbar, ob gewährtes Skonto tatsächlich gezogen wurde.",
+    "Für die übrigen sieben Lieferanten wurden vier Prüfpunkte angewendet, nicht alle (siehe Prüfumfang, Seite 1)."
+  ],
+
+  "empfehlungen": [
+    "Beim Großhändler die sicheren Positionen beanstanden. Die Rechnungsnummern stehen auf Seite 1.",
+    "Die stille Preiserhöhung ansprechen, bevor sie zur neuen Grundlage wird. Nicht als Reklamation, sondern als Nachverhandlung.",
+    "Lieferscheine künftig zur Rechnung heften. Ohne sie ist rund ein Fünftel der Positionen nicht prüfbar.",
+    "Die Konditionsvereinbarung mit dem Farbenhändler heraussuchen, damit sich die Zuschläge klären lassen."
+  ]
+}

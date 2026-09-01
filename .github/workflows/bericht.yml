@@ -1,0 +1,46 @@
+name: Prüfbericht erzeugen
+
+# Baut aus ops/bericht/funde.csv und bericht.json die Word-Datei und legt
+# sie als herunterladbares Ergebnis an den Lauf. Damit lässt sich der
+# Bericht ohne lokale Installation erzeugen.
+on:
+  workflow_dispatch:
+    inputs:
+      muster:
+        description: "Musterbericht mit Kennzeichnung statt echtem Bericht"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  bericht:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Abhängigkeiten installieren
+        working-directory: ops/bericht
+        run: npm install --no-audit --no-fund
+
+      - name: Bericht erzeugen
+        working-directory: ops/bericht
+        run: |
+          if [ "${{ inputs.muster }}" = "true" ]; then
+            node erzeuge-bericht.js --muster
+          else
+            node erzeuge-bericht.js
+          fi
+
+      - name: Word-Datei bereitstellen
+        uses: actions/upload-artifact@v4
+        with:
+          name: pruefbericht
+          path: ops/bericht/*.docx
+          if-no-files-found: error
+          retention-days: 7
