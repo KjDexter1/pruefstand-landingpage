@@ -2,7 +2,8 @@
 <html lang="de">
 <head>
 <meta charset="utf-8" />
-<title>Rechnung testen – Prüfstand</title>
+<title>Formalprüfung testen – Prüfstand</title>
+<meta name="description" content="Kostenloses Werkzeug: prüft, ob eine XRechnung die Pflichtangaben enthält. Was es nicht findet: ob der Preis stimmt und die Menge geliefert wurde." />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -147,13 +148,13 @@
 
 <main class="wrap">
   <div class="hero-lite">
-    <span class="eyebrow">Live-Test · Beta</span>
-    <h1>Teste deine XRechnung direkt hier.</h1>
-    <p>Lade eine XRechnung (XML) hoch. Wir prüfen sofort, ob die wichtigsten Pflichtangaben nach EN&nbsp;16931 vorhanden sind.</p>
+    <span class="eyebrow">Kostenloses Werkzeug</span>
+    <h1>Formal geprüft heißt nicht: richtig abgerechnet.</h1>
+    <p>Lade eine XRechnung (XML) hoch — das Werkzeug sagt dir in Sekunden, ob die Pflichtangaben vorhanden sind. Kostenlos und ohne Anmeldung. Danach zeigen wir dir, was diese Prüfung <em>nicht</em> findet.</p>
   </div>
 
   <div class="notice-box">
-    <b>Wichtig zum Testumfang:</b> Diese Prüfung kontrolliert aktuell, ob zentrale Pflichtfelder (Rechnungsnummer, Datum, Beträge, Steuer-ID, mind. eine Rechnungsposition) in der Datei vorhanden sind. Es ist noch keine vollständige Prüfung aller offiziellen EN-16931-Regeln (KoSIT-Schematron) — das ist als Ausbaustufe geplant. Deine Datei wird nur zur Prüfung verarbeitet, nicht dauerhaft gespeichert.
+    <b>Was dieses Werkzeug prüft:</b> ob zentrale Pflichtfelder (Rechnungsnummer, Datum, Beträge, Steuer-ID, mindestens eine Rechnungsposition) in der Datei vorhanden sind. Es ist keine vollständige Prüfung aller offiziellen EN-16931-Regeln nach KoSIT-Schematron — dafür gibt es kostenlose amtliche Validatoren im Netz, und wir bilden hier nur den schnellen Grundcheck ab. Deine Datei wird nur zur Prüfung verarbeitet und nicht dauerhaft gespeichert.
   </div>
 
   <form id="checkForm">
@@ -188,9 +189,18 @@
     <div class="checklist" id="checklist"></div>
   </div>
 
+  <div class="notice-box">
+    <b>Was diese Prüfung nicht findet — und keine andere Software auch:</b>
+    ob der berechnete <b>Preis</b> dem entspricht, was ihr ausgehandelt habt · ob die <b>Menge</b> geliefert wurde, die auf der Rechnung steht ·
+    ob der vereinbarte <b>Rabatt</b> überhaupt angewendet wurde · ob <b>Zuschläge</b> vereinbart waren ·
+    ob <b>Pfand und Retouren</b> jemals gutgeschrieben wurden. Eine Rechnung kann alle Pflichtfelder enthalten,
+    sauber rechnen — und trotzdem 90 € zu hoch sein. Dafür braucht es den Lieferschein, die Konditionen und den
+    Vergleich mit den Vormonaten. <a href="funktionsweise.html" style="color:var(--accent-strong); text-decoration:underline;">So gehen wir dabei vor →</a>
+  </div>
+
   <div class="lead-box" id="leadBox">
-    <h3 id="leadTitle">Fragen zum Ergebnis?</h3>
-    <div class="lb-sub" id="leadSub">Trag dich ein — wir melden uns persönlich, unverbindlich.</div>
+    <h3 id="leadTitle">Sollen wir eure letzten drei Monate durchsehen?</h3>
+    <div class="lb-sub" id="leadSub">Kostenlos und unverbindlich. Finden wir nichts, kostet es nichts — dann wisst ihr, dass eure Rechnungen sauber sind.</div>
 
     <form id="leadForm">
       <div class="lead-grid">
@@ -208,14 +218,14 @@
         </div>
         <div class="full">
           <label for="leadMessage">Nachricht</label>
-          <textarea id="leadMessage" name="message" placeholder="z. B. Frage zum fehlenden Feld, Interesse an vollständiger Prüfung ..."></textarea>
+          <textarea id="leadMessage" name="message" placeholder="z. B. Hauptlieferant, ungefähre Zahl der Eingangsrechnungen pro Monat, Frage zum Prüfergebnis ..."></textarea>
         </div>
       </div>
       <button type="submit" class="btn" id="leadSubmitBtn">
         <span class="spinner"></span>
         <span class="btn-label">Absenden</span>
       </button>
-      <div class="lb-note">Deine Daten werden nur zur Kontaktaufnahme genutzt, nicht weitergegeben.</div>
+      <div class="lb-note">Deine Daten werden nur zur Kontaktaufnahme genutzt und nicht weitergegeben. Es entsteht keine Zahlungspflicht und kein Vertrag.</div>
     </form>
 
     <div class="lead-success" id="leadSuccess">
@@ -224,7 +234,7 @@
     </div>
   </div>
 
-  <div class="disclaimer">Automatisierter Test-Prototyp, kein rechtsverbindliches Prüfergebnis. Bei Fragen zur Umsetzung: <a href="index.html#demo" style="color:var(--accent-strong); text-decoration:underline;">Demo anfragen</a>.</div>
+  <div class="disclaimer">Automatisierter Grundcheck, kein rechtsverbindliches Prüfergebnis. Für die inhaltliche Prüfung eurer Eingangsrechnungen: <a href="index.html#demo" style="color:var(--accent-strong); text-decoration:underline;">kostenlose Erstprüfung anfordern</a>.</div>
 </main>
 
 <footer>
@@ -374,11 +384,11 @@
       gesamtstatus: valid ? "vollständig" : "unvollständig"
     };
     if (valid) {
-      leadTitle.textContent = "Interesse an der vollständigen Prüfung?";
-      leadSub.textContent = "Diese Prüfung deckt die zentralen Pflichtfelder ab. Trag dich ein, wenn du über die vollständige EN-16931-Regelprüfung informiert werden willst.";
+      leadTitle.textContent = "Formal in Ordnung. Und der Preis?";
+      leadSub.textContent = "Diese Datei ist technisch korrekt — mehr sagt das Ergebnis nicht. Ob der berechnete Preis eurer Absprache entspricht und die Menge wirklich geliefert wurde, prüfen wir kostenlos an euren letzten drei Monaten.";
     } else {
-      leadTitle.textContent = "Frage zum fehlenden Feld?";
-      leadSub.textContent = "Trag dich ein — wir melden uns persönlich und helfen dir, die Rechnung korrekt zu machen.";
+      leadTitle.textContent = "Es fehlen Pflichtangaben.";
+      leadSub.textContent = "Welche, steht oben. Wenn ihr darüber hinaus wissen wollt, ob bei euch auch inhaltlich falsch abgerechnet wird, sehen wir eure letzten drei Monate kostenlos durch.";
     }
     leadBox.classList.add("show");
   }
