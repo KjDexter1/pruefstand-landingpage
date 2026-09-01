@@ -2,7 +2,8 @@
 <html lang="de">
 <head>
 <meta charset="utf-8" />
-<title>Prüfstand</title>
+<title>Prüfstand — Eingangsrechnungen prüfen lassen</title>
+<meta name="description" content="Kostenlose Prüfung eurer Eingangsrechnungen: falsche Preise, nicht gelieferte Mengen, doppelte Positionen, fehlende Gutschriften. Für Elektro-, SHK- und Baubetriebe." />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -455,6 +456,17 @@
   .success-panel h3 { font-family: var(--font-body); text-transform: none; letter-spacing: normal; font-size: 18px; font-weight: 700; }
   .success-panel p { margin-top: 10px; font-size: 14.5px; color: var(--muted); line-height: 1.6; max-width: 40ch; margin-left: auto; margin-right: auto; }
 
+  .direkt { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center; justify-content: center; font-size: 13px; }
+  .direkt span { color: var(--muted); }
+  .direkt a { color: var(--accent-strong); font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+  .direkt a:hover { text-decoration: underline; }
+  .direkt svg { width: 15px; height: 15px; }
+
+  .success-steps { margin: 18px auto 0; max-width: 34ch; text-align: left; display: flex; flex-direction: column; gap: 10px; }
+  .success-step { display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: start; font-size: 13.5px; color: var(--ink-soft); line-height: 1.55; }
+  .success-step b { display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: var(--success-bg); color: var(--success-strong); font-family: var(--font-mono); font-size: 11px; font-weight: 700; }
+  .success-note { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 12px; color: var(--faint); line-height: 1.55; }
+
   .copy-panel { text-align: center; padding: 20px 6px 8px; }
   .copy-panel h3 { font-family: var(--font-body); text-transform: none; letter-spacing: normal; font-size: 18px; font-weight: 700; }
   .copy-panel p { margin-top: 10px; font-size: 14.5px; color: var(--muted); line-height: 1.6; }
@@ -484,14 +496,13 @@
     </a>
     <div class="nav-links">
       <a class="hide-sm" href="#problem">Das Problem</a>
-      <a class="hide-sm" href="#vergleich">Vergleich</a>
+      <a class="hide-sm" href="#pruefpunkte">Was wir prüfen</a>
       <a class="hide-sm" href="#ablauf">Ablauf</a>
-      <a class="hide-sm" href="#loesung">Lösung</a>
-      <a class="hide-sm" href="#roadmap">Roadmap</a>
-      <a class="hide-sm" href="funktionsweise.html">Bildlich erklärt</a>
-      <a class="hide-sm" href="test.html" style="color:var(--accent-strong); font-weight:700;">Jetzt testen</a>
-      <a class="hide-sm" href="#preis">Preis</a>
-      <a class="btn" href="#demo" style="padding:8px 16px;">Demo anfragen</a>
+      <a class="hide-sm" href="#bericht">Der Bericht</a>
+      <a class="hide-sm" href="#preis">Kosten</a>
+      <a class="hide-sm" href="funktionsweise.html">So läuft es ab</a>
+      <a class="hide-sm" href="test.html">Selbst testen</a>
+      <a class="btn" href="#demo" style="padding:8px 16px;">Kostenlose Prüfung</a>
     </div>
   </div>
 </div>
@@ -502,41 +513,40 @@
   <div class="wrap hero-grid">
     <div>
       <span class="eyebrow">Für Elektro-, SHK- &amp; Baubetriebe</span>
-      <h1>Schluss mit dem XML-Chaos im Postfach.</h1>
-      <p class="hero-sub">Prüfstand prüft, visualisiert und übergibt jede E-Rechnung automatisch an euren Steuerberater — bevor der nächste Skonto verfällt.</p>
+      <h1>Zahlt ihr eurem Großhändler zu viel?</h1>
+      <p class="hero-sub">Wir prüfen eure Eingangsrechnungen der letzten drei Monate — auf still erhöhte Preise, nicht gelieferte Mengen, doppelte Positionen und fehlende Gutschriften. Kostenlos. Finden wir nichts, kostet es nichts.</p>
       <div class="hero-ctas">
         <a href="#demo" class="btn btn-primary btn-lg">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"/></svg>
-          10-Minuten-Demo sichern
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/><path d="M8.5 11l2 2 4-4"/></svg>
+          Kostenlose Prüfung anfordern
         </a>
-        <a href="https://claude.ai/code/artifact/5e9e2d9a-d1de-4b43-800b-15eb146e33e7" target="_blank" rel="noopener" class="btn btn-lg">
-          Live-Dashboard ansehen
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
+        <a href="#pruefpunkte" class="btn btn-lg">
+          Was genau geprüft wird
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
         </a>
       </div>
-      <div class="hero-note">Keine Kreditkarte nötig für die Demo. Setup mit eurem Steuerberater in einem Termin. <a href="funktionsweise.html" style="color:var(--accent-strong); text-decoration:underline;">So funktioniert Prüfstand im Detail →</a></div>
+      <div class="hero-note">Kein Konto, keine Software, keine Umstellung im Betrieb. Ihr schickt die Rechnungen — wir schicken den Bericht. <a href="funktionsweise.html" style="color:var(--accent-strong); text-decoration:underline;">So läuft die Erstprüfung im Detail ab →</a></div>
     </div>
 
     <div class="hero-visual">
       <div class="hv-card">
-        <div class="hv-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> Schema geprüft</div>
+        <div class="hv-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.2v.1"/></svg> 3 Abweichungen gefunden</div>
         <div class="hv-head">
           <div>
             <div class="hv-brand">Nordmann Baustoffhandel</div>
-            <div class="hv-brand-sub">RE-2026-08214 · XRechnung</div>
+            <div class="hv-brand-sub">RE-2026-08214 · geprüft am 04.09.2026</div>
           </div>
-          <div class="hv-meta">18.08.2026<br>fällig 17.09.2026</div>
+          <div class="hv-meta">Zeitraum<br>Jun – Aug 2026</div>
         </div>
         <div class="hv-rows">
-          <div class="hv-row"><span>Trockenbeton C25/30, 120 Sack</span><span>774,00 €</span></div>
-          <div class="hv-row"><span>Dachziegel, 850 Stk.</span><span>1.088,00 €</span></div>
-          <div class="hv-row"><span>Dämmplatte, 6 Pal.</span><span>1.137,00 €</span></div>
+          <div class="hv-row"><span>Trockenbeton: Preis still von 6,20 auf 6,45 €</span><span>+ 30,00 €</span></div>
+          <div class="hv-row"><span>Dachziegel: 40 Stk. mehr berechnet als geliefert</span><span>+ 51,20 €</span></div>
+          <div class="hv-row"><span>Palettenpfand belastet, nie gutgeschrieben</span><span>+ 96,00 €</span></div>
         </div>
-        <div class="hv-total"><span>Gesamt</span><span class="tabular">5.741,75 €</span></div>
+        <div class="hv-total"><span>Auf dieser Rechnung</span><span class="tabular">177,20 €</span></div>
         <div class="hv-stamp">
           <div>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
-            <div class="hv-stamp-text">GoBD<br>validiert</div>
+            <div class="hv-stamp-text">3 Monate<br>1.310 €<br>zu viel</div>
           </div>
         </div>
       </div>
@@ -550,119 +560,130 @@
   <div class="wrap">
     <div class="section-head reveal">
       <span class="eyebrow">Das Problem</span>
-      <h2>Jede liegen gebliebene E-Rechnung kostet doppelt: Zeit und Skonto.</h2>
-      <p>Seit E-Rechnungen im B2B-Bereich zum Standard werden, landen XRechnung- und ZUGFeRD-Dateien im Posteingang jedes Handwerksbetriebs — meist ohne dass jemand im Büro sie ohne Zusatzsoftware lesen kann.</p>
+      <h2>Der Fehler steht auf der Rechnung — nur schaut ihn niemand an.</h2>
+      <p>Eingangsrechnungen werden bezahlt, weil sie plausibel aussehen. Verglichen wird selten: nicht mit dem Lieferschein, nicht mit den vereinbarten Konditionen und nicht mit dem, was derselbe Artikel im Vormonat gekostet hat.</p>
     </div>
 
     <div class="problem-grid">
       <div class="problem-card reveal">
         <svg class="problem-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 8.5h1a1.5 1.5 0 0 1 0 3h-1a1.5 1.5 0 0 0 0 3h1M12 7v1.5M12 15.5V17M15 8.5l-6 7"/></svg>
-        <h3>Skonto-Verlust</h3>
-        <p>2 % Skonto sind schnell verschenkt, wenn eine Rechnung erst nach zehn Tagen erfasst wird. Über ein Jahr summiert sich das spürbar.</p>
+        <h3>Preise steigen still</h3>
+        <p>Der Einzelpreis eines Artikels ändert sich zwischen zwei Lieferungen. Ohne Vergleich über mehrere Monate fällt das niemandem auf.</p>
       </div>
       <div class="problem-card reveal">
         <svg class="problem-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 3.5"/></svg>
-        <h3>Zeitverschwendung im Büro</h3>
-        <p>Summen gegenprüfen, Positionen abtippen, Belege sortieren: Das bindet Bürozeit, die im Tagesgeschäft an anderer Stelle fehlt.</p>
+        <h3>Niemand vergleicht mit dem Lieferschein</h3>
+        <p>Der Lieferschein liegt im Auto oder in der Werkstatt, die Rechnung kommt Wochen später ins Büro. Mengen werden nicht gegengeprüft.</p>
       </div>
       <div class="problem-card reveal">
         <svg class="problem-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"/><path d="M14 3v5h5M9 13h6M9 16.5h4"/></svg>
-        <h3>Unleserliche Dateiformate</h3>
-        <p>XRechnung ist reiner XML-Code ohne Layout, ZUGFeRD versteckt die Daten in einer PDF. Ohne passende Software sieht das niemand auf einen Blick.</p>
+        <h3>Gutschriften kommen nie an</h3>
+        <p>Retouren, Palettenpfand, Leergut: Belastet wird sofort, gutgeschrieben oft gar nicht. Nachgehalten wird das in kaum einem Betrieb.</p>
       </div>
     </div>
 
     <div class="proof-row reveal">
       <div class="proof-stat">
-        <div class="proof-num tabular">≈ 50 %</div>
-        <div class="proof-label">der Handwerksbetriebe empfinden Empfang und Verarbeitung von E-Rechnungen als belastender als klassische PDF-Rechnungen.</div>
+        <div class="proof-num tabular">288.000 €</div>
+        <div class="proof-label">Einkaufsvolumen im Jahr bei 50 Eingangsrechnungen im Monat zu durchschnittlich 480 €. Über diese Summe läuft die Prüfung.</div>
       </div>
       <div class="proof-stat">
-        <div class="proof-num tabular">Ø 3.000 €</div>
-        <div class="proof-label">einmalige Einführungskosten pro Betrieb für E-Rechnungs-Fähigkeit — plus laufende Software- und IT-Kosten.</div>
+        <div class="proof-num tabular">1 – 2 %</div>
+        <div class="proof-label">angenommene Fehlerquote auf Eingangsrechnungen. Bewusst eine Annahme und kein Erfahrungswert — genau deshalb prüfen wir zuerst kostenlos.</div>
       </div>
     </div>
-    <div class="proof-source">Quelle: <a href="https://www.zdh.de/presse/veroeffentlichungen/pressemitteilungen/e-rechnung-fuer-betriebe-noch-mehr-aufwand-statt-entlastung/" target="_blank" rel="noopener">ZDH-Umfrage zur E-Rechnung, 2025/2026, ca. 2.000 befragte Handwerksbetriebe</a></div>
+    <div class="proof-source">Beide Werte sind Rechengrößen zur Einordnung, keine erhobenen Marktdaten. Was in eurem Betrieb tatsächlich steckt, zeigt erst die Prüfung.</div>
 
     <div class="calc-box reveal">
       <div style="flex:1; min-width:220px;">
-        <div class="calc-label">Rechenbeispiel · Skonto-Verlust pro Jahr</div>
-        <div class="calc-formula">25 Rechnungen/Monat · ⌀ 480 € · 2 % Skonto · jede dritte Rechnung wird zu spät erfasst</div>
+        <div class="calc-label">Rechenbeispiel · was jährlich zurückholbar wäre</div>
+        <div class="calc-formula">288.000 € Einkaufsvolumen · angenommene Fehlerquote von 1 bis 2 %</div>
       </div>
       <div>
-        <div class="calc-result tabular">≈ 950 € / Jahr</div>
-        <div class="calc-result-label">nur durch verspätete Bearbeitung — illustrative Rechnung, kein Erfahrungswert</div>
+        <div class="calc-result tabular">2.900 – 5.800 €</div>
+        <div class="calc-result-label">illustrative Rechnung auf Basis einer Annahme — keine Zusicherung für euren Betrieb</div>
       </div>
     </div>
   </div>
 </section>
 
-<section id="vergleich">
+<section id="pruefpunkte">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow">Der Vergleich</span>
-      <h2>Wie schneidet Prüfstand gegen den heutigen Arbeitsalltag ab?</h2>
-      <p>Rechenbeispiel für einen typischen Betrieb mit rund 50 Eingangsrechnungen im Monat, Bürozeit mit 35 €/Std. kalkuliert. Illustrative Beispielrechnung, kein individuelles Versprechen für euren Betrieb.</p>
+      <span class="eyebrow">Was wir prüfen</span>
+      <h2>Acht Punkte, die keine Software für euch prüft.</h2>
+      <p>Ob eine Rechnung technisch korrekt ist, erledigt ein kostenloses amtliches Prüfprogramm in Sekunden. Ob überhaupt <em>richtig abgerechnet</em> wurde, prüft das nicht — dafür braucht es den Lieferschein, die Konditionen und den Vergleich mit den Vormonaten. Genau das machen wir, jede Rechnung einzeln.</p>
     </div>
 
-    <div class="compare-grid">
-      <div class="compare-card reveal">
-        <h3>Zeitaufwand pro Monat<div class="compare-sub">für die Prüfung von 50 Eingangsrechnungen</div></h3>
-        <div class="compare-rows">
-          <div class="compare-row">
-            <div class="compare-row-label"><span>Manuelle Prüfung</span><span class="compare-val tabular">7,5 Std.</span></div>
-            <div class="compare-track"><div class="compare-fill" style="width:100%"></div></div>
-          </div>
-          <div class="compare-row">
-            <div class="compare-row-label"><span>Generische XML-Viewer</span><span class="compare-val tabular">5,8 Std.</span></div>
-            <div class="compare-track"><div class="compare-fill" style="width:77%"></div></div>
-          </div>
-          <div class="compare-row">
-            <div class="compare-row-label"><span>DATEV / sevDesk / lexoffice</span><span class="compare-val tabular">1,7 Std.</span></div>
-            <div class="compare-track"><div class="compare-fill" style="width:23%"></div></div>
-          </div>
-          <div class="compare-row is-winner">
-            <div class="compare-row-label"><span>Prüfstand</span><span class="compare-val tabular">0,4 Std.</span></div>
-            <div class="compare-track"><div class="compare-fill" style="width:5%"></div></div>
-          </div>
+    <div class="solution-grid">
+      <div class="check-row reveal">
+        <div class="check-num"><b>01</b>Preis</div>
+        <div>
+          <div class="check-title">Preisverlauf je Artikel</div>
+          <div class="check-desc">Wir schreiben den Einzelpreis desselben Artikels über drei Monate untereinander. Jede stille Erhöhung fällt dabei auf — auch ohne dass uns eine Preisliste vorliegt.</div>
         </div>
-        <span class="compare-badge">≈ 95 % weniger Zeit als manuell</span>
       </div>
-
-      <div class="compare-card reveal">
-        <h3>Gesamtkosten pro Monat<div class="compare-sub">Bürozeit + ggf. Softwarekosten, 35 €/Std.</div></h3>
-        <div class="compare-rows">
-          <div class="compare-row">
-            <div class="compare-row-label"><span>Manuelle Prüfung</span><span class="compare-val tabular">263 €</span></div>
-            <div class="compare-track"><div class="compare-fill" style="width:100%"></div></div>
-          </div>
-          <div class="compare-row">
-            <div class="compare-row-label"><span>Generische XML-Viewer</span><span class="compare-val tabular">204 €</span></div>
-            <div class="compare-track"><div class="compare-fill" style="width:78%"></div></div>
-          </div>
-          <div class="compare-row">
-            <div class="compare-row-label"><span>DATEV / sevDesk / lexoffice</span><span class="compare-val tabular">118 €</span></div>
-            <div class="compare-track"><div class="compare-fill" style="width:45%"></div></div>
-          </div>
-          <div class="compare-row is-winner">
-            <div class="compare-row-label"><span>Prüfstand (inkl. 49 € Abo)</span><span class="compare-val tabular">64 €</span></div>
-            <div class="compare-track"><div class="compare-fill" style="width:24%"></div></div>
-          </div>
+      <div class="check-row reveal">
+        <div class="check-num"><b>02</b>Nachlass</div>
+        <div>
+          <div class="check-title">Rabatt und Staffel</div>
+          <div class="check-desc">Wurde der vereinbarte Nachlass überhaupt angewendet — und in derselben Höhe wie auf den übrigen Rechnungen desselben Lieferanten?</div>
         </div>
-        <span class="compare-badge">≈ 76 % weniger Kosten als manuell</span>
+      </div>
+      <div class="check-row reveal">
+        <div class="check-num"><b>03</b>Menge</div>
+        <div>
+          <div class="check-title">Rechnung gegen Lieferschein</div>
+          <div class="check-desc">Position für Position. Besonders bei Schüttgut, Kabel und Rohren, wo gerundet wird.</div>
+        </div>
+      </div>
+      <div class="check-row reveal">
+        <div class="check-num"><b>04</b>Lieferung</div>
+        <div>
+          <div class="check-title">Berechnet, aber nie geliefert</div>
+          <div class="check-desc">Positionen ohne Entsprechung auf irgendeinem Lieferschein — häufig bei Nachlieferungen, die nie kamen.</div>
+        </div>
+      </div>
+      <div class="check-row reveal">
+        <div class="check-num"><b>05</b>Dopplung</div>
+        <div>
+          <div class="check-title">Doppelte Rechnung, doppelte Position</div>
+          <div class="check-desc">Gleicher Betrag, gleicher Lieferant, nahe beieinanderliegende Daten. Kommt öfter vor, als man denkt.</div>
+        </div>
+      </div>
+      <div class="check-row reveal">
+        <div class="check-num"><b>06</b>Zuschläge</div>
+        <div>
+          <div class="check-title">Mindermenge, Fracht, Palette, Energie</div>
+          <div class="check-desc">Wir prüfen, ob Zuschläge durchgängig berechnet werden oder nur manchmal auftauchen — und ob sie überhaupt vereinbart waren.</div>
+        </div>
+      </div>
+      <div class="check-row reveal">
+        <div class="check-num"><b>07</b>Gutschrift</div>
+        <div>
+          <div class="check-title">Pfand, Leergut, Retouren</div>
+          <div class="check-desc">Belastet wurde sofort. Wir gleichen ab, ob die Gutschrift jemals kam.</div>
+        </div>
+      </div>
+      <div class="check-row reveal">
+        <div class="check-num"><b>08</b>Skonto</div>
+        <div>
+          <div class="check-title">Skonto trotz fristgerechter Zahlung nicht gewährt</div>
+          <div class="check-desc">Zahlungsdatum gegen Skontofrist. Dafür brauchen wir eure Zahlungsnachweise — ohne sie entfällt dieser Punkt.</div>
+        </div>
       </div>
     </div>
 
-    <div class="compare-foot">Annahmen: 50 Eingangsrechnungen/Monat, 35 €/Std. Bürokraft-Kostensatz, ø Prüfzeit manuell 9 Min./Rechnung, mit XML-Viewer 7 Min., mit Buchhaltungssuite 2 Min. zzgl. Software ab ca. 60 €/Monat, mit Prüfstand 0,5 Min. Kontrollzeit zzgl. 49 €/Monat Abo. Werte sind eine Beispielrechnung zur Orientierung, keine Zusicherung für euren konkreten Betrieb.</div>
+    <div class="compare-foot">Dazu kommen Umsatzsteuer-Ausweis, fehlende Lieferscheinbezüge und die Pflichtangaben nach EN 16931 — dieser Teil läuft maschinell und ist in der kostenlosen Prüfung enthalten. Den formalen Grundcheck könnt ihr <a href="test.html" style="color:var(--accent-strong); text-decoration:underline;">hier selbst mit einer eigenen Datei ausprobieren</a>.</div>
   </div>
 </section>
 
 <section id="ablauf">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow">So einfach geht's</span>
-      <h2>Kein Einlernen, keine Schulung — drei Klicks bis zur geprüften Rechnung.</h2>
-      <p>So läuft's für eure Bürokraft ab, egal ob Elektro-, SHK- oder Baubetrieb — vom Erhalt der Rechnung bis zur Übergabe an den Steuerberater.</p>
+      <span class="eyebrow">So läuft es ab</span>
+      <h2>Drei Schritte — zehn Minuten Aufwand bei euch.</h2>
+      <p>Vom Ordner bis zum Bericht. Den Rest machen wir, egal ob Elektro-, SHK- oder Baubetrieb.</p>
     </div>
 
     <div class="steps-strip">
@@ -671,60 +692,60 @@
           <span class="step-num">1</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M7 8l5-5 5 5"/><path d="M20 15v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-4"/></svg>
         </div>
-        <div class="step-title">Rechnung reinziehen</div>
-        <div class="step-desc">XRechnung- oder ZUGFeRD-Datei per Drag &amp; Drop hochladen — genau wie einen Anhang in einer E-Mail.</div>
-        <span class="step-time">≈ 5 Sekunden</span>
+        <div class="step-title">Unterlagen schicken</div>
+        <div class="step-desc">Eingangsrechnungen der letzten drei Monate, dazu Lieferscheine und — falls vorhanden — die Preisliste eures Hauptlieferanten. Per E-Mail, oder wir holen den Ordner ab.</div>
+        <span class="step-time">≈ 10 Minuten bei euch</span>
       </div>
       <div class="step-item reveal">
         <div class="step-circle">
           <span class="step-num">2</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/><path d="M8.5 11l2 2 4-4"/></svg>
         </div>
-        <div class="step-title">Prüfstand prüft automatisch</div>
-        <div class="step-desc">Schema, Rechenprobe, IBAN und USt-IdNr. werden im Hintergrund geprüft — ohne dass jemand mitrechnen muss.</div>
-        <span class="step-time">≈ 3 Sekunden</span>
+        <div class="step-title">Wir prüfen von Hand</div>
+        <div class="step-desc">Jede Rechnung, alle Prüfpunkte, sortiert nach Lieferant. Keine Stichprobe nebenbei, sondern eine echte Durchsicht.</div>
+        <span class="step-time">3 – 5 Werktage</span>
       </div>
       <div class="step-item reveal">
         <div class="step-circle">
           <span class="step-num">3</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"/><path d="M14 3v5h5"/><path d="m9 15 2 2 4-4"/></svg>
         </div>
-        <div class="step-title">Fertig für den Steuerberater</div>
-        <div class="step-desc">Geprüfte Rechnung ist archiviert und bereit zur gesammelten Übergabe — ein Klick statt zehn Anhänge.</div>
-        <span class="step-time">Kein weiterer Aufwand</span>
+        <div class="step-title">Bericht und Gespräch</div>
+        <div class="step-desc">Zwei Seiten: was gefunden wurde, mit welchem Betrag belegt, und was ihr damit macht. Wir gehen den Bericht gemeinsam durch.</div>
+        <span class="step-time">≈ 20 Minuten</span>
       </div>
     </div>
   </div>
 </section>
 
-<section id="loesung">
+<section id="bericht">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow">Die Lösung</span>
-      <h2>Prüfstand macht aus dem XML-Wust eine Rechnung, die jeder lesen kann.</h2>
-      <p>Ihr ladet die Belege hoch — Prüfstand prüft, stellt sie verständlich dar und bereitet sie für die Übergabe an den Steuerberater vor. Genau wie im echten Dashboard, das ihr euch unten live ansehen könnt.</p>
+      <span class="eyebrow">Der Bericht</span>
+      <h2>Zwei Seiten, die ihr eurem Lieferanten vorlegen könnt.</h2>
+      <p>Kein Dashboard, kein Login, keine Einarbeitung. Ein Dokument, das jede Position belegt — und ehrlich trennt zwischen dem, was sicher ist, und dem, was noch zu klären ist.</p>
     </div>
 
     <div class="solution-grid">
       <div class="check-row reveal">
-        <div class="check-num"><b>01</b>Prüfung</div>
+        <div class="check-num"><b>01</b>Summe</div>
         <div>
-          <div class="check-title">Automatische Prüfung</div>
-          <div class="check-desc">Jede eingehende Rechnung wird in Sekunden gegen die XRechnung- und ZUGFeRD-Vorgaben geprüft — Schema, Rechenprobe, IBAN, USt-IdNr. GoBD-konform archiviert, ohne dass jemand manuell draufschauen muss.</div>
+          <div class="check-title">Die Zahl ganz oben</div>
+          <div class="check-desc">Ein Satz: wie viel in drei Monaten zu viel berechnet wurde — und wie viel davon belegbar ist. In die Summe zählt nur, was wir mit Rechnung und Lieferschein nachweisen können. Der Rest steht getrennt als „zu klären“.</div>
         </div>
       </div>
       <div class="check-row reveal">
-        <div class="check-num"><b>02</b>Vorschau</div>
+        <div class="check-num"><b>02</b>Positionen</div>
         <div>
-          <div class="check-title">Klare visuelle Vorschau</div>
-          <div class="check-desc">Aus dem XML-Code wird eine Rechnung, wie man sie kennt: Lieferant, Positionen, Summen — alles auf einen Blick, inklusive Prüf-Stempel für den schnellen Überblick.</div>
+          <div class="check-title">Jeder Fund einzeln belegt</div>
+          <div class="check-desc">Lieferant, Rechnungsnummer, Datum, Prüfpunkt, Soll, Ist, Differenz. Damit könnt ihr direkt beim Lieferanten nachfragen — ohne dass jemand die Zahlen erst suchen muss.</div>
         </div>
       </div>
       <div class="check-row reveal">
-        <div class="check-num"><b>03</b>Übergabe</div>
+        <div class="check-num"><b>03</b>Muster</div>
         <div>
-          <div class="check-title">Direkt zum Steuerberater</div>
-          <div class="check-desc">Geprüfte Rechnungen werden gesammelt und strukturiert bereitgestellt — statt zehn einzelne Anhänge zu verschicken oder ins Portal zu laden.</div>
+          <div class="check-title">Was sich bei welchem Lieferanten wiederholt</div>
+          <div class="check-desc">Je Lieferant ein Satz zum Muster — etwa: bei diesem Händler fehlt in jeder dritten Rechnung die Skontoangabe. Das ist der Teil, mit dem ihr nachverhandeln könnt.</div>
         </div>
       </div>
     </div>
@@ -732,32 +753,32 @@
     <div class="mock reveal">
       <div class="mock-bar">
         <span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-dot"></span>
-        <span class="mock-url">pruefstand.app · Posteingang</span>
+        <span class="mock-url">Prüfbericht · Muster Elektrotechnik GmbH · Jun – Aug 2026</span>
       </div>
       <div class="mock-body">
         <div class="mock-side">
           <div class="mock-inv">
-            <div class="mock-inv-top"><span class="mock-inv-name">Nordmann Baustoffhandel</span><span class="mock-chip ok">Validiert</span></div>
-            <div class="mock-inv-amt tabular">5.741,75 €</div>
+            <div class="mock-inv-top"><span class="mock-inv-name">Nordmann Baustoffe</span><span class="mock-chip ok">6 Funde</span></div>
+            <div class="mock-inv-amt tabular">618,40 €</div>
           </div>
           <div class="mock-inv">
-            <div class="mock-inv-top"><span class="mock-inv-name">Elektro Voss GmbH</span><span class="mock-chip ok">Validiert</span></div>
-            <div class="mock-inv-amt tabular">2.183,65 €</div>
+            <div class="mock-inv-top"><span class="mock-inv-name">Elektro Voss GmbH</span><span class="mock-chip ok">3 Funde</span></div>
+            <div class="mock-inv-amt tabular">431,00 €</div>
           </div>
           <div class="mock-inv">
-            <div class="mock-inv-top"><span class="mock-inv-name">Malerbedarf Rombach</span><span class="mock-chip ok">Validiert</span></div>
-            <div class="mock-inv-amt tabular">312,90 €</div>
+            <div class="mock-inv-top"><span class="mock-inv-name">Malerbedarf Rombach</span><span class="mock-chip ok">2 Funde</span></div>
+            <div class="mock-inv-amt tabular">261,00 €</div>
           </div>
         </div>
         <div class="mock-main">
           <div class="mock-kpis">
-            <div class="mock-kpi"><div class="mock-kpi-label">Geprüft</div><div class="mock-kpi-val tabular">5</div></div>
-            <div class="mock-kpi"><div class="mock-kpi-label">Volumen</div><div class="mock-kpi-val tabular">13.659 €</div></div>
-            <div class="mock-kpi"><div class="mock-kpi-label">Validiert</div><div class="mock-kpi-val tabular">40 %</div></div>
+            <div class="mock-kpi"><div class="mock-kpi-label">Rechnungen</div><div class="mock-kpi-val tabular">150</div></div>
+            <div class="mock-kpi"><div class="mock-kpi-label">Funde</div><div class="mock-kpi-val tabular">11</div></div>
+            <div class="mock-kpi"><div class="mock-kpi-label">Belegbar</div><div class="mock-kpi-val tabular">1.310 €</div></div>
           </div>
-          <a class="mock-link" href="https://claude.ai/code/artifact/5e9e2d9a-d1de-4b43-800b-15eb146e33e7" target="_blank" rel="noopener">
-            Original-Dashboard live öffnen
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
+          <a class="mock-link" href="#demo">
+            Kostenlose Prüfung anfordern
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
         </div>
       </div>
@@ -765,29 +786,29 @@
   </div>
 </section>
 
-<section id="roadmap">
+<section id="danach">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow">Roadmap</span>
-      <h2>Was als Nächstes kommt</h2>
-      <p>Prüfstand befindet sich im aktiven Aufbau. Diese Funktionen sind in Entwicklung und noch nicht Teil des heutigen Demo-Stands — Early-Access-Betriebe können ihre Prioritäten direkt mitgestalten.</p>
+      <span class="eyebrow">Danach</span>
+      <h2>Wenn sich derselbe Fehler jeden Monat wiederholt</h2>
+      <p>Die Erstprüfung ist einmalig und kostenlos. Was danach passiert, entscheidet ihr in Ruhe. Das hier wäre möglich — nichts davon wird über diese Seite abgeschlossen.</p>
     </div>
 
     <div class="roadmap-grid">
       <div class="roadmap-card reveal">
-        <span class="roadmap-tag">In Entwicklung</span>
-        <h3>KI-Abgleich mit Lieferscheinen</h3>
-        <p>Automatischer Abgleich zwischen Rechnungspositionen und begleitenden Lieferschein-Dokumenten — zeigt auf einen Blick, ob nur berechnet wurde, was auch geliefert wurde.</p>
+        <span class="roadmap-tag">Optional</span>
+        <h3>Laufende Prüfung</h3>
+        <p>Jede Eingangsrechnung wird geprüft, bevor sie bezahlt wird. Ihr bekommt monatlich eine kurze Liste statt einer nachträglichen Überraschung — Umfang und Preis besprechen wir persönlich.</p>
       </div>
       <div class="roadmap-card reveal">
-        <span class="roadmap-tag">In Entwicklung</span>
-        <h3>Ampel-Ergebnis mit Prüfprotokoll</h3>
-        <p>Grün: Datensatz fehlerfrei und EN-16931-konform. Rot: Prüfbericht mit konkreten Korrekturhinweisen, direkt verwendbar für die Rückfrage beim Lieferanten.</p>
+        <span class="roadmap-tag">Optional</span>
+        <h3>Nachverhandlung vorbereiten</h3>
+        <p>Wir bereiten auf, was ihr eurem Lieferanten vorlegen könnt: Positionen, Beträge, Belege. Den Kontakt zum Lieferanten haltet ihr — wir treten dort nie in eurem Namen auf.</p>
       </div>
       <div class="roadmap-card reveal">
-        <span class="roadmap-tag">In Entwicklung</span>
-        <h3>Direkter DATEV-Export</h3>
-        <p>Validierte Rechnungsdaten fließen automatisiert und ohne Tippfehler in gängige DATEV-Formate — statt manuell zusammengestellter Sammel-Anhänge.</p>
+        <span class="roadmap-tag">In Arbeit</span>
+        <h3>Übergabe an eure Kanzlei</h3>
+        <p>Geprüfte Belege strukturiert an den Steuerberater, in gängigen DATEV-Formaten. An dieser Anbindung arbeiten wir gerade — sie ist noch nicht fertig.</p>
       </div>
     </div>
   </div>
@@ -796,26 +817,26 @@
 <section id="preis" class="band">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow">Geplanter Preis · Early Access</span>
-      <h2>Ein Preis. Keine Überraschungen.</h2>
-      <p>Prüfstand befindet sich aktuell im Aufbau. Wer sich jetzt für die Demo einträgt, sichert sich diesen Preis dauerhaft, sobald der reguläre Betrieb startet — unverbindlich und ohne Zahlung heute.</p>
+      <span class="eyebrow">Kosten</span>
+      <h2>Die Erstprüfung kostet nichts.</h2>
+      <p>Kein Vertrag, kein Konto, keine Zahlungsdaten. Ihr schickt die Unterlagen, bekommt den Bericht und entscheidet danach in Ruhe, ob ihr weitermachen wollt.</p>
     </div>
 
     <div class="price-card reveal">
       <div class="price-top">
-        <span class="price-amount tabular">49 €</span>
-        <span class="price-period">/ Monat</span>
+        <span class="price-amount tabular">0 €</span>
+        <span class="price-period">/ Erstprüfung</span>
       </div>
-      <div class="price-vat">geplanter Preis zum Marktstart · zzgl. gesetzlicher MwSt. · keine Zahlung, kein Vertrag heute</div>
+      <div class="price-vat">einmalig · keine Zahlung, kein Vertrag · Unterlagen kommen zurück oder werden gelöscht</div>
       <ul class="price-list">
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> Unbegrenzte Rechnungsprüfungen</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> XRechnung &amp; ZUGFeRD in einer Ansicht</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> GoBD-konforme Archivierung, 10 Jahre</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> Gesammelte Übergabe an den Steuerberater</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> Persönlicher E-Mail-Support</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> Bis zu drei Monate Eingangsrechnungen</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> Alle Prüfpunkte, von Hand durchgesehen</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> Schriftlicher Bericht mit belegten Beträgen</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> Gemeinsames Durchsprechen, ca. 20 Minuten</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> Verschwiegenheitserklärung vorab, wenn ihr sie wollt</li>
       </ul>
-      <a href="#demo" class="btn btn-primary">Early-Access-Platz sichern</a>
-      <div class="price-fine">Ein Betrieb, ein Preis — für zusätzliche Standorte sprecht uns einfach an. Kein automatischer Vertragsabschluss durch die Demo-Anfrage.</div>
+      <a href="#demo" class="btn btn-primary">Kostenlose Prüfung anfordern</a>
+      <div class="price-fine">Über diese Seite wird kein kostenpflichtiger Vertrag geschlossen. Möchtet ihr im Anschluss eine laufende Prüfung, besprechen wir Umfang und Preis persönlich.</div>
     </div>
   </div>
 </section>
@@ -823,31 +844,31 @@
 <section id="demo">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow">Live-Demo</span>
-      <h2>In 10 Minuten sehen, wie viel Zeit ihr sparen könnt.</h2>
-      <p>Wir zeigen euch Prüfstand live an echten Rechnungen aus eurem Gewerk — ohne Vorbereitung eurerseits.</p>
+      <span class="eyebrow">Kostenlose Erstprüfung</span>
+      <h2>Schickt uns drei Monate — wir sagen euch, was drinsteckt.</h2>
+      <p>Für Elektro-, SHK- und Baubetriebe. Vorbereiten müsst ihr nichts außer dem Ordner.</p>
     </div>
 
     <div class="cta-grid">
       <div class="cta-points reveal">
         <div class="cta-point">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"/></svg>
-          <div><b>10 Minuten, per Bildschirmfreigabe.</b> Kein Verkaufsgespräch — wir zeigen das Dashboard an euren eigenen Beleg-Typen.</div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/><path d="M8.5 11l2 2 4-4"/></svg>
+          <div><b>Wir prüfen, ihr müsst nichts tun.</b> Die Eingangsrechnungen der letzten drei Monate reichen. Lieferscheine und Preisabsprachen helfen zusätzlich, sind aber keine Bedingung.</div>
         </div>
         <div class="cta-point">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4.5 5-6 8-6s6.5 1.5 8 6"/></svg>
-          <div><b>Für Inhaber und Büro gemeinsam.</b> Wir gehen auf beide Perspektiven ein — Kosten und Kontrolle, Ablauf und Zeitersparnis.</div>
+          <div><b>Vertraulich behandelt.</b> Keine Weitergabe an Dritte und ausdrücklich nicht an eure Lieferanten. Eine Verschwiegenheitserklärung unterschreiben wir euch vorab.</div>
         </div>
         <div class="cta-point">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-          <div><b>Unverbindlich.</b> Das Formular geht direkt bei uns ein — kein Konto, keine Verpflichtung.</div>
+          <div><b>Ohne Verpflichtung.</b> Finden wir nichts, kostet es nichts — dann wisst ihr, dass eure Rechnungen sauber sind. Das Formular geht direkt bei uns ein, kein Konto nötig.</div>
         </div>
       </div>
 
       <div class="form-card reveal" id="demoFormCard">
         <form class="native-form" id="demoForm">
           <input type="hidden" name="access_key" value="edca9e91-0c0e-4652-a765-bbb9488ca28d" />
-          <input type="hidden" name="subject" value="Neue Demo-Anfrage über Prüfstand" />
+          <input type="hidden" name="subject" value="Neue Anfrage: kostenlose Erstprüfung" />
           <input type="hidden" name="from_name" value="Prüfstand Landingpage" />
           <input type="checkbox" name="botcheck" class="hp-field" tabindex="-1" autocomplete="off" />
 
@@ -867,34 +888,67 @@
               <input id="f-firma" name="firma_gewerk" type="text" required autocomplete="organization" placeholder="z. B. Kessler Dach & Fassade GmbH · Bau" />
             </div>
             <div class="field">
-              <label for="f-zeit">Wunschzeitraum</label>
-              <select id="f-zeit" name="zeitraum">
-                <option>Diese Woche</option>
-                <option>Nächste Woche</option>
-                <option>Flexibel — bitte Vorschlag machen</option>
+              <label for="f-belege">Eingangsrechnungen pro Monat</label>
+              <select id="f-belege" name="belege">
+                <option>bis 25</option>
+                <option>25 bis 50</option>
+                <option>50 bis 100</option>
+                <option>mehr als 100</option>
+                <option>weiß ich nicht genau</option>
               </select>
             </div>
           </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="f-lieferant">Hauptlieferant (optional)</label>
+              <input id="f-lieferant" name="lieferant" type="text" placeholder="z. B. Großhändler, bei dem ihr am meisten kauft" />
+            </div>
+          </div>
 
-          <button type="submit" id="submitBtn" class="btn btn-primary form-submit">10-Minuten-Demo anfragen</button>
+          <button type="submit" id="submitBtn" class="btn btn-primary form-submit">Kostenlose Prüfung anfordern</button>
           <div class="form-status" id="formStatus"></div>
-          <div class="form-legal">Mit dem Absenden meldet ihr euch für eine 10-minütige Live-Demo an. Wir melden uns per E-Mail an die angegebene Adresse.</div>
+          <div class="form-legal">Mit dem Absenden fragt ihr eine einmalige, kostenlose Prüfung an. Wir melden uns per E-Mail an die angegebene Adresse. Es entsteht keine Zahlungspflicht und kein Vertrag.</div>
+
+          <div class="direkt">
+            <span>Lieber direkt?</span>
+            <a href="mailto:farukpolat@mail.de?subject=Kostenlose%20Erstpr%C3%BCfung">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+              farukpolat@mail.de
+            </a>
+            <a href="tel:+4915228487769">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 1.9.6 2.8a2 2 0 0 1-.5 2.1L8.1 9.8a16 16 0 0 0 6 6l1.2-1.1a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.8.6a2 2 0 0 1 1.8 2Z"/></svg>
+              0152 28487769
+            </a>
+          </div>
         </form>
 
         <div class="success-panel" id="successPanel" hidden>
           <div class="success-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
-          <h3>Vielen Dank! Ihre Demo-Anfrage wurde übermittelt.</h3>
+          <h3>Danke — eure Anfrage ist angekommen.</h3>
+          <p>Wir schauen sie uns an und melden uns <strong>innerhalb von zwei Werktagen</strong> persönlich bei euch.</p>
+
+          <div class="success-steps">
+            <div class="success-step"><b>1</b><span>Wir melden uns per E-Mail oder Telefon und klären in fünf Minuten, ob eine Prüfung bei euch etwas bringt.</span></div>
+            <div class="success-step"><b>2</b><span>Ihr schickt die Eingangsrechnungen der letzten drei Monate — oder wir holen den Ordner ab.</span></div>
+            <div class="success-step"><b>3</b><span>Nach 3 bis 5 Werktagen bekommt ihr den Bericht und wir gehen ihn gemeinsam durch.</span></div>
+          </div>
+
+          <div class="success-note">Auf Wunsch unterschreiben wir vorab eine Verschwiegenheitserklärung. Es entsteht keine Zahlungspflicht und kein Vertrag. Wenn ihr es eilig habt, erreicht ihr uns direkt unter <a href="tel:+4915228487769" style="color:var(--accent-strong);">0152 28487769</a>.</div>
         </div>
 
         <div class="copy-panel" id="copyPanel" hidden>
           <div class="success-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
-          <h3>Fast geschafft — Anfrage senden</h3>
-          <p>Automatischer Versand hat nicht geklappt. Text kopieren, in eine neue E-Mail an <strong>farukpolat@mail.de</strong> einfügen und abschicken.</p>
+          <h3>Fast geschafft — ein Klick fehlt noch</h3>
+          <p>Der automatische Versand wurde blockiert, oft durch einen Werbeblocker oder eine unterbrochene Verbindung. Über den Knopf unten öffnet sich eure E-Mail mit fertig ausgefülltem Text an <strong>farukpolat@mail.de</strong> — nur noch abschicken.</p>
           <textarea id="copyText" class="copy-textarea" readonly rows="7"></textarea>
           <div class="copy-actions">
-            <button type="button" id="copyTextBtn" class="btn btn-primary">
+            <a id="mailtoLink" class="btn btn-primary" href="mailto:farukpolat@mail.de">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+              E-Mail öffnen
+            </a>
+            <button type="button" id="copyTextBtn" class="btn">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-              Text kopieren
+              Nur Text kopieren
             </button>
             <span id="copyStatus" class="copy-status"></span>
           </div>
@@ -910,7 +964,7 @@
       <span class="nav-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6l1 4H8l1-4Z"/><path d="M7 7h10l1 13H6L7 7Z"/><path d="M10 12h4"/></svg></span>
       Prüfstand
     </a>
-    <span>Der E-Rechnungs-Hub für Handwerker · XRechnung &amp; ZUGFeRD · GoBD-konform</span>
+    <span>Rechnungsprüfung für Handwerksbetriebe · Preise, Mengen, Gutschriften · Erstprüfung kostenlos</span>
     <span><a href="impressum.html" style="color:var(--faint); text-decoration:underline;">Impressum</a> · <a href="datenschutz.html" style="color:var(--faint); text-decoration:underline;">Datenschutz</a></span>
   </div>
 </footer>
@@ -935,16 +989,18 @@
   var copyText = document.getElementById("copyText");
   var copyTextBtn = document.getElementById("copyTextBtn");
   var copyStatus = document.getElementById("copyStatus");
+  var mailtoLink = document.getElementById("mailtoLink");
 
   function buildRequestText(data) {
     return [
       "An: farukpolat@mail.de",
-      "Betreff: Demo-Anfrage: " + data.firma_gewerk,
+      "Betreff: Kostenlose Erstprüfung: " + data.firma_gewerk,
       "",
       "Name: " + data.name,
       "E-Mail: " + data.email,
       "Betrieb / Gewerk: " + data.firma_gewerk,
-      "Wunschzeitraum: " + data.zeitraum
+      "Eingangsrechnungen pro Monat: " + data.belege,
+      "Hauptlieferant: " + (data.lieferant || "keine Angabe")
     ].join("\n");
   }
 
@@ -959,9 +1015,27 @@
     return ok ? Promise.resolve() : Promise.reject(new Error("copy unsupported"));
   }
 
+  function buildMailto(data) {
+    var betreff = "Kostenlose Erstprüfung: " + (data.firma_gewerk || "");
+    var text = [
+      "Guten Tag,",
+      "",
+      "wir möchten die kostenlose Erstprüfung unserer Eingangsrechnungen anfragen.",
+      "",
+      "Name: " + data.name,
+      "E-Mail: " + data.email,
+      "Betrieb / Gewerk: " + data.firma_gewerk,
+      "Eingangsrechnungen pro Monat: " + data.belege,
+      "Hauptlieferant: " + (data.lieferant || "keine Angabe")
+    ].join("\n");
+    return "mailto:farukpolat@mail.de?subject=" + encodeURIComponent(betreff) +
+           "&body=" + encodeURIComponent(text);
+  }
+
   function showCopyFallback(data) {
     demoForm.hidden = true;
     copyPanel.hidden = false;
+    if (mailtoLink) mailtoLink.href = buildMailto(data);
     copyText.value = buildRequestText(data);
     copyText.focus();
     copyText.select();
@@ -980,7 +1054,8 @@
         name: (fd.get("name") || "").toString().trim(),
         email: (fd.get("email") || "").toString().trim(),
         firma_gewerk: (fd.get("firma_gewerk") || "").toString().trim(),
-        zeitraum: (fd.get("zeitraum") || "").toString().trim()
+        belege: (fd.get("belege") || "").toString().trim(),
+        lieferant: (fd.get("lieferant") || "").toString().trim()
       };
 
       submitBtn.disabled = true;
@@ -1000,7 +1075,12 @@
             name: payload.name,
             email: payload.email,
             firma_gewerk: payload.firma_gewerk,
-            zeitraum: payload.zeitraum,
+            belege: payload.belege,
+            lieferant: payload.lieferant,
+            /* zeitraum bleibt als Feld erhalten, damit das bestehende
+               Make.com-Szenario weiterhin einen Wert bekommt, solange es
+               dort nicht auf "belege" umgestellt ist. */
+            zeitraum: payload.belege,
             quelle: "pruefstand-landingpage"
           })
         }).catch(function () { /* bewusst ignoriert */ });
@@ -1016,25 +1096,38 @@
           name: payload.name,
           email: payload.email,
           firma_gewerk: payload.firma_gewerk,
-          zeitraum: payload.zeitraum,
+          belege: payload.belege,
+          lieferant: payload.lieferant,
           botcheck: fd.get("botcheck") ? "true" : ""
         })
       })
-        .then(function (res) { return res.json().then(function (json) { return { ok: res.ok, json: json }; }); })
+        .then(function (res) {
+          return res.json()
+            .catch(function () { return { success: false, message: "Antwort nicht lesbar (HTTP " + res.status + ")" }; })
+            .then(function (json) { return { ok: res.ok, status: res.status, json: json }; });
+        })
         .then(function (result) {
           if (result.ok && result.json && result.json.success) {
             demoForm.hidden = true;
             successPanel.hidden = false;
           } else {
+            /* Die echte Ursache in die Browser-Konsole schreiben. Ohne das
+               sieht man nur "Versand blockiert" und weiss nicht, ob der
+               Zugangsschluessel, das Kontingent oder die Verbindung das
+               Problem ist. */
+            console.error("[Pruefstand] Formularversand fehlgeschlagen — HTTP " +
+              (result.status || "?") + ": " +
+              ((result.json && result.json.message) || "keine Meldung"));
             showCopyFallback(payload);
           }
         })
-        .catch(function () {
+        .catch(function (err) {
+          console.error("[Pruefstand] Formular konnte nicht gesendet werden:", err);
           showCopyFallback(payload);
         })
         .then(function () {
           submitBtn.disabled = false;
-          submitBtn.textContent = "10-Minuten-Demo anfragen";
+          submitBtn.textContent = "Kostenlose Prüfung anfordern";
         });
     });
   }

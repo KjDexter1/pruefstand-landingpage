@@ -2,7 +2,8 @@
 <html lang="de">
 <head>
 <meta charset="utf-8" />
-<title>So funktioniert Prüfstand</title>
+<title>So läuft die Erstprüfung ab – Prüfstand</title>
+<meta name="description" content="Was wir an euren Eingangsrechnungen prüfen, wie die Preisprüfung funktioniert, was mit euren Unterlagen passiert und was wir ausdrücklich nicht tun." />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -115,6 +116,22 @@
 
   footer { border-top: 1px solid var(--border); padding: 28px 0; }
   .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; font-size: 12.5px; color: var(--faint); }
+
+  /* ---- Preisverlauf (nur auf dieser Seite) ---- */
+  .trend { margin-top: 30px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .trend-head { padding: 14px 18px; border-bottom: 1px solid var(--border); background: var(--surface-2); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .trend-scroll { overflow-x: auto; }
+  .trend table { border-collapse: collapse; width: 100%; min-width: 520px; font-size: 14px; }
+  .trend th, .trend td { padding: 11px 18px; text-align: left; border-bottom: 1px solid var(--border); }
+  .trend thead th { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--faint); font-weight: 600; }
+  .trend tbody tr:last-child td { border-bottom: none; }
+  .trend .num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+  .trend tr.hit { background: var(--accent-bg); }
+  .trend tr.hit td { font-weight: 600; }
+  .trend-foot { padding: 14px 18px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .note-box { margin-top: 28px; background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius-sm); padding: 20px 22px; }
+  .note-box h3 { font-size: 15px; }
+  .note-box p { margin-top: 8px; font-size: 14px; color: var(--muted); line-height: 1.65; }
 </style>
 </head>
 <body>
@@ -130,134 +147,204 @@
 
 <section class="hero-lite">
   <div class="wrap">
-    <span class="eyebrow">So funktioniert Prüfstand</span>
-    <h1 style="margin-top:14px;">Vom XML-Chaos zur geprüften Rechnung — Schritt für Schritt erklärt.</h1>
-    <p>Diese Seite zeigt bildlich, was Prüfstand heute schon kann und woran wir als Nächstes arbeiten — ohne Marketing-Übertreibung.</p>
+    <span class="eyebrow">So läuft die Erstprüfung ab</span>
+    <h1 style="margin-top:14px;">Was wir prüfen, wie wir es prüfen — und was mit euren Unterlagen passiert.</h1>
+    <p>Diese Seite ist für Betriebe, die vor der Übergabe genau wissen wollen, worauf sie sich einlassen. Ohne Marketing-Übertreibung, einschließlich der Punkte, die wir ausdrücklich nicht leisten.</p>
   </div>
 </section>
 
 <div class="hazard" role="presentation"></div>
 
-<section id="rechtslage">
+<section id="unterschied">
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">Die Rechtslage</span>
-      <h2>Seit 1. Januar 2025 gilt: E-Rechnungen empfangen ist Pflicht.</h2>
-      <p>Inländische Unternehmen müssen strukturierte elektronische Rechnungen im B2B-Geschäft empfangen und GoBD-konform verarbeiten können.</p>
+      <span class="eyebrow">Der Kern</span>
+      <h2>Eine Rechnung kann fehlerfrei sein — und trotzdem zu hoch.</h2>
+      <p>Alles, was heute automatisch geprüft wird, prüft nur die Form. Ob überhaupt richtig abgerechnet wurde, steht auf einem anderen Blatt. Genau dieses Blatt nehmen wir uns vor.</p>
     </div>
 
     <div class="basics-grid">
       <div class="basics-card">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 7v6c0 4.5 3.5 7.5 8 9 4.5-1.5 8-4.5 8-9V7l-8-4Z"/><path d="m9 12 2 2 4-4"/></svg>
-        <h3>EN 16931</h3>
-        <p>Die europäische Norm für elektronische Rechnungen — das rechtliche Fundament hinter XRechnung und ZUGFeRD.</p>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"/><path d="M14 3v5h5"/><path d="m9 15 2 2 4-4"/></svg>
+        <h3>Formale Prüfung</h3>
+        <p>Ist die Rechnung technisch korrekt? Schema, Rechenprobe, Pflichtangaben, IBAN, Steuernummer. Das erledigen kostenlose amtliche Prüfprogramme in Sekunden — wir lassen es nebenbei mitlaufen und berechnen es nicht.</p>
       </div>
       <div class="basics-card">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"/><path d="M14 3v5h5M9 13h6M9 16.5h4"/></svg>
-        <h3>XRechnung &amp; ZUGFeRD</h3>
-        <p>Zwei zulässige Formate: XRechnung ist reines XML, ZUGFeRD kombiniert XML mit einer sichtbaren PDF-Ansicht.</p>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/><path d="M8.5 11h5"/></svg>
+        <h3>Sachliche Prüfung</h3>
+        <p>Wurde richtig abgerechnet? Stimmt der Preis mit der Absprache, die Menge mit dem Lieferschein, der Rabatt mit der Vereinbarung? Dafür braucht es Unterlagen und Vergleich — das macht keine Software für euch.</p>
       </div>
       <div class="basics-card">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v3M16 3v3"/></svg>
-        <h3>GoBD-konform</h3>
-        <p>Rechnungen müssen im strukturierten Format empfangen, verarbeitet und über zehn Jahre archiviert werden.</p>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.2v.1"/></svg>
+        <h3>Die Lücke dazwischen</h3>
+        <p>Eine Rechnung über 1.240 € kann formal einwandfrei sein und trotzdem 90 € zu hoch, weil ein Preis still angehoben wurde. Formal fällt das niemandem auf. Genau diese Lücke prüfen wir.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section id="realitaet">
+<section id="groessenordnung">
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">Die Realität im Handwerk</span>
-      <h2>Zwischen Pflicht und Büro-Alltag klafft eine Lücke.</h2>
-      <p>Das sagt der Zentralverband des Deutschen Handwerks (ZDH) in seiner aktuellen Umfrage — ohne Übertreibung, mit Quelle.</p>
+      <span class="eyebrow">Die Größenordnung</span>
+      <h2>Worüber wir eigentlich reden.</h2>
+      <p>Nicht über Bürominuten, sondern über das Einkaufsvolumen, das jedes Jahr durch euren Betrieb läuft.</p>
     </div>
 
     <div class="proof-row">
       <div class="proof-stat">
-        <div class="proof-num tabular">≈ 50 %</div>
-        <div class="proof-label">der Handwerksbetriebe empfinden Empfang und Verarbeitung von E-Rechnungen als belastender als klassische PDF-Rechnungen.</div>
+        <div class="proof-num tabular">288.000 €</div>
+        <div class="proof-label">Einkaufsvolumen im Jahr bei 50 Eingangsrechnungen im Monat zu durchschnittlich 480 €. Über diese Summe läuft die Prüfung.</div>
       </div>
       <div class="proof-stat">
-        <div class="proof-num tabular">Ø 3.000 €</div>
-        <div class="proof-label">einmalige Einführungskosten pro Betrieb — plus laufende Software- und IT-Kosten.</div>
+        <div class="proof-num tabular">1 – 2 %</div>
+        <div class="proof-label">angenommene Fehlerquote. Bewusst eine Annahme und kein Erfahrungswert — deshalb prüfen wir zuerst kostenlos, statt eine Zahl zu versprechen.</div>
       </div>
     </div>
-    <div class="proof-source">Quelle: <a href="https://www.zdh.de/presse/veroeffentlichungen/pressemitteilungen/e-rechnung-fuer-betriebe-noch-mehr-aufwand-statt-entlastung/" target="_blank" rel="noopener">ZDH-Umfrage zur E-Rechnung, 2025/2026, ca. 2.000 befragte Handwerksbetriebe</a></div>
+    <div class="proof-source">Beide Werte sind Rechengrößen zur Einordnung, keine erhobenen Marktdaten.</div>
   </div>
 </section>
 
-<section id="pipeline">
+<section id="preisverlauf">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Bildlich erklärt</span>
+      <h2>Wie eine stille Preiserhöhung sichtbar wird.</h2>
+      <p>Das ist der Handgriff, der am häufigsten etwas findet — und er braucht keine Preisliste. Wir nehmen einen Artikel, der bei einem Lieferanten mehrfach vorkommt, und schreiben seinen Einzelpreis über die Monate untereinander.</p>
+    </div>
+
+    <div class="trend">
+      <div class="trend-head">Trockenbeton C25/30, 25 kg · Lieferant Nordmann Baustoffe</div>
+      <div class="trend-scroll">
+        <table>
+          <thead>
+            <tr><th>Rechnung</th><th>Datum</th><th class="num">Menge</th><th class="num">Einzelpreis</th><th class="num">Position</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>RE-2026-06104</td><td>12.06.2026</td><td class="num">80 Sack</td><td class="num">6,20 €</td><td class="num">496,00 €</td></tr>
+            <tr><td>RE-2026-06377</td><td>27.06.2026</td><td class="num">40 Sack</td><td class="num">6,20 €</td><td class="num">248,00 €</td></tr>
+            <tr><td>RE-2026-07022</td><td>09.07.2026</td><td class="num">120 Sack</td><td class="num">6,20 €</td><td class="num">744,00 €</td></tr>
+            <tr class="hit"><td>RE-2026-07588</td><td>24.07.2026</td><td class="num">60 Sack</td><td class="num">6,45 €</td><td class="num">387,00 €</td></tr>
+            <tr class="hit"><td>RE-2026-08214</td><td>18.08.2026</td><td class="num">120 Sack</td><td class="num">6,45 €</td><td class="num">774,00 €</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="trend-foot">Ab dem 24. Juli kostet derselbe Sack 25 Cent mehr — ohne Ankündigung und ohne dass sich sonst etwas geändert hätte. Auf den beiden Rechnungen sind das 45 €. Hochgerechnet auf ein Jahr und alle betroffenen Artikel wird daraus ein Betrag, über den sich reden lässt. Jede einzelne Rechnung für sich sah plausibel aus — auffällig wird es erst im Nebeneinander.</div>
+    </div>
+
+    <div class="note-box">
+      <h3>Warum das im Betrieb nie jemand bemerkt</h3>
+      <p>Die Rechnungen kommen einzeln, im Abstand von Wochen, und werden einzeln geprüft und bezahlt. Niemand legt fünf Rechnungen aus drei Monaten nebeneinander und vergleicht Zeile für Zeile. Genau das ist unsere Arbeit.</p>
+    </div>
+  </div>
+</section>
+
+<section id="ablauf">
   <div class="wrap">
     <div class="section-head">
       <span class="eyebrow">Der Ablauf</span>
-      <h2>Vom Posteingang bis zum Steuerberater.</h2>
-      <p>Grün markiert, was heute im Early-Access-Dashboard schon läuft. Gestrichelt markiert, was als Nächstes gebaut wird.</p>
+      <h2>Vom ersten Gespräch bis zum Bericht.</h2>
+      <p>Grün markiert, was zur kostenlosen Erstprüfung gehört. Grau markiert, was optional danach möglich ist — darüber entscheidet ihr in Ruhe und erst, wenn ihr Ergebnisse gesehen habt.</p>
     </div>
 
     <div class="pipeline">
       <div class="pipe-row">
+        <div class="pipe-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 1.9.6 2.8a2 2 0 0 1-.5 2.1L8.1 9.8a16 16 0 0 0 6 6l1.2-1.1a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.8.6a2 2 0 0 1 1.8 2Z"/></svg></div>
+        <div>
+          <div class="pipe-title-row"><span class="pipe-title">1. Kurzes Gespräch</span><span class="pipe-tag live">Kostenlos</span></div>
+          <div class="pipe-desc">Fünf Minuten am Telefon: Bei welchem Großhändler kauft ihr hauptsächlich, wie viele Rechnungen kommen im Monat, gibt es Lieferscheine. Danach wissen wir beide, ob eine Prüfung bei euch überhaupt Sinn ergibt.</div>
+        </div>
+      </div>
+      <div class="pipe-row">
+        <div class="pipe-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+        <div>
+          <div class="pipe-title-row"><span class="pipe-title">2. Verschwiegenheitserklärung</span><span class="pipe-tag live">Auf Wunsch</span></div>
+          <div class="pipe-desc">Unterschrieben, bevor ihr irgendetwas herausgebt. Sie schließt ausdrücklich aus, dass eure Zahlen an Dritte gehen — insbesondere an eure Lieferanten.</div>
+        </div>
+      </div>
+      <div class="pipe-row">
         <div class="pipe-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M7 8l5-5 5 5"/><path d="M20 15v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-4"/></svg></div>
         <div>
-          <div class="pipe-title-row"><span class="pipe-title">1. Rechnung hochladen</span><span class="pipe-tag live">Heute verfügbar</span></div>
-          <div class="pipe-desc">XRechnung- oder ZUGFeRD-Datei per Drag &amp; Drop hochladen — genau wie einen E-Mail-Anhang.</div>
+          <div class="pipe-title-row"><span class="pipe-title">3. Unterlagen übergeben</span><span class="pipe-tag live">≈ 10 Minuten bei euch</span></div>
+          <div class="pipe-desc">Eingangsrechnungen der letzten drei Monate als Pflichtteil. Lieferscheine, Preis- oder Konditionsvereinbarungen und Zahlungsnachweise machen die Prüfung deutlich schärfer, sind aber keine Bedingung. Per E-Mail, oder wir holen den Ordner ab.</div>
         </div>
       </div>
       <div class="pipe-row">
         <div class="pipe-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/><path d="M8.5 11l2 2 4-4"/></svg></div>
         <div>
-          <div class="pipe-title-row"><span class="pipe-title">2. Formale Prüfung gegen EN 16931</span><span class="pipe-tag live">Heute verfügbar</span></div>
-          <div class="pipe-desc">Schema, Rechenprobe, IBAN und USt-IdNr. werden automatisch geprüft — inklusive lesbarer, druckfähiger Vorschau.</div>
+          <div class="pipe-title-row"><span class="pipe-title">4. Prüfung von Hand</span><span class="pipe-tag live">3 – 5 Werktage</span></div>
+          <div class="pipe-desc">Sortiert nach Lieferant, der größte zuerst — dort sitzt in den meisten Betrieben rund die Hälfte des Volumens. Preisverlauf je Artikel, Mengen gegen Lieferschein, Rabatte, Zuschläge, Dopplungen, Pfand, Retouren, Skonto. Die formale Prüfung läuft maschinell mit.</div>
+        </div>
+      </div>
+      <div class="pipe-row">
+        <div class="pipe-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"/><path d="M14 3v5h5M9 13h6M9 16.5h4"/></svg></div>
+        <div>
+          <div class="pipe-title-row"><span class="pipe-title">5. Bericht und Gespräch</span><span class="pipe-tag live">≈ 20 Minuten</span></div>
+          <div class="pipe-desc">Zwei Seiten: die Summe oben, darunter jeder Fund einzeln mit Rechnungsnummer, Soll, Ist und Differenz. Getrennt ausgewiesen, was belegbar ist und was noch zu klären wäre. Wir gehen den Bericht gemeinsam durch.</div>
         </div>
       </div>
       <div class="pipe-row planned">
-        <div class="pipe-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></div>
+        <div class="pipe-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg></div>
         <div>
-          <div class="pipe-title-row"><span class="pipe-title">3. Posteingangs-Automatisierung</span><span class="pipe-tag planned">In Entwicklung</span></div>
-          <div class="pipe-desc">Automatische Weiterleitung eingehender Rechnungs-E-Mails direkt ins System, ohne manuellen Download.</div>
-        </div>
-      </div>
-      <div class="pipe-row planned">
-        <div class="pipe-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
-        <div>
-          <div class="pipe-title-row"><span class="pipe-title">4. Abgleich mit Lieferscheinen</span><span class="pipe-tag planned">In Entwicklung</span></div>
-          <div class="pipe-desc">Prüft, ob nur berechnet wurde, was auch tatsächlich geliefert wurde — automatischer Abgleich von Rechnungsposition und Lieferschein.</div>
-        </div>
-      </div>
-      <div class="pipe-row planned">
-        <div class="pipe-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h4l3 8 4-16 3 8h4"/></svg></div>
-        <div>
-          <div class="pipe-title-row"><span class="pipe-title">5. Direkter DATEV-Export</span><span class="pipe-tag planned">In Entwicklung</span></div>
-          <div class="pipe-desc">Validierte Daten fließen automatisiert ins DATEV-Format — ohne Tippfehler, direkt beim Steuerberater.</div>
+          <div class="pipe-title-row"><span class="pipe-title">6. Laufende Prüfung</span><span class="pipe-tag planned">Optional danach</span></div>
+          <div class="pipe-desc">Jede Eingangsrechnung wird geprüft, bevor sie bezahlt wird. Umfang und Preis besprechen wir persönlich — über die Website wird dazu nichts abgeschlossen.</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section id="gewinne">
+<section id="unterlagen">
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">Der Effekt</span>
-      <h2>Was das für euren Betrieb bedeutet.</h2>
+      <span class="eyebrow">Eure Unterlagen</span>
+      <h2>Was mit den Rechnungen passiert, die ihr uns gebt.</h2>
+      <p>Das ist die Frage, die im Gespräch am häufigsten unausgesprochen bleibt. Deshalb steht die Antwort hier.</p>
+    </div>
+
+    <div class="basics-grid">
+      <div class="basics-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 7v6c0 4.5 3.5 7.5 8 9 4.5-1.5 8-4.5 8-9V7l-8-4Z"/><path d="M15 9.5 11 14l-2-2"/></svg>
+        <h3>Nur für diese Prüfung</h3>
+        <p>Die Unterlagen werden ausschließlich für eure Prüfung verwendet. Keine Weitergabe an Dritte und ausdrücklich kein Kontakt zu euren Lieferanten — den führt allein ihr.</p>
+      </div>
+      <div class="basics-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/><path d="M10 11v5M14 11v5"/></svg>
+        <h3>Rückgabe und Löschung</h3>
+        <p>Originalordner kommen zurück, digitale Kopien werden spätestens nach acht Wochen gelöscht. Auf Wunsch bestätigen wir das schriftlich.</p>
+      </div>
+      <div class="basics-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
+        <h3>Was wir daraus lernen dürfen</h3>
+        <p>Wir werten aus, welche Abrechnungsfehler typisch sind — anonymisiert und ohne Rückschluss auf euren Betrieb, eure Preise oder eure Konditionen. Euren Namen nennen wir nur, wenn ihr ausdrücklich zustimmt.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="grenzen">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Die Grenzen</span>
+      <h2>Was wir ausdrücklich nicht tun.</h2>
+      <p>Drei Punkte, die wir lieber vorher sagen als hinterher.</p>
     </div>
 
     <div class="wins-grid">
       <div class="win-card">
-        <div class="win-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"/><path d="M9 15l6-6M9 9h.01M15 15h.01"/></svg></div>
-        <h3>Weniger Bürokratie</h3>
-        <p>Kein Papierkram, kein manuelles Abtippen — mehr Zeit für die eigentliche Arbeit statt für XML-Anhänge.</p>
+        <div class="win-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"/><path d="M14 3v5h5"/><path d="m10 14 4 4M14 14l-4 4"/></svg></div>
+        <h3>Keine Steuerberatung</h3>
+        <p>Wir rechnen nach, was auf euren Rechnungen steht. Kontierung, Buchführung, Abschlüsse und die steuerliche Beurteilung bleiben bei eurem Steuerberater — so sieht es das Steuerberatungsgesetz vor, und dabei bleibt es.</p>
       </div>
       <div class="win-card">
-        <div class="win-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 7v6c0 4.5 3.5 7.5 8 9 4.5-1.5 8-4.5 8-9V7l-8-4Z"/></svg></div>
-        <h3>Rechtliche Sicherheit</h3>
-        <p>GoBD-konforme Archivierung und formale Prüfung senken das Risiko bei einer Betriebsprüfung spürbar.</p>
+        <div class="win-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 1.9.6 2.8a2 2 0 0 1-.5 2.1L8.1 9.8a16 16 0 0 0 6 6l1.2-1.1a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.8.6a2 2 0 0 1 1.8 2Z"/><path d="m2 2 20 20"/></svg></div>
+        <h3>Kein Auftritt gegenüber eurem Lieferanten</h3>
+        <p>Wir reklamieren nichts in eurem Namen und rufen dort niemanden an. Ihr bekommt die Belege aufbereitet — ob und wie ihr damit auf euren Händler zugeht, entscheidet ihr allein.</p>
       </div>
       <div class="win-card">
-        <div class="win-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 3.5"/></svg></div>
-        <h3>Schnellere Freigaben</h3>
-        <p>Prüfung in Sekunden statt Tagen — dadurch bessere Chancen, Skonto-Fristen tatsächlich einzuhalten.</p>
+        <div class="win-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.2v.1"/></svg></div>
+        <h3>Keine Garantie auf Vollständigkeit</h3>
+        <p>Wir prüfen sorgfältig, aber auf Grundlage dessen, was uns vorliegt. Fehlt der Lieferschein, lässt sich die Menge nicht prüfen. Wir sagen im Bericht, was wir nicht prüfen konnten — statt so zu tun, als wäre alles abgedeckt.</p>
       </div>
     </div>
   </div>
@@ -265,10 +352,10 @@
 
 <section class="cta-band">
   <div class="wrap">
-    <span class="eyebrow" style="color: var(--accent-strong);">Jetzt ausprobieren</span>
-    <h2 style="margin-top:12px; font-size: clamp(22px, 3vw, 30px);">Selbst sehen, wie einfach das ist.</h2>
-    <p>10 Minuten Live-Demo, unverbindlich — wir zeigen euch Prüfstand an euren eigenen Beleg-Typen.</p>
-    <a href="index.html#demo" class="btn btn-primary btn-lg">10-Minuten-Demo anfragen</a>
+    <span class="eyebrow" style="color: var(--accent-strong);">Kostenlose Erstprüfung</span>
+    <h2 style="margin-top:12px; font-size: clamp(22px, 3vw, 30px);">Drei Monate reichen, um es herauszufinden.</h2>
+    <p>Ihr schickt die Eingangsrechnungen, wir schicken den Bericht. Finden wir nichts, kostet es nichts — und ihr wisst, dass eure Rechnungen sauber sind.</p>
+    <a href="index.html#demo" class="btn btn-primary btn-lg">Kostenlose Prüfung anfordern</a>
   </div>
 </section>
 

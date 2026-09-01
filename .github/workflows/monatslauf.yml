@@ -1,0 +1,43 @@
+name: Monatslauf
+
+# Am 1. jedes Monats. Groesserer Rueckblick inklusive Preis-, Wettbewerbs-,
+# Datenschutz- und Abbruchpruefung.
+on:
+  schedule:
+    - cron: "0 5 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  bericht:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Bericht erzeugen
+        id: bericht
+        run: python3 ops/pruefstand.py bericht --monat
+
+      - name: Bericht committen
+        run: |
+          git config user.name "Monatslauf"
+          git config user.email "actions@github.com"
+          git add ops/berichte
+          git diff --staged --quiet || git commit -m "Monatsbericht ${{ steps.bericht.outputs.titel }}"
+          git push
+
+      - name: Issue anlegen
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TITEL: ${{ steps.bericht.outputs.titel }}
+          PFAD: ${{ steps.bericht.outputs.pfad }}
+        run: |
+          gh issue create \
+            --title "$TITEL" \
+            --body-file "$PFAD" \
+            --label monatslauf \
+            --repo "${{ github.repository }}" || \
+          gh issue create --title "$TITEL" --body-file "$PFAD" --repo "${{ github.repository }}"

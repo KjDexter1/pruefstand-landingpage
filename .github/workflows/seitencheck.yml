@@ -1,0 +1,23 @@
+name: Seitencheck
+
+# Taeglich 06:30 UTC. Prueft die Landingpage auf fehlende Pflichtseiten,
+# tote interne Verweise und die Kontaktadresse im Demo-Formular.
+# Bei Fehlern schlaegt der Lauf fehl und GitHub benachrichtigt per Mail.
+on:
+  schedule:
+    - cron: "30 6 * * *"
+  workflow_dispatch:
+  push:
+    paths:
+      - "*.html"
+
+permissions:
+  contents: read
+
+jobs:
+  pruefen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Seitencheck
+        run: python3 ops/linkcheck.py
