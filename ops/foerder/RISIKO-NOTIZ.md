@@ -75,13 +75,22 @@ Quoten, Fristen und Voraussetzungen ändern sich mehrmals jährlich. Ein
 veralteter Katalogeintrag, auf den sich ein Betrieb verlässt, ist ein
 Haftungsfall.
 
-**Was technisch umgesetzt ist:** Jeder Katalogeintrag hat die Felder
-`geprueft_am` und `geprueft_von`. Solange sie leer sind, weist das Skript
-bei jedem Lauf aus, dass der Eintrag nicht verifiziert ist, und die
-Vorbereitungsmappe trägt einen entsprechenden Warnkasten.
+**Was technisch umgesetzt ist:** Der Katalog trennt zwei Zustände.
+`recherchiert_am` mit `quelle` und `quelle_typ` hält fest, woher eine Angabe
+stammt. `freigegeben_am` mit `freigegeben_von` hält fest, dass ein Mensch sie
+beim Träger bestätigt hat. Solange die Freigabe fehlt, weist das Skript bei
+jedem Lauf darauf hin und die Vorbereitungsmappe trägt pro Programm einen
+Warnkasten. Freigaben, die älter als sechs Monate sind, werden ebenfalls
+gemeldet.
 
-**Derzeit sind alle Einträge unverifiziert.** Vor der ersten Nutzung mit
-einem Kunden muss jeder Eintrag beim Träger gegengeprüft werden.
+**Stand 2026-09-01: alle fünf Einträge recherchiert, keiner freigegeben.**
+Vier Angaben stammen von Trägerseiten, eine (§ 82 SGB III) aus
+Sekundärquellen und ist deshalb besonders zu bestätigen.
+
+**Zu klären mit der Anwältin:** Genügt die Kennzeichnung „recherchiert am,
+Quelle X" gegenüber dem Kunden, wenn eine Angabe sich später als überholt
+herausstellt? Oder muss vor jeder Kundenmappe eine tagesaktuelle
+Bestätigung eingeholt werden?
 
 ## 5. Datenschutz
 
