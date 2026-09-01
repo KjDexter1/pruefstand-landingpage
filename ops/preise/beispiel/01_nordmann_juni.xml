@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2"
+         xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+         xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+  <cbc:CustomizationID>urn:cen.eu:en16931:2017</cbc:CustomizationID>
+  <cbc:ID>RE-2026-06104</cbc:ID>
+  <cbc:IssueDate>2026-06-12</cbc:IssueDate>
+  <cbc:DocumentCurrencyCode>EUR</cbc:DocumentCurrencyCode>
+  <cac:AccountingSupplierParty><cac:Party>
+    <cac:PartyName><cbc:Name>Nordmann Baustoffe GmbH</cbc:Name></cac:PartyName>
+  </cac:Party></cac:AccountingSupplierParty>
+  <cac:AccountingCustomerParty><cac:Party>
+    <cac:PartyName><cbc:Name>Muster Elektrotechnik GmbH</cbc:Name></cac:PartyName>
+  </cac:Party></cac:AccountingCustomerParty>
+  <cac:InvoiceLine>
+    <cbc:ID>1</cbc:ID>
+    <cbc:InvoicedQuantity unitCode="H87">80</cbc:InvoicedQuantity>
+    <cbc:LineExtensionAmount currencyID="EUR">496.00</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Trockenbeton C25/30, 25 kg</cbc:Name>
+      <cac:SellersItemIdentification><cbc:ID>TB-2530</cbc:ID></cac:SellersItemIdentification>
+    </cac:Item>
+    <cac:Price><cbc:PriceAmount currencyID="EUR">6.20</cbc:PriceAmount></cac:Price>
+  </cac:InvoiceLine>
+  <cac:InvoiceLine>
+    <cbc:ID>2</cbc:ID>
+    <cbc:InvoicedQuantity unitCode="H87">400</cbc:InvoicedQuantity>
+    <cbc:LineExtensionAmount currencyID="EUR">512.00</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Dachziegel Frankfurter Pfanne</cbc:Name>
+      <cac:SellersItemIdentification><cbc:ID>DZ-1140</cbc:ID></cac:SellersItemIdentification>
+    </cac:Item>
+    <cac:Price><cbc:PriceAmount currencyID="EUR">1.28</cbc:PriceAmount></cac:Price>
+  </cac:InvoiceLine>
+</Invoice>
