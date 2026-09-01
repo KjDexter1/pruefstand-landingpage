@@ -1,3 +1,9 @@
 node_modules/
 package-lock.json
 *.docx
+
+# Arbeitsdateien mit echten Kundendaten. Die Vorlagen liegen in beispiel/.
+# Der normale Arbeitsordner ist ~/pruefstand-daten, also ausserhalb des
+# Projekts — diese Regeln sind die zweite Sicherung.
+funde.csv
+bericht.json

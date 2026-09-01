@@ -4,6 +4,25 @@ Erzeugt den fertigen Prüfbericht als Word-Datei. Du trägst die Funde in eine
 Tabelle ein, das Skript rechnet und schreibt das Dokument. Damit stehen im
 Bericht, mit dem du Geld verlangst, keine Rechen- oder Tippfehler.
 
+## Wo die Daten liegen
+
+**Nicht im Projektordner.** Die Arbeitsdateien enthalten Rechnungsnummern,
+Lieferanten und Beträge echter Betriebe. Kämen sie in die Versionsverwaltung,
+blieben sie dort dauerhaft — auch nach dem Löschen. Das widerspräche der
+Zusage aus der Vertraulichkeitserklärung, digitale Kopien nach acht Wochen
+zu löschen.
+
+Standardordner ist deshalb **`~/pruefstand-daten`**. Beim ersten Aufruf legt
+das Skript ihn an und kopiert die Vorlagen hinein:
+
+```
+Arbeitsordner angelegt: /Users/faruk/pruefstand-daten
+Hineinkopiert: funde.csv, bericht.json
+```
+
+Für mehrere Betriebe parallel: `--daten ~/kunden/voss`. Die Word-Datei
+entsteht im selben Ordner wie die Daten.
+
 ## Zwei Dateien füllst du aus
 
 **`funde.csv`** — eine Zeile je Fund. Öffnet sich in Excel per Doppelklick
@@ -39,21 +58,25 @@ Dokument peinlich, das einen Betrag gegenüber einem Lieferanten begründet.
 
 ```bash
 cd ops/bericht
-npm install          # einmalig
-npm run bericht      # -> Pruefbericht_<Betrieb>.docx
-npm run muster       # -> Musterbericht_Pruefstand.docx, gekennzeichnet
+npm install                          # einmalig
+
+node erzeuge-bericht.js              # aus ~/pruefstand-daten
+node erzeuge-bericht.js --daten ~/kunden/voss
+node erzeuge-bericht.js --beispiel   # mit den Beispieldaten des Projekts
+node erzeuge-bericht.js --muster     # gekennzeichnete Musterfassung
 ```
 
-Voraussetzung ist Node.js. Wer nichts installieren will, nutzt den Weg über
-GitHub (siehe unten).
+Voraussetzung ist Node.js.
 
-## Ohne Installation, über GitHub
+## Der GitHub-Weg erzeugt nur noch den Musterbericht
 
-1. `ops/bericht/funde.csv` und `ops/bericht/bericht.json` direkt auf
-   github.com bearbeiten und speichern.
-2. Reiter **Actions** → **Prüfbericht erzeugen** → *Run workflow*.
-3. Nach etwa einer Minute liegt die Word-Datei unter dem Lauf als
-   herunterladbares Ergebnis (*Artifacts*).
+Früher ließ sich der Bericht ohne lokale Installation über *Actions* bauen.
+Das geht für **echte** Berichte nicht mehr, und zwar aus gutem Grund: Dafür
+müssten die Kundendaten ins Repository, und genau das soll nicht passieren.
+
+Der Workflow *Musterbericht erzeugen* baut weiterhin die gekennzeichnete
+Musterfassung aus den Beispieldaten — brauchbar, um jemandem zu zeigen, wie
+ein Bericht aussieht. Echte Berichte entstehen lokal.
 
 ## Danach
 
