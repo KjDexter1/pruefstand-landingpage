@@ -465,6 +465,7 @@
   .success-steps { margin: 18px auto 0; max-width: 34ch; text-align: left; display: flex; flex-direction: column; gap: 10px; }
   .success-step { display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: start; font-size: 13.5px; color: var(--ink-soft); line-height: 1.55; }
   .success-step b { display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: var(--success-bg); color: var(--success-strong); font-family: var(--font-mono); font-size: 11px; font-weight: 700; }
+  .success-step .dauer { display: block; font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--accent-strong); font-style: normal; margin-bottom: 2px; }
   .success-note { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 12px; color: var(--faint); line-height: 1.55; }
 
   .copy-panel { text-align: center; padding: 20px 6px 8px; }
@@ -514,7 +515,7 @@
     <div>
       <span class="eyebrow">Für Elektro-, SHK- &amp; Baubetriebe</span>
       <h1>Zahlt ihr eurem Großhändler zu viel?</h1>
-      <p class="hero-sub">Wir prüfen eure Eingangsrechnungen der letzten drei Monate — auf still erhöhte Preise, nicht gelieferte Mengen, doppelte Positionen und fehlende Gutschriften. Kostenlos. Finden wir nichts, kostet es nichts.</p>
+      <p class="hero-sub">Wir prüfen eure Eingangsrechnungen aus den letzten drei Monaten — auf still erhöhte Preise, nicht gelieferte Mengen, doppelte Positionen und fehlende Gutschriften. Kostenlos. Finden wir nichts, kostet es nichts.</p>
       <div class="hero-ctas">
         <a href="#demo" class="btn btn-primary btn-lg">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/><path d="M8.5 11l2 2 4-4"/></svg>
@@ -693,7 +694,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M7 8l5-5 5 5"/><path d="M20 15v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-4"/></svg>
         </div>
         <div class="step-title">Unterlagen schicken</div>
-        <div class="step-desc">Eingangsrechnungen der letzten drei Monate, dazu Lieferscheine und — falls vorhanden — die Preisliste eures Hauptlieferanten. Per E-Mail, oder wir holen den Ordner ab.</div>
+        <div class="step-desc">Eingangsrechnungen aus den letzten drei Monaten, dazu Lieferscheine und — falls vorhanden — die Preisliste eures Hauptlieferanten. Per E-Mail, oder wir holen den Ordner ab.</div>
         <span class="step-time">≈ 10 Minuten bei euch</span>
       </div>
       <div class="step-item reveal">
@@ -829,7 +830,7 @@
       </div>
       <div class="price-vat">einmalig · keine Zahlung, kein Vertrag · Unterlagen kommen zurück oder werden gelöscht</div>
       <ul class="price-list">
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> Bis zu drei Monate Eingangsrechnungen</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> Eingangsrechnungen aus bis zu drei Monaten</li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> Alle Prüfpunkte, von Hand durchgesehen</li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> Schriftlicher Bericht mit belegten Beträgen</li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> Gemeinsames Durchsprechen, ca. 20 Minuten</li>
@@ -845,15 +846,15 @@
   <div class="wrap">
     <div class="section-head reveal">
       <span class="eyebrow">Kostenlose Erstprüfung</span>
-      <h2>Schickt uns drei Monate — wir sagen euch, was drinsteckt.</h2>
-      <p>Für Elektro-, SHK- und Baubetriebe. Vorbereiten müsst ihr nichts außer dem Ordner.</p>
+      <h2>Schickt uns euren Rechnungsordner — in einer Woche wisst ihr, was drinsteckt.</h2>
+      <p>Für Elektro-, SHK- und Baubetriebe. Geprüft werden die Eingangsrechnungen aus den letzten drei Monaten — die Prüfung selbst dauert 3 bis 5 Werktage.</p>
     </div>
 
     <div class="cta-grid">
       <div class="cta-points reveal">
         <div class="cta-point">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/><path d="M8.5 11l2 2 4-4"/></svg>
-          <div><b>Wir prüfen, ihr müsst nichts tun.</b> Die Eingangsrechnungen der letzten drei Monate reichen. Lieferscheine und Preisabsprachen helfen zusätzlich, sind aber keine Bedingung.</div>
+          <div><b>Wir prüfen, ihr müsst nichts tun.</b> Die Eingangsrechnungen aus den letzten drei Monaten reichen. Lieferscheine und Preisabsprachen helfen zusätzlich, sind aber keine Bedingung.</div>
         </div>
         <div class="cta-point">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4.5 5-6 8-6s6.5 1.5 8 6"/></svg>
@@ -928,10 +929,12 @@
           <p>Wir schauen sie uns an und melden uns <strong>innerhalb von zwei Werktagen</strong> persönlich bei euch.</p>
 
           <div class="success-steps">
-            <div class="success-step"><b>1</b><span>Wir melden uns per E-Mail oder Telefon und klären in fünf Minuten, ob eine Prüfung bei euch etwas bringt.</span></div>
-            <div class="success-step"><b>2</b><span>Ihr schickt die Eingangsrechnungen der letzten drei Monate — oder wir holen den Ordner ab.</span></div>
-            <div class="success-step"><b>3</b><span>Nach 3 bis 5 Werktagen bekommt ihr den Bericht und wir gehen ihn gemeinsam durch.</span></div>
+            <div class="success-step"><b>1</b><span><em class="dauer">Innerhalb von 2 Werktagen</em>Wir melden uns per E-Mail oder Telefon und klären in fünf Minuten, ob eine Prüfung bei euch etwas bringt.</span></div>
+            <div class="success-step"><b>2</b><span><em class="dauer">Danach, 10 Minuten bei euch</em>Ihr schickt die Eingangsrechnungen aus den letzten drei Monaten — oder wir holen den Ordner ab.</span></div>
+            <div class="success-step"><b>3</b><span><em class="dauer">3 bis 5 Werktage später</em>Ihr bekommt den Bericht und wir gehen ihn gemeinsam durch.</span></div>
           </div>
+
+          <p style="margin-top:14px; font-size:13px; color:var(--muted); max-width:38ch; margin-left:auto; margin-right:auto;">Die drei Monate sind der geprüfte <strong>Zeitraum eurer Rechnungen</strong> — nicht die Dauer der Prüfung.</p>
 
           <div class="success-note">Auf Wunsch unterschreiben wir vorab eine Verschwiegenheitserklärung. Es entsteht keine Zahlungspflicht und kein Vertrag. Wenn ihr es eilig habt, erreicht ihr uns direkt unter <a href="tel:+4915228487769" style="color:var(--accent-strong);">0152 28487769</a>.</div>
         </div>
