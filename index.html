@@ -456,6 +456,11 @@
   .success-panel h3 { font-family: var(--font-body); text-transform: none; letter-spacing: normal; font-size: 18px; font-weight: 700; }
   .success-panel p { margin-top: 10px; font-size: 14.5px; color: var(--muted); line-height: 1.6; max-width: 40ch; margin-left: auto; margin-right: auto; }
 
+  .success-steps { margin: 18px auto 0; max-width: 34ch; text-align: left; display: flex; flex-direction: column; gap: 10px; }
+  .success-step { display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: start; font-size: 13.5px; color: var(--ink-soft); line-height: 1.55; }
+  .success-step b { display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: var(--success-bg); color: var(--success-strong); font-family: var(--font-mono); font-size: 11px; font-weight: 700; }
+  .success-note { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 12px; color: var(--faint); line-height: 1.55; }
+
   .copy-panel { text-align: center; padding: 20px 6px 8px; }
   .copy-panel h3 { font-family: var(--font-body); text-transform: none; letter-spacing: normal; font-size: 18px; font-weight: 700; }
   .copy-panel p { margin-top: 10px; font-size: 14.5px; color: var(--muted); line-height: 1.6; }
@@ -901,18 +906,31 @@
 
         <div class="success-panel" id="successPanel" hidden>
           <div class="success-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
-          <h3>Danke — eure Anfrage ist angekommen. Wir melden uns innerhalb von zwei Werktagen.</h3>
+          <h3>Danke — eure Anfrage ist angekommen.</h3>
+          <p>Wir schauen sie uns an und melden uns <strong>innerhalb von zwei Werktagen</strong> persönlich bei euch.</p>
+
+          <div class="success-steps">
+            <div class="success-step"><b>1</b><span>Wir melden uns per E-Mail oder Telefon und klären in fünf Minuten, ob eine Prüfung bei euch etwas bringt.</span></div>
+            <div class="success-step"><b>2</b><span>Ihr schickt die Eingangsrechnungen der letzten drei Monate — oder wir holen den Ordner ab.</span></div>
+            <div class="success-step"><b>3</b><span>Nach 3 bis 5 Werktagen bekommt ihr den Bericht und wir gehen ihn gemeinsam durch.</span></div>
+          </div>
+
+          <div class="success-note">Auf Wunsch unterschreiben wir vorab eine Verschwiegenheitserklärung. Es entsteht keine Zahlungspflicht und kein Vertrag. Wenn ihr es eilig habt, erreicht ihr uns direkt unter <a href="tel:+4915228487769" style="color:var(--accent-strong);">0152 28487769</a>.</div>
         </div>
 
         <div class="copy-panel" id="copyPanel" hidden>
           <div class="success-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
-          <h3>Fast geschafft — Anfrage senden</h3>
-          <p>Automatischer Versand hat nicht geklappt. Text kopieren, in eine neue E-Mail an <strong>farukpolat@mail.de</strong> einfügen und abschicken.</p>
+          <h3>Fast geschafft — ein Klick fehlt noch</h3>
+          <p>Der automatische Versand wurde blockiert, oft durch einen Werbeblocker oder eine unterbrochene Verbindung. Über den Knopf unten öffnet sich eure E-Mail mit fertig ausgefülltem Text an <strong>farukpolat@mail.de</strong> — nur noch abschicken.</p>
           <textarea id="copyText" class="copy-textarea" readonly rows="7"></textarea>
           <div class="copy-actions">
-            <button type="button" id="copyTextBtn" class="btn btn-primary">
+            <a id="mailtoLink" class="btn btn-primary" href="mailto:farukpolat@mail.de">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+              E-Mail öffnen
+            </a>
+            <button type="button" id="copyTextBtn" class="btn">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-              Text kopieren
+              Nur Text kopieren
             </button>
             <span id="copyStatus" class="copy-status"></span>
           </div>
@@ -953,6 +971,7 @@
   var copyText = document.getElementById("copyText");
   var copyTextBtn = document.getElementById("copyTextBtn");
   var copyStatus = document.getElementById("copyStatus");
+  var mailtoLink = document.getElementById("mailtoLink");
 
   function buildRequestText(data) {
     return [
@@ -978,9 +997,27 @@
     return ok ? Promise.resolve() : Promise.reject(new Error("copy unsupported"));
   }
 
+  function buildMailto(data) {
+    var betreff = "Kostenlose Erstprüfung: " + (data.firma_gewerk || "");
+    var text = [
+      "Guten Tag,",
+      "",
+      "wir möchten die kostenlose Erstprüfung unserer Eingangsrechnungen anfragen.",
+      "",
+      "Name: " + data.name,
+      "E-Mail: " + data.email,
+      "Betrieb / Gewerk: " + data.firma_gewerk,
+      "Eingangsrechnungen pro Monat: " + data.belege,
+      "Hauptlieferant: " + (data.lieferant || "keine Angabe")
+    ].join("\n");
+    return "mailto:farukpolat@mail.de?subject=" + encodeURIComponent(betreff) +
+           "&body=" + encodeURIComponent(text);
+  }
+
   function showCopyFallback(data) {
     demoForm.hidden = true;
     copyPanel.hidden = false;
+    if (mailtoLink) mailtoLink.href = buildMailto(data);
     copyText.value = buildRequestText(data);
     copyText.focus();
     copyText.select();
