@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<title>Fördermittel-Check – Prüfstand</title>
+<meta name="description" content="Optionales Modul: Wir erkennen aus euren Eingangsrechnungen Investitionen, für die staatliche Zuschüsse existieren, und bereiten den Antrag vor. Eingereicht wird vom Betrieb." />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #EAEEF1; --surface: #FFFFFF; --surface-2: #F4F6F8; --surface-3: #EDF0F3;
+    --ink: #171B20; --ink-soft: #333B43; --muted: #5C6773; --faint: #8B96A2;
+    --border: #DCE2E7; --border-strong: #C6CED5;
+    --accent: #C96A12; --accent-strong: #A2560D; --accent-bg: #FBEEDF; --accent-ink: #FFFFFF;
+    --success: #1F8A54; --success-strong: #166B41; --success-bg: #E3F5EA; --success-border: #B8E2C8;
+    --shadow-sm: 0 1px 2px rgba(23,27,32,0.07); --shadow-md: 0 10px 28px -10px rgba(23,27,32,0.22); --shadow-lg: 0 26px 60px -16px rgba(23,27,32,0.32);
+    --radius: 12px; --radius-sm: 7px;
+    --band-bg: #171B20; --band-bg-2: #1F252C; --band-ink: #F4F1E9; --band-muted: #A9B2BB; --band-border: #333C45;
+    --font-display: "IBM Plex Sans Condensed", "Arial Narrow", sans-serif;
+    --font-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+    --font-mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #11151A; --surface: #181D23; --surface-2: #1E252C; --surface-3: #242C34;
+      --ink: #E9ECEF; --ink-soft: #C7CED5; --muted: #93A0AC; --faint: #6B7680;
+      --border: #2A323B; --border-strong: #384049;
+      --accent: #E29A4E; --accent-strong: #F0B36E; --accent-bg: rgba(226,154,78,0.14); --accent-ink: #171200;
+      --success: #49BE83; --success-strong: #6ED09D; --success-bg: rgba(73,190,131,0.13); --success-border: rgba(73,190,131,0.35);
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.45); --shadow-md: 0 10px 28px -10px rgba(0,0,0,0.6); --shadow-lg: 0 26px 60px -16px rgba(0,0,0,0.65);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #11151A; --surface: #181D23; --surface-2: #1E252C; --surface-3: #242C34;
+    --ink: #E9ECEF; --ink-soft: #C7CED5; --muted: #93A0AC; --faint: #6B7680;
+    --border: #2A323B; --border-strong: #384049;
+    --accent: #E29A4E; --accent-strong: #F0B36E; --accent-bg: rgba(226,154,78,0.14); --accent-ink: #171200;
+    --success: #49BE83; --success-strong: #6ED09D; --success-bg: rgba(73,190,131,0.13); --success-border: rgba(73,190,131,0.35);
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.45); --shadow-md: 0 10px 28px -10px rgba(0,0,0,0.6); --shadow-lg: 0 26px 60px -16px rgba(0,0,0,0.65);
+  }
+  * { box-sizing: border-box; }
+  html { color-scheme: light dark; scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3 { font-family: var(--font-display); text-transform: uppercase; letter-spacing: 0.01em; text-wrap: balance; margin: 0; }
+  p { margin: 0; }
+  .tabular { font-variant-numeric: tabular-nums; }
+  a { color: inherit; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent-strong); }
+  .eyebrow::before { content: ""; width: 7px; height: 7px; background: var(--accent); border-radius: 1px; transform: rotate(45deg); }
+  .hazard { height: 8px; background: repeating-linear-gradient(-45deg, var(--accent) 0 14px, var(--ink) 14px 28px); opacity: 0.9; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 13px 22px; border-radius: var(--radius-sm); border: 1.5px solid var(--border-strong); background: var(--surface); color: var(--ink); font-size: 14.5px; font-weight: 600; cursor: pointer; text-decoration: none; transition: border-color .15s ease, background .15s ease; }
+  .btn:hover { border-color: var(--faint); background: var(--surface-2); }
+  .btn-primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); box-shadow: var(--shadow-sm); }
+  .btn-primary:hover { background: var(--accent-strong); border-color: var(--accent-strong); }
+  .btn-lg { padding: 15px 26px; font-size: 15.5px; }
+
+  .nav { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1120px; margin: 0 auto; }
+  .nav-brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; text-decoration: none; color: var(--ink); }
+  .nav-mark { width: 30px; height: 30px; border-radius: 7px; flex: none; background: linear-gradient(155deg, var(--accent), var(--accent-strong)); display: flex; align-items: center; justify-content: center; }
+  .nav-mark svg { width: 16px; height: 16px; }
+  .nav-back { font-size: 13.5px; font-weight: 600; text-decoration: none; color: var(--muted); }
+  .nav-back:hover { color: var(--ink); }
+
+  .hero-lite { padding: 60px 0 40px; text-align: center; }
+  .hero-lite h1 { font-size: clamp(30px, 5vw, 46px); font-weight: 700; line-height: 1.06; }
+  .hero-lite p { margin: 16px auto 0; max-width: 56ch; font-size: 16.5px; color: var(--muted); }
+
+  section { padding: 56px 0; }
+  .section-head { max-width: 66ch; margin: 0 auto; text-align: center; }
+  .section-head h2 { font-size: clamp(24px, 3.2vw, 32px); margin-top: 12px; }
+  .section-head p { margin-top: 14px; font-size: 15.5px; color: var(--muted); }
+
+  .basics-grid { margin-top: 36px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 860px) { .basics-grid { grid-template-columns: 1fr; } }
+  .basics-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 20px; box-shadow: var(--shadow-sm); border-top: 3px solid var(--accent); }
+  .basics-card svg { width: 30px; height: 30px; color: var(--accent-strong); }
+  .basics-card h3 { font-size: 15.5px; margin-top: 12px; }
+  .basics-card p { margin-top: 8px; font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+
+  .proof-row { margin-top: 36px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  @media (max-width: 600px) { .proof-row { grid-template-columns: 1fr; } }
+  .proof-stat { background: var(--accent-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 22px; text-align: left; }
+  .proof-num { font-family: var(--font-display); font-size: 32px; font-weight: 700; color: var(--accent-strong); line-height: 1; }
+  .proof-label { margin-top: 6px; font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; }
+  .proof-source { margin-top: 14px; font-size: 11.5px; color: var(--faint); text-align: center; }
+  .proof-source a { color: var(--accent-strong); text-decoration: none; }
+
+  .pipeline { margin-top: 44px; display: flex; flex-direction: column; gap: 0; }
+  .pipe-row { display: grid; grid-template-columns: 46px 1fr; gap: 20px; padding: 20px 0; border-top: 1px solid var(--border); position: relative; }
+  .pipe-row:first-child { border-top: none; }
+  .pipe-dot { width: 46px; height: 46px; border-radius: 50%; background: var(--surface); border: 2px solid var(--accent); color: var(--accent-strong); display: flex; align-items: center; justify-content: center; flex: none; }
+  .pipe-dot svg { width: 20px; height: 20px; }
+  .pipe-row.planned .pipe-dot { border-color: var(--border-strong); color: var(--faint); border-style: dashed; }
+  .pipe-title-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .pipe-title { font-weight: 700; font-size: 15.5px; }
+  .pipe-desc { margin-top: 6px; font-size: 13.5px; color: var(--muted); line-height: 1.6; max-width: 60ch; }
+  .pipe-tag { font-family: var(--font-mono); font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; border-radius: 999px; padding: 2px 8px; }
+  .pipe-tag.live { color: var(--success-strong); background: var(--success-bg); border: 1px solid var(--success-border); }
+  .pipe-tag.planned { color: var(--muted); background: var(--surface-3); border: 1px solid var(--border); }
+
+  .wins-grid { margin-top: 36px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 860px) { .wins-grid { grid-template-columns: 1fr; } }
+  .win-card { text-align: center; padding: 26px 18px; }
+  .win-icon { width: 54px; height: 54px; margin: 0 auto; border-radius: 50%; background: var(--surface); border: 2px solid var(--accent); color: var(--accent-strong); display: flex; align-items: center; justify-content: center; }
+  .win-icon svg { width: 24px; height: 24px; }
+  .win-card h3 { margin-top: 14px; font-size: 15px; }
+  .win-card p { margin-top: 8px; font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+
+  .cta-band { background: var(--band-bg); color: var(--band-ink); text-align: center; }
+  .cta-band p { margin-top: 12px; color: var(--band-muted); font-size: 15px; max-width: 50ch; margin-left: auto; margin-right: auto; }
+  .cta-band .btn-primary { margin-top: 22px; }
+
+  footer { border-top: 1px solid var(--border); padding: 28px 0; }
+  .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; font-size: 12.5px; color: var(--faint); }
+
+  /* ---- Preisverlauf (nur auf dieser Seite) ---- */
+  .trend { margin-top: 30px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .trend-head { padding: 14px 18px; border-bottom: 1px solid var(--border); background: var(--surface-2); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .trend-scroll { overflow-x: auto; }
+  .trend table { border-collapse: collapse; width: 100%; min-width: 520px; font-size: 14px; }
+  .trend th, .trend td { padding: 11px 18px; text-align: left; border-bottom: 1px solid var(--border); }
+  .trend thead th { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--faint); font-weight: 600; }
+  .trend tbody tr:last-child td { border-bottom: none; }
+  .trend .num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+  .trend tr.hit { background: var(--accent-bg); }
+  .trend tr.hit td { font-weight: 600; }
+  .trend-foot { padding: 14px 18px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .note-box { margin-top: 28px; background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius-sm); padding: 20px 22px; }
+  .note-box h3 { font-size: 15px; }
+  .note-box p { margin-top: 8px; font-size: 14px; color: var(--muted); line-height: 1.65; }
+</style>
+</head>
+<body>
+<div class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="index.html">
+      <span class="nav-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6l1 4H8l1-4Z"/><path d="M7 7h10l1 13H6L7 7Z"/><path d="M10 12h4"/></svg></span>
+      Prüfstand
+    </a>
+    <a class="nav-back" href="index.html">← Zurück zur Startseite</a>
+  </div>
+</div>
+
+<section class="hero-lite">
+  <div class="wrap">
+    <span class="eyebrow">Optionales Modul</span>
+    <h1 style="margin-top:14px;">Ihr habt investiert. Für einen Teil davon gibt es Geld vom Staat.</h1>
+    <p>Beim Prüfen eurer Eingangsrechnungen sehen wir ohnehin, was ihr angeschafft habt. Für manche dieser Anschaffungen existieren Zuschüsse, die schlicht nicht beantragt werden. Dieses Modul erkennt solche Fälle und bereitet den Antrag vor.</p>
+    <p style="margin-top:12px;"><strong>Kurz zur Einordnung:</strong> Wir beraten nicht über Förderrecht und reichen nichts ein. Wir bereiten Unterlagen auf — unterschrieben und abgeschickt wird vom Betrieb.</p>
+  </div>
+</section>
+
+<div class="hazard" role="presentation"></div>
+
+<section id="warum">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Warum das liegen bleibt</span>
+      <h2>Nicht weil es niemand will — weil es niemandem auffällt.</h2>
+      <p>Ein Zuschuss nützt nur, wenn jemand rechtzeitig merkt, dass es ihn gibt. Genau daran scheitert es im Betriebsalltag.</p>
+    </div>
+
+    <div class="basics-grid">
+      <div class="basics-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 3.5"/></svg>
+        <h3>Der Antrag kommt zu spät</h3>
+        <p>Viele Programme verlangen den Antrag <em>vor</em> dem Kauf. Wer die Rechnung schon bezahlt hat, ist meist raus. Das ist der häufigste und der bitterste Grund.</p>
+      </div>
+      <div class="basics-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+        <h3>Niemand behält den Überblick</h3>
+        <p>Bund, Länder, Kammern, Arbeitsagentur — mehrere Träger, unterschiedliche Bedingungen, laufende Änderungen. Für einen Achtmannbetrieb ist das kein Nebenbei-Thema.</p>
+      </div>
+      <div class="basics-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"/><path d="M14 3v5h5M9 13h6M9 16.5h4"/></svg>
+        <h3>Der Papierkram schreckt ab</h3>
+        <p>Wer den Antrag einmal aufgeschlagen hat, legt ihn oft wieder weg. Genau dieser Teil lässt sich abnehmen, ohne dass jemand Rechtsberatung leisten müsste.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="ablauf">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">So läuft es ab</span>
+      <h2>Vier Schritte, aufgesetzt auf die Rechnungsprüfung.</h2>
+      <p>Das Modul braucht keine neuen Unterlagen. Es nutzt, was für die Erstprüfung ohnehin vorliegt.</p>
+    </div>
+
+    <div class="pipeline">
+      <div class="pipe-row">
+        <div class="pipe-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></div>
+        <div>
+          <div class="pipe-title-row"><span class="pipe-title">1. Investitionen erkennen</span><span class="pipe-tag live">aus den Rechnungen</span></div>
+          <div class="pipe-desc">Beim Durchsehen der Eingangsrechnungen fallen Anschaffungen auf, die kein Verbrauchsmaterial sind: Maschinen, Anlagen, Heizungstechnik, Schulungen. Diese Positionen werden gesammelt.</div>
+        </div>
+      </div>
+      <div class="pipe-row">
+        <div class="pipe-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h4l3 8 4-16 3 8h4"/></svg></div>
+        <div>
+          <div class="pipe-title-row"><span class="pipe-title">2. Programme zuordnen</span><span class="pipe-tag live">Hinweis, keine Zusage</span></div>
+          <div class="pipe-desc">Zu jeder erkannten Kategorie schauen wir nach, welche Programme grundsätzlich passen könnten, und nennen Träger, Bedingungen und Frist. Ob ein Programm für euren Betrieb einschlägig ist, prüft der Träger — nicht wir.</div>
+        </div>
+      </div>
+      <div class="pipe-row">
+        <div class="pipe-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"/></svg></div>
+        <div>
+          <div class="pipe-title-row"><span class="pipe-title">3. Fristen im Blick behalten</span><span class="pipe-tag live">vier und zwei Wochen vorher</span></div>
+          <div class="pipe-desc">Läuft eine Frist, meldet ihr euch nicht bei uns — wir melden uns bei euch. Vier Wochen und noch einmal zwei Wochen vorher. Jede Meldung wird protokolliert, damit später nachvollziehbar ist, wann informiert wurde.</div>
+        </div>
+      </div>
+      <div class="pipe-row">
+        <div class="pipe-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"/><path d="M14 3v5h5"/><path d="m9 15 2 2 4-4"/></svg></div>
+        <div>
+          <div class="pipe-title-row"><span class="pipe-title">4. Antrag vorbereiten</span><span class="pipe-tag planned">Einreichung bei euch</span></div>
+          <div class="pipe-desc">Ihr bekommt eine Mappe: Checkliste, zusammengestellte Rechnungsdaten, die nötigen Angaben zum Betrieb. Ihr prüft, unterschreibt und reicht ein. Das ist keine Förmlichkeit — die Verantwortung für den Antrag bleibt beim Betrieb.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="grenzen">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Die Grenzen</span>
+      <h2>Was wir ausdrücklich nicht tun.</h2>
+      <p>Dieser Abschnitt ist wichtiger als der Rest der Seite.</p>
+    </div>
+
+    <div class="wins-grid">
+      <div class="win-card">
+        <div class="win-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 7v6c0 4.5 3.5 7.5 8 9 4.5-1.5 8-4.5 8-9V7l-8-4Z"/><path d="m10 12 4 4M14 12l-4 4"/></svg></div>
+        <h3>Keine Rechts- oder Förderberatung</h3>
+        <p>Wir erbringen eine Schreib- und Organisationsleistung: Unterlagen zusammenstellen, Formulare vorbereiten, an Fristen erinnern. Die rechtliche Beurteilung eines Programms gehört zu einer Rechtsanwältin, einem Steuerberater oder der Beratung des Trägers.</p>
+      </div>
+      <div class="win-card">
+        <div class="win-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M7 8l5-5 5 5"/><path d="M20 15v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-4"/><path d="m2 2 20 20"/></svg></div>
+        <h3>Keine Einreichung durch uns</h3>
+        <p>Die Ämter haben dafür keine Schnittstellen, und es wäre auch nicht richtig so. Ihr bekommt die fertige Mappe, prüft sie und reicht selbst ein. So bleibt die Kontrolle dort, wo die Verantwortung liegt.</p>
+      </div>
+      <div class="win-card">
+        <div class="win-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.2v.1"/></svg></div>
+        <h3>Keine Zusage auf Bewilligung</h3>
+        <p>Ob gefördert wird, entscheidet ausschließlich der Träger. Wir sagen euch, was passen könnte und worauf zu achten ist — kein Betrag auf unserer Seite ist ein Anspruch. Wenn ein Antrag abgelehnt wird, ist das kein Mangel unserer Leistung.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="kosten">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Kosten</span>
+      <h2>Erst wenn etwas ankommt.</h2>
+      <p>Die Vorbereitung wird erfolgsabhängig vergütet oder pauschal — was besser passt, hängt vom Programm ab und wird vorher schriftlich festgehalten.</p>
+    </div>
+
+    <div class="basics-grid">
+      <div class="basics-card">
+        <h3>Erkennung</h3>
+        <p>Der Hinweis auf mögliche Programme entsteht ohnehin bei der Rechnungsprüfung und kostet nichts extra.</p>
+      </div>
+      <div class="basics-card">
+        <h3>Vorbereitung</h3>
+        <p>Erfolgsabhängiger Anteil an der ausgezahlten Förderung oder ein fester Betrag je Antrag. Beides wird vor Beginn vereinbart, nie danach.</p>
+      </div>
+      <div class="basics-card">
+        <h3>Kein Abschluss über diese Seite</h3>
+        <p>Wie bei allem anderen: Umfang und Preis besprechen wir persönlich. Über die Website kommt kein kostenpflichtiger Vertrag zustande.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="wrap">
+    <span class="eyebrow" style="color: var(--accent-strong);">Persönlich besprechen</span>
+    <h2 style="margin-top:12px; font-size: clamp(22px, 3vw, 30px);">Erst die Rechnungen, dann das Thema Förderung.</h2>
+    <p>Das Modul setzt auf der Erstprüfung auf. Fangt dort an — wenn sich dabei Investitionen zeigen, sprechen wir über den Rest.</p>
+    <a href="index.html#demo" class="btn btn-primary btn-lg">Kostenlose Prüfung anfordern</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-inner">
+    <a class="nav-brand" href="index.html">
+      <span class="nav-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6l1 4H8l1-4Z"/><path d="M7 7h10l1 13H6L7 7Z"/><path d="M10 12h4"/></svg></span>
+      Prüfstand
+    </a>
+    <span><a href="impressum.html" style="color:var(--faint); text-decoration:underline;">Impressum</a> · <a href="datenschutz.html" style="color:var(--faint); text-decoration:underline;">Datenschutz</a></span>
+  </div>
+</footer>
+</body>
+</html>
