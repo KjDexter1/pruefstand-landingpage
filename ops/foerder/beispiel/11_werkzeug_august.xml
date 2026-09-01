@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2"
+ xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+ xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+<cbc:ID>RE-3310</cbc:ID><cbc:IssueDate>2026-08-06</cbc:IssueDate>
+<cac:AccountingSupplierParty><cac:Party><cac:PartyName><cbc:Name>Werkzeug Kessler KG</cbc:Name></cac:PartyName></cac:Party></cac:AccountingSupplierParty>
+<cac:InvoiceLine><cbc:ID>1</cbc:ID>
+<cbc:InvoicedQuantity unitCode="H87">1</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="EUR">7480.00</cbc:LineExtensionAmount>
+<cac:Item><cbc:Name>Schraubenkompressor 5,5 kW, Druckluftanlage</cbc:Name>
+<cac:SellersItemIdentification><cbc:ID>KOMP-500</cbc:ID></cac:SellersItemIdentification></cac:Item>
+<cac:Price><cbc:PriceAmount currencyID="EUR">7480.00</cbc:PriceAmount></cac:Price></cac:InvoiceLine>
+<cac:InvoiceLine><cbc:ID>2</cbc:ID>
+<cbc:InvoicedQuantity unitCode="H87">2</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="EUR">2580.00</cbc:LineExtensionAmount>
+<cac:Item><cbc:Name>Kernbohrmaschine 400 mm</cbc:Name>
+<cac:SellersItemIdentification><cbc:ID>BOHR-40</cbc:ID></cac:SellersItemIdentification></cac:Item>
+<cac:Price><cbc:PriceAmount currencyID="EUR">1290.00</cbc:PriceAmount></cac:Price></cac:InvoiceLine>
+</Invoice>

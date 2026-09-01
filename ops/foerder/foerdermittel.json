@@ -1,0 +1,106 @@
+{
+  "_hinweis": "ACHTUNG: Quoten, Fristen und Voraussetzungen sind PLATZHALTER. Kein Eintrag darf gegenüber einem Kunden verwendet werden, solange 'geprueft_am' leer ist. Programme ändern sich mehrmals im Jahr; Bewilligung erfolgt ausschließlich durch den Träger.",
+  "_pflege": "Vor jeder Nutzung beim Träger gegenprüfen, 'quelle' aufrufen, 'geprueft_am' und 'geprueft_von' setzen. Nicht geprüfte Einträge werden vom Skript als solche ausgewiesen.",
+  "_stand": "2026-09-01",
+
+  "kategorien": {
+    "energie": {
+      "bezeichnung": "Energie- und Ressourceneffizienz",
+      "stichworte": ["heizung", "wärmepumpe", "waermepumpe", "dämmung", "daemmung", "lüftung", "lueftung",
+                     "druckluft", "kompressor", "led", "beleuchtung", "photovoltaik", "pv-modul",
+                     "wärmerückgewinnung", "energieberatung", "isolierung", "fenster"]
+    },
+    "maschinen": {
+      "bezeichnung": "Maschinen, Werkzeuge, Betriebsausstattung",
+      "stichworte": ["maschine", "werkzeug", "bohrhammer", "säge", "saege", "hebebühne", "hebebuehne",
+                     "anlage", "gerät", "geraet", "presse", "kernbohr", "biegemaschine", "stapler"]
+    },
+    "digitalisierung": {
+      "bezeichnung": "Digitalisierung und Software",
+      "stichworte": ["software", "lizenz", "server", "notebook", "laptop", "tablet", "erp",
+                     "warenwirtschaft", "cloud", "digitalisierung", "it-", "edv"]
+    },
+    "weiterbildung": {
+      "bezeichnung": "Qualifizierung und Weiterbildung",
+      "stichworte": ["schulung", "lehrgang", "seminar", "weiterbildung", "meisterkurs",
+                     "fortbildung", "zertifizierung", "prüfungsgebühr", "pruefungsgebuehr"]
+    },
+    "fahrzeug": {
+      "bezeichnung": "Fahrzeuge und Ladeinfrastruktur",
+      "stichworte": ["transporter", "fahrzeug", "kastenwagen", "ladestation", "wallbox", "e-transporter"]
+    }
+  },
+
+  "programme": [
+    {
+      "id": "bafa-eew",
+      "name": "BAFA Bundesförderung für Energie- und Ressourceneffizienz in der Wirtschaft (EEW)",
+      "traeger": "Bundesamt für Wirtschaft und Ausfuhrkontrolle (BAFA)",
+      "kategorie": "energie",
+      "quote_prozent": null,
+      "mindestinvestition_eur": null,
+      "frist": "laufend",
+      "antrag_vor_investition": true,
+      "quelle": "https://www.bafa.de/",
+      "geprueft_am": "",
+      "geprueft_von": "",
+      "notiz": "Richtet sich an gewerbliche Unternehmen. Quote und Mindestinvestition unbedingt beim BAFA gegenprüfen. Antragstellung regelmäßig VOR Vorhabenbeginn erforderlich — das entscheidet, ob eine bereits bezahlte Rechnung überhaupt noch förderfähig ist."
+    },
+    {
+      "id": "beg-em",
+      "name": "Bundesförderung für effiziente Gebäude, Einzelmaßnahmen (BEG EM)",
+      "traeger": "BAFA / KfW",
+      "kategorie": "energie",
+      "quote_prozent": null,
+      "mindestinvestition_eur": null,
+      "frist": "laufend",
+      "antrag_vor_investition": true,
+      "quelle": "https://www.energiewechsel.de/",
+      "geprueft_am": "",
+      "geprueft_von": "",
+      "notiz": "Bei Einzelmaßnahmen ist regelmäßig ein Energieeffizienz-Experte einzubinden. Fördersätze wurden 2026 geändert — Stand zwingend prüfen."
+    },
+    {
+      "id": "kfw-invest",
+      "name": "KfW-Förderkredite für Investitionen im Mittelstand",
+      "traeger": "KfW",
+      "kategorie": "maschinen",
+      "quote_prozent": null,
+      "mindestinvestition_eur": null,
+      "frist": "laufend",
+      "antrag_vor_investition": true,
+      "quelle": "https://www.kfw.de/",
+      "geprueft_am": "",
+      "geprueft_von": "",
+      "notiz": "Überwiegend Kredite, nicht Zuschüsse — im Kundengespräch klar trennen. Antrag läuft über die Hausbank, nicht direkt bei der KfW."
+    },
+    {
+      "id": "qcg-82-sgb3",
+      "name": "Förderung der beruflichen Weiterbildung Beschäftigter (Qualifizierungschancengesetz, § 82 SGB III)",
+      "traeger": "Bundesagentur für Arbeit",
+      "kategorie": "weiterbildung",
+      "quote_prozent": null,
+      "mindestinvestition_eur": null,
+      "frist": "laufend",
+      "antrag_vor_investition": true,
+      "quelle": "https://www.arbeitsagentur.de/unternehmen/finanziell/weiterbildung-beschaeftigter-arbeitnehmer",
+      "geprueft_am": "",
+      "geprueft_von": "",
+      "notiz": "Lehrgangskosten und teilweise Arbeitsentgelt. Höhe hängt von Betriebsgröße und Alter der Beschäftigten ab. Beratung durch den Arbeitgeber-Service ist der übliche Weg."
+    },
+    {
+      "id": "egz-88-sgb3",
+      "name": "Eingliederungszuschuss (§ 88 SGB III)",
+      "traeger": "Bundesagentur für Arbeit",
+      "kategorie": "weiterbildung",
+      "quote_prozent": null,
+      "mindestinvestition_eur": null,
+      "frist": "laufend",
+      "antrag_vor_investition": true,
+      "quelle": "https://www.arbeitsagentur.de/unternehmen/finanziell/eingliederungszuschuss",
+      "geprueft_am": "",
+      "geprueft_von": "",
+      "notiz": "Zuschuss zum Arbeitsentgelt bei Einstellung. Wird nicht aus Rechnungen erkennbar — Treffer entsteht nur im Gespräch. Antrag VOR Einstellung."
+    }
+  ]
+}

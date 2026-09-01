@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2"
+ xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+ xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+<cbc:ID>RE-9921</cbc:ID><cbc:IssueDate>2026-07-15</cbc:IssueDate>
+<cac:AccountingSupplierParty><cac:Party><cac:PartyName><cbc:Name>Technikhaus Rhein-Main GmbH</cbc:Name></cac:PartyName></cac:Party></cac:AccountingSupplierParty>
+<cac:InvoiceLine><cbc:ID>1</cbc:ID>
+<cbc:InvoicedQuantity unitCode="H87">1</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="EUR">18400.00</cbc:LineExtensionAmount>
+<cac:Item><cbc:Name>Wärmepumpe Luft/Wasser 14 kW inkl. Speicher</cbc:Name>
+<cac:SellersItemIdentification><cbc:ID>WP-14</cbc:ID></cac:SellersItemIdentification></cac:Item>
+<cac:Price><cbc:PriceAmount currencyID="EUR">18400.00</cbc:PriceAmount></cac:Price></cac:InvoiceLine>
+<cac:InvoiceLine><cbc:ID>2</cbc:ID>
+<cbc:InvoicedQuantity unitCode="H87">1</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="EUR">2650.00</cbc:LineExtensionAmount>
+<cac:Item><cbc:Name>Montage und Inbetriebnahme</cbc:Name>
+<cac:SellersItemIdentification><cbc:ID>MON-1</cbc:ID></cac:SellersItemIdentification></cac:Item>
+<cac:Price><cbc:PriceAmount currencyID="EUR">2650.00</cbc:PriceAmount></cac:Price></cac:InvoiceLine>
+</Invoice>
