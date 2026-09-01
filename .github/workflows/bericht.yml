@@ -1,46 +1,37 @@
-name: Prüfbericht erzeugen
+name: Musterbericht erzeugen
 
-# Baut aus ops/bericht/funde.csv und bericht.json die Word-Datei und legt
-# sie als herunterladbares Ergebnis an den Lauf. Damit lässt sich der
-# Bericht ohne lokale Installation erzeugen.
+# Baut den gekennzeichneten Musterbericht aus den Beispieldaten des Projekts
+# und legt ihn als herunterladbares Ergebnis an den Lauf.
+#
+# Bewusst NUR der Musterbericht: Echte Kundendaten dürfen nicht in dieses
+# Repository. Sie stünden dauerhaft in der Versionsverwaltung, auch nach dem
+# Löschen — das widerspräche der Zusage aus der Vertraulichkeitserklärung,
+# digitale Kopien nach acht Wochen zu löschen. Echte Berichte werden lokal
+# erzeugt, aus ~/pruefstand-daten.
 on:
   workflow_dispatch:
-    inputs:
-      muster:
-        description: "Musterbericht mit Kennzeichnung statt echtem Bericht"
-        type: boolean
-        default: false
 
 permissions:
   contents: read
 
 jobs:
-  bericht:
+  musterbericht:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-
       - name: Abhängigkeiten installieren
         working-directory: ops/bericht
         run: npm install --no-audit --no-fund
-
-      - name: Bericht erzeugen
+      - name: Musterbericht bauen
         working-directory: ops/bericht
-        run: |
-          if [ "${{ inputs.muster }}" = "true" ]; then
-            node erzeuge-bericht.js --muster
-          else
-            node erzeuge-bericht.js
-          fi
-
+        run: node erzeuge-bericht.js --beispiel --muster
       - name: Word-Datei bereitstellen
         uses: actions/upload-artifact@v4
         with:
-          name: pruefbericht
+          name: musterbericht
           path: ops/bericht/*.docx
           if-no-files-found: error
           retention-days: 7

@@ -4,7 +4,16 @@
  *   funde.csv      – eine Zeile je Fund
  *   bericht.json   – Betrieb, Lieferanten, Muster, Empfehlungen
  *
- *   node erzeuge-bericht.js [--muster]
+ *   node erzeuge-bericht.js                 aus ~/pruefstand-daten
+ *   node erzeuge-bericht.js --daten <pfad>  aus einem anderen Ordner
+ *   node erzeuge-bericht.js --beispiel      mit den Beispieldaten im Projekt
+ *   node erzeuge-bericht.js --muster        gekennzeichnete Musterfassung
+ *
+ * Die Arbeitsdaten liegen absichtlich AUSSERHALB des Projektordners. Sie
+ * enthalten Rechnungsnummern, Lieferanten und Betraege echter Betriebe.
+ * Kaeme das in die Versionsverwaltung, bliebe es dort dauerhaft - auch nach
+ * dem Loeschen. Das widerspraeche der Zusage aus der Vertraulichkeits-
+ * erklaerung, digitale Kopien nach acht Wochen zu loeschen.
  *
  * Gerechnet wird hier, nicht von Hand: Summe der belegbaren Funde,
  * Anzahl der Funde, geprüfte Rechnungen, Einkaufsvolumen und die
@@ -12,6 +21,7 @@
  */
 
 const fs = require("fs");
+const os = require("os");
 const path = require("path");
 const {
   Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
@@ -19,7 +29,37 @@ const {
 } = require("docx");
 
 const HIER = __dirname;
+const BEISPIEL = path.join(HIER, "beispiel");
 const MUSTER = process.argv.includes("--muster");
+
+/* Wo die Arbeitsdaten liegen. Voreinstellung ausserhalb des Projekts. */
+function datenOrdner() {
+  const i = process.argv.indexOf("--daten");
+  if (i >= 0 && process.argv[i + 1]) return path.resolve(process.argv[i + 1]);
+  if (process.argv.includes("--beispiel")) return BEISPIEL;
+  return path.join(os.homedir(), "pruefstand-daten");
+}
+
+const DATEN = datenOrdner();
+
+/* Fehlt der Ordner, wird er angelegt und mit den Beispieldateien
+   vorbelegt - dann ist sofort klar, wo eingetragen wird. */
+function ordnerVorbereiten() {
+  if (DATEN === BEISPIEL) return;
+  const fehlend = ["funde.csv", "bericht.json"].filter(
+    (n) => !fs.existsSync(path.join(DATEN, n)));
+  if (fehlend.length === 0) return;
+  fs.mkdirSync(DATEN, { recursive: true });
+  fehlend.forEach((n) => fs.copyFileSync(path.join(BEISPIEL, n), path.join(DATEN, n)));
+  console.log("\n  Arbeitsordner angelegt: " + DATEN +
+    "\n  Hineinkopiert: " + fehlend.join(", ") +
+    "\n\n  Dort die Werte des Betriebs eintragen und den Befehl erneut ausfuehren." +
+    "\n  Dieser Ordner liegt ausserhalb des Projekts, damit Kundendaten nicht" +
+    "\n  in die Versionsverwaltung geraten.\n");
+  process.exit(0);
+}
+
+ordnerVorbereiten();
 
 // ------------------------------------------------------------------ Einlesen
 
@@ -31,7 +71,7 @@ function leseCsv(datei) {
   return zeilen.slice(1).map((z, i) => {
     const f = zerlege(z);
     if (f.length < kopf.length) {
-      throw new Error(`funde.csv Zeile ${i + 2}: ${f.length} Felder, erwartet ${kopf.length}`);
+      throw new Error(`${path.basename(datei)} Zeile ${i + 2}: ${f.length} Felder, erwartet ${kopf.length}`);
     }
     const o = {};
     kopf.forEach((k, j) => (o[k] = (f[j] || "").trim()));
@@ -63,8 +103,8 @@ function zahl(text) {
 const eur = (n) => n.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";
 const eur0 = (n) => Math.round(n).toLocaleString("de-DE") + " €";
 
-const cfg = JSON.parse(fs.readFileSync(path.join(HIER, "bericht.json"), "utf8"));
-const funde = leseCsv(path.join(HIER, "funde.csv"));
+const cfg = JSON.parse(fs.readFileSync(path.join(DATEN, "bericht.json"), "utf8"));
+const funde = leseCsv(path.join(DATEN, "funde.csv"));
 
 // ------------------------------------------------------------------ Rechnen
 
@@ -274,10 +314,11 @@ const sicherName = (s) => s.split(",")[0].replace(/[^A-Za-zÄÖÜäöüß0-9]+/g
 const name = MUSTER ? "Musterbericht_Pruefstand.docx"
                     : `Pruefbericht_${sicherName(cfg.betrieb)}.docx`;
 
+const zielOrdner = DATEN === BEISPIEL ? HIER : DATEN;
 Packer.toBuffer(doc).then((b) => {
-  fs.writeFileSync(path.join(HIER, name), b);
+  fs.writeFileSync(path.join(zielOrdner, name), b);
   console.log(`
-  ${name}
+  ${path.join(zielOrdner, name)}
 
   Rechnungen geprüft   ${rechnungen}
   Einkaufsvolumen      ${eur0(volumen)}
