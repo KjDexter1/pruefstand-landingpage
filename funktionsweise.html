@@ -131,6 +131,12 @@
   .trend-foot { padding: 14px 18px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); line-height: 1.6; }
   .note-box { margin-top: 28px; background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius-sm); padding: 20px 22px; }
   .note-box h3 { font-size: 15px; }
+  .trend .abw { color: var(--accent-strong); font-weight: 700; }
+  .garantien { margin-top: 28px; display: grid; gap: 12px; }
+  .garantie { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--success); border-radius: var(--radius-sm); padding: 16px 20px; display: grid; grid-template-columns: 26px 1fr; gap: 14px; align-items: start; }
+  .garantie .num { font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--success-strong); background: var(--success-bg); border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; }
+  .garantie h3 { font-size: 14.5px; margin: 3px 0 0; }
+  .garantie p { margin-top: 6px; font-size: 13.5px; color: var(--muted); line-height: 1.6; }
   .note-box p { margin-top: 8px; font-size: 14px; color: var(--muted); line-height: 1.65; }
 </style>
 </head>
@@ -150,7 +156,7 @@
     <span class="eyebrow">So läuft die Erstprüfung ab</span>
     <h1 style="margin-top:14px;">Was wir prüfen, wie wir es prüfen — und was mit euren Unterlagen passiert.</h1>
     <p>Diese Seite ist für Betriebe, die vor der Übergabe genau wissen wollen, worauf sie sich einlassen. Ohne Marketing-Übertreibung, einschließlich der Punkte, die wir ausdrücklich nicht leisten.</p>
-    <p style="margin-top:12px;"><strong>Kurz zur Einordnung:</strong> Geprüft werden die Rechnungen aus einem Zeitraum von drei Monaten. Die Prüfung selbst dauert 3 bis 5 Werktage.</p>
+    <p style="margin-top:12px;"><strong>Kurz zur Einordnung:</strong> Geprüft werden die Rechnungen aus einem Zeitraum von drei Monaten. Strukturierte E-Rechnungen laufen in 24 bis 48 Stunden durch die Pipeline; kommen Papierbelege dazu, rechnet mit 3 bis 5 Werktagen.</p>
   </div>
 </section>
 
@@ -240,6 +246,35 @@
   </div>
 </section>
 
+<section id="preisspiegel">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Der regionale Preisspiegel</span>
+      <h2>Weißt du, was dein Großhändler dem Betrieb im Nachbarort berechnet?</h2>
+      <p>Im Großhandel gibt es keine festen Preisschilder. Wer gut verhandelt, zahlt weniger. Wer einfach bestellt, zahlt den Listenpreis. Prüfstand gleicht deine Einkaufspreise vollautomatisch mit dem anonymisierten Durchschnitt deiner Region ab. Du siehst sofort, bei welchen Artikeln du über Marktschnitt liegst — und gehst mit echten Zahlen ins nächste Lieferantengespräch.</p>
+      <p style="margin-top:14px;"><span class="pipe-tag planned">In Entwicklung</span> &nbsp; Der Preisspiegel entsteht erst, wenn genügend Betriebe mitmachen — siehe Garantie 2 weiter unten. Bis dahin ist er nicht Teil der Erstprüfung.</p>
+    </div>
+
+    <div class="trend">
+      <div class="trend-head">Beispielrechnung · Kupferrohr 15 × 1 mm, halbhart</div>
+      <div class="trend-scroll">
+        <table>
+          <thead>
+            <tr><th>Position</th><th class="num">Wert</th><th>Bedeutung</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Dein Preis</td><td class="num">6,85 € / m</td><td>so abgerechnet auf deinen Rechnungen</td></tr>
+            <tr><td>Regionaler Schnitt, PLZ 60xxx–61xxx</td><td class="num">5,90 € / m</td><td>anonymisierter Durchschnitt der teilnehmenden Betriebe</td></tr>
+            <tr><td>Abweichung</td><td class="num abw">+ 13,8 %</td><td>du liegst über Marktschnitt</td></tr>
+            <tr><td>Bei 1.200 m Jahresbedarf</td><td class="num abw">1.140 €</td><td>verschenkte Marge pro Jahr</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="trend-foot">Erfundene Zahlen zur Veranschaulichung, keine erhobenen Marktdaten. Ein Preis über dem Schnitt ist kein Fehler des Lieferanten — er ist ein Verhandlungsargument. Der Unterschied zur Rechnungsprüfung ist wichtig: Dort geht es darum, ob falsch abgerechnet wurde. Hier geht es darum, ob zu teuer eingekauft wird.</div>
+    </div>
+  </div>
+</section>
+
 <section id="ablauf">
   <div class="wrap">
     <div class="section-head">
@@ -266,15 +301,15 @@
       <div class="pipe-row">
         <div class="pipe-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M7 8l5-5 5 5"/><path d="M20 15v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-4"/></svg></div>
         <div>
-          <div class="pipe-title-row"><span class="pipe-title">3. Unterlagen übergeben</span><span class="pipe-tag live">≈ 10 Minuten bei euch</span></div>
-          <div class="pipe-desc">Eingangsrechnungen aus den letzten drei Monaten als Pflichtteil. Lieferscheine, Preis- oder Konditionsvereinbarungen und Zahlungsnachweise machen die Prüfung deutlich schärfer, sind aber keine Bedingung. Per E-Mail, oder wir holen den Ordner ab.</div>
+          <div class="pipe-title-row"><span class="pipe-title">3. Unterlagen übergeben</span><span class="pipe-tag live">≈ 5 Minuten bei euch</span></div>
+          <div class="pipe-desc">Rechnungen als PDF, ZUGFeRD oder XRechnung direkt per Mail oder sicherem Upload bereitstellen. Eingangsrechnungen aus den letzten drei Monaten sind der Pflichtteil; Lieferscheine, Konditionsvereinbarungen und Zahlungsnachweise machen die Prüfung schärfer, sind aber keine Bedingung. Wer lieber den Ordner übergibt, kann das auch — wir holen ihn ab.</div>
         </div>
       </div>
       <div class="pipe-row">
         <div class="pipe-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/><path d="M8.5 11l2 2 4-4"/></svg></div>
         <div>
-          <div class="pipe-title-row"><span class="pipe-title">4. Prüfung von Hand</span><span class="pipe-tag live">3 – 5 Werktage</span></div>
-          <div class="pipe-desc">Sortiert nach Lieferant, der größte zuerst — dort sitzt in den meisten Betrieben rund die Hälfte des Volumens. Bei den größten Lieferanten laufen alle Prüfpunkte durch: Preisverlauf je Artikel, Mengen gegen Lieferschein, Rabatte, Zuschläge, Dopplungen, Pfand, Retouren, Skonto. Bei kleineren Lieferanten prüfen wir gezielt die Punkte, die erfahrungsgemäß am häufigsten etwas finden — vollständige Prüfung jeder einzelnen Kleinstrechnung wäre teurer als der mögliche Fund. Der Bericht weist aus, welcher Lieferant wie tief geprüft wurde. Die formale Prüfung läuft maschinell über alle Rechnungen mit.</div>
+          <div class="pipe-title-row"><span class="pipe-title">4. Automatisierter Tiefenabgleich</span><span class="pipe-tag live">24 – 48 Stunden</span></div>
+          <div class="pipe-desc">Unsere Pipeline gleicht Preisverläufe je Artikel, Lieferscheinmengen und Rabatte maschinell ab und bewertet sie gegen den regionalen Preisspiegel. Das gilt für strukturierte E-Rechnungen — XRechnung und ZUGFeRD liest die Pipeline direkt. Papierbelege, Scans und Lieferscheine ohne Datensatz gehen zusätzlich durch die Hand; dann dauert es entsprechend länger. Geprüft wird nach Lieferant sortiert, der größte zuerst: dort laufen alle Prüfpunkte durch, bei kleineren Lieferanten gezielt die, die am häufigsten etwas finden. Der Bericht weist aus, welcher Lieferant wie tief geprüft wurde.</div>
         </div>
       </div>
       <div class="pipe-row">
@@ -317,7 +352,31 @@
       <div class="basics-card">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
         <h3>Was wir daraus lernen dürfen</h3>
-        <p>Wir werten aus, welche Abrechnungsfehler typisch sind — anonymisiert und ohne Rückschluss auf euren Betrieb, eure Preise oder eure Konditionen. Euren Namen nennen wir nur, wenn ihr ausdrücklich zustimmt.</p>
+        <p>Wir werten aus, welche Abrechnungsfehler typisch sind — anonymisiert und ohne Rückschluss auf euren Betrieb. Euren Namen nennen wir nur, wenn ihr ausdrücklich zustimmt.</p>
+      </div>
+    </div>
+
+    <div class="garantien">
+      <div class="garantie">
+        <span class="num">1</span>
+        <div>
+          <h3>Keine Weitergabe von Einzelpreisen oder Lieferantennamen</h3>
+          <p>Was ihr bei wem zu welchem Preis einkauft, verlässt dieses Haus nicht. In den regionalen Schnitt fließt ausschließlich ein Durchschnittswert ein — nie eure Einzelpreise, nie die Namen eurer Lieferanten.</p>
+        </div>
+      </div>
+      <div class="garantie">
+        <span class="num">2</span>
+        <div>
+          <h3>Der 5er-Schwellenwert</h3>
+          <p>Ein regionaler Schnitt wird erst berechnet, wenn mindestens fünf unabhängige Betriebe aus eurer Region denselben Artikel gekauft haben. Ein Rückschluss auf euren Betrieb ist damit mathematisch ausgeschlossen. Solange die fünf nicht zusammenkommen, gibt es für diesen Artikel schlicht keinen Vergleichswert — auch nicht intern.</p>
+        </div>
+      </div>
+      <div class="garantie">
+        <span class="num">3</span>
+        <div>
+          <h3>Kein Kontakt zu Großhändlern</h3>
+          <p>Wir treten gegenüber euren Lieferanten nicht auf und verkaufen keine Daten — weder an Lieferanten noch an Kanzleien noch an sonst jemanden. Der Preisspiegel existiert für die teilnehmenden Betriebe, für niemanden sonst.</p>
+        </div>
       </div>
     </div>
   </div>
