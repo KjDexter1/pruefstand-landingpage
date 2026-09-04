@@ -1,0 +1,280 @@
+<title>Datenschutzerklärung</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Serif:wght@600&display=swap">
+<style>
+  :root {
+    --ground:#F2F1EC; --surface:#FBFAF7; --ink:#1A1D1B; --ink-soft:#55605A;
+    --ink-faint:#8A938D; --rule:#D4D2C9; --accent:#0E5B50; --accent-soft:#DCEAE6;
+    --flag:#A93C1B; --flag-soft:#F6E3DC;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:#141715; --surface:#1C201E; --ink:#EDEEEA; --ink-soft:#A8B2AC;
+      --ink-faint:#6F7A74; --rule:#333B37; --accent:#5FBFAC; --accent-soft:#10322C;
+      --flag:#E08466; --flag-soft:#37201A;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:#141715; --surface:#1C201E; --ink:#EDEEEA; --ink-soft:#A8B2AC;
+    --ink-faint:#6F7A74; --rule:#333B37; --accent:#5FBFAC; --accent-soft:#10322C;
+    --flag:#E08466; --flag-soft:#37201A;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size:15px; line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  .wrap { max-width:72ch; margin:0 auto; padding:32px 20px 72px; }
+  a { color:var(--accent); }
+  h1 {
+    font-family:"IBM Plex Serif", Georgia, serif; font-weight:600;
+    font-size:clamp(26px,4.5vw,34px); margin:0 0 6px; line-height:1.15;
+  }
+  .stand {
+    font-family:"IBM Plex Mono", ui-monospace, monospace; font-size:12px;
+    color:var(--ink-faint); margin:0 0 22px;
+  }
+  h2 {
+    font-family:"IBM Plex Sans", sans-serif; font-weight:600; font-size:16px;
+    margin:30px 0 8px; padding-bottom:5px; border-bottom:1px solid var(--rule);
+  }
+  h2 .nr { color:var(--accent); font-family:"IBM Plex Mono", monospace; font-size:13px; }
+  h3 { font-size:14.5px; font-weight:600; margin:16px 0 5px; }
+  p { margin:0 0 12px; }
+  ul { margin:0 0 12px; padding-left:20px; }
+  li { margin-bottom:5px; }
+  .zurueck {
+    font-family:"IBM Plex Mono", ui-monospace, monospace; font-size:11px;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--accent);
+    text-decoration:none; display:inline-block; margin-bottom:14px;
+  }
+  .zurueck:hover { text-decoration:underline; }
+  .lueck {
+    background:var(--flag-soft); color:var(--flag); font-weight:600;
+    padding:1px 6px; border-radius:3px; font-size:14px;
+  }
+  .hinweis {
+    background:var(--flag-soft); border-left:3px solid var(--flag);
+    border-radius:0 4px 4px 0; padding:13px 16px; margin:0 0 26px; font-size:14px;
+  }
+  .hinweis strong { display:block; margin-bottom:4px; }
+  .betont {
+    background:var(--accent-soft); border-left:3px solid var(--accent);
+    border-radius:0 4px 4px 0; padding:13px 16px; margin:12px 0; font-size:14.5px;
+  }
+  .betont p:last-child { margin-bottom:0; }
+  .block {
+    background:var(--surface); border:1px solid var(--rule); border-radius:6px;
+    padding:14px 18px; margin:0 0 12px;
+  }
+  .block p:last-child { margin-bottom:0; }
+  .rechtsgrund {
+    font-family:"IBM Plex Mono", ui-monospace, monospace; font-size:11.5px;
+    color:var(--ink-faint); display:block; margin-top:6px;
+  }
+  footer {
+    margin-top:40px; padding-top:14px; border-top:1px solid var(--rule);
+    color:var(--ink-faint); font-size:12.5px;
+  }
+  footer a { color:var(--ink-soft); }
+</style>
+
+<div class="wrap">
+  <a class="zurueck" href="leser.html">← zurück zur Startseite</a>
+  <h1>Datenschutzerklärung</h1>
+  <p class="stand">Stand: <span class="lueck">[Datum eintragen]</span></p>
+
+  <div class="hinweis">
+    <strong>Vor dem Veröffentlichen ausfüllen</strong>
+    Rot markierte Stellen ersetzen und diesen Kasten löschen. Abschnitt 3 muss an den
+    tatsächlichen Hosting-Anbieter angepasst werden, Abschnitt 7 an die tatsächlich
+    eingebundenen Schriftarten. Wird eine Funktion später ergänzt — etwa ein Kontaktformular
+    mit Serverübertragung —, muss diese Erklärung mitwachsen.
+  </div>
+
+  <h2><span class="nr">1</span> &nbsp;Verantwortlicher</h2>
+  <div class="block">
+    <p>
+      Verantwortlich für die Datenverarbeitung auf dieser Website im Sinne der
+      Datenschutz-Grundverordnung ist:
+    </p>
+    <p>
+      <span class="lueck">[Vor- und Nachname]</span><br>
+      <span class="lueck">[Straße und Hausnummer]</span><br>
+      <span class="lueck">[Postleitzahl und Ort]</span><br>
+      Telefon: <span class="lueck">[Telefonnummer]</span><br>
+      E-Mail: <span class="lueck">[E-Mail-Adresse]</span>
+    </p>
+  </div>
+
+  <h2><span class="nr">2</span> &nbsp;Grundsatz</h2>
+  <div class="betont">
+    <p>
+      Diese Website ist bewusst so gebaut, dass sie so wenig Daten wie möglich verarbeitet.
+      Sie setzt <strong>keine Cookies</strong>, bindet <strong>keine Analyse- oder
+      Trackingdienste</strong> ein, führt <strong>keine Nutzerkonten</strong> und legt
+      <strong>keine Datenbank</strong> an.
+    </p>
+    <p>
+      Insbesondere werden <strong>keine Rechnungsdaten übertragen oder gespeichert</strong>.
+      Näheres dazu in Abschnitt 4.
+    </p>
+  </div>
+
+  <h2><span class="nr">3</span> &nbsp;Aufruf der Website und Server-Logfiles</h2>
+  <p>
+    Beim Aufruf dieser Website werden durch den Hosting-Anbieter automatisch Informationen
+    erfasst, die Ihr Browser übermittelt. Das sind insbesondere:
+  </p>
+  <ul>
+    <li>IP-Adresse des anfragenden Geräts</li>
+    <li>Datum und Uhrzeit des Zugriffs</li>
+    <li>Name und URL der abgerufenen Datei</li>
+    <li>verwendeter Browser und Betriebssystem</li>
+    <li>gegebenenfalls die zuvor besuchte Seite</li>
+  </ul>
+  <p>
+    Diese Daten sind technisch erforderlich, um die Website auszuliefern, ihre Stabilität
+    zu gewährleisten und Angriffe abzuwehren. Sie werden nicht mit anderen Datenquellen
+    zusammengeführt und nicht dazu verwendet, Rückschlüsse auf einzelne Personen zu ziehen.
+    <span class="rechtsgrund">
+      Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO — berechtigtes Interesse am sicheren und
+      störungsfreien Betrieb der Website.
+    </span>
+  </p>
+
+  <h3>Hosting</h3>
+  <div class="block">
+    <p>
+      Diese Website wird gehostet bei <span class="lueck">[Name und Anschrift des
+      Hosting-Anbieters]</span>. Der Anbieter verarbeitet die oben genannten Daten in
+      meinem Auftrag; es besteht ein Vertrag über die Auftragsverarbeitung nach
+      Art. 28 DSGVO.
+    </p>
+    <p style="margin-top:10px;color:var(--ink-faint);font-size:13.5px">
+      Sitzt der Anbieter außerhalb der Europäischen Union, ist an dieser Stelle zusätzlich
+      anzugeben, auf welcher Grundlage die Übermittlung erfolgt — etwa
+      Standardvertragsklauseln nach Art. 46 DSGVO oder ein Angemessenheitsbeschluss.
+    </p>
+  </div>
+
+  <h2><span class="nr">4</span> &nbsp;Der E-Rechnungs-Leser</h2>
+  <div class="betont">
+    <p>
+      Wenn Sie auf der Startseite eine Rechnungsdatei auswählen oder in das Feld ziehen,
+      <strong>wird diese Datei nicht übertragen</strong>. Sie wird ausschließlich in Ihrem
+      Browser auf Ihrem eigenen Gerät gelesen und dargestellt.
+    </p>
+    <p>
+      Es findet kein Hochladen statt, es erfolgt keine Speicherung auf einem Server, und
+      weder ich noch der Hosting-Anbieter erhalten Kenntnis vom Inhalt der Datei. Sobald
+      Sie die Seite schließen oder neu laden, ist der Inhalt verschwunden.
+    </p>
+    <p>
+      In datenschutzrechtlicher Hinsicht findet auf meiner Seite damit
+      <strong>keine Verarbeitung dieser Daten statt</strong>.
+    </p>
+  </div>
+
+  <h2><span class="nr">5</span> &nbsp;Die Selbstauskunft</h2>
+  <p>
+    Die drei Fragen zu Rechnungsprogramm, Vorjahresumsatz und § 13 b sowie die Felder für
+    Betrieb, Ansprechpartner, Telefon und E-Mail werden ebenfalls
+    <strong>ausschließlich in Ihrem Browser</strong> ausgewertet. Es werden keine Eingaben
+    an einen Server gesendet.
+  </p>
+  <p>
+    Wenn Sie auf <em>E-Mail schreiben</em> klicken, wird lediglich Ihr eigenes
+    E-Mail-Programm mit einem vorbereiteten Text geöffnet. Ob Sie diese Nachricht
+    tatsächlich absenden, entscheiden allein Sie. Erst mit dem Absenden erhalte ich die
+    darin enthaltenen Angaben — dann gilt Abschnitt 6.
+  </p>
+  <p>
+    Der Knopf <em>Text kopieren</em> legt den Text in die Zwischenablage Ihres Geräts.
+    Auch dabei verlässt nichts Ihren Rechner.
+  </p>
+
+  <h2><span class="nr">6</span> &nbsp;Kontaktaufnahme</h2>
+  <p>
+    Wenn Sie mich per E-Mail oder telefonisch kontaktieren, verarbeite ich die von Ihnen
+    mitgeteilten Angaben — in der Regel Name, Betrieb, Telefonnummer, E-Mail-Adresse sowie
+    die Angaben zu Ihrer Software und Ihrer Umsatzsituation —, um Ihre Anfrage zu
+    beantworten und ein Angebot zu erstellen.
+    <span class="rechtsgrund">
+      Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO bei Anbahnung oder Durchführung eines
+      Vertrags, im Übrigen Art. 6 Abs. 1 lit. f DSGVO.
+    </span>
+  </p>
+  <p>
+    Ich lösche diese Angaben, sobald sie für den Zweck nicht mehr erforderlich sind und
+    keine gesetzlichen Aufbewahrungspflichten entgegenstehen. Für geschäftliche
+    Korrespondenz und Belege gelten die handels- und steuerrechtlichen Fristen von sechs
+    beziehungsweise zehn Jahren.
+  </p>
+  <p>
+    Sofern im Rahmen eines Auftrags Zugriff auf Systeme oder Unterlagen Ihres Betriebs
+    erforderlich ist, wird dies vorab gesondert vereinbart. Personenbezogene Daten aus
+    Ihren Rechnungen werden dabei nicht zu eigenen Zwecken ausgewertet, nicht gespeichert
+    und nicht an Dritte weitergegeben.
+  </p>
+
+  <h2><span class="nr">7</span> &nbsp;Schriftarten</h2>
+  <div class="block">
+    <p>
+      Diese Seite verwendet die Schriftart IBM Plex. Werden die Schriftdateien von einem
+      externen Anbieter geladen, wird dabei die IP-Adresse Ihres Geräts an diesen Anbieter
+      übermittelt.
+    </p>
+    <p style="margin-top:10px;color:var(--ink-faint);font-size:13.5px">
+      Hinweis für den Betreiber: Werden die Schriften lokal auf dem eigenen Server
+      abgelegt, findet keine Übermittlung an Dritte statt und dieser Abschnitt kann
+      entsprechend gekürzt werden. Das ist die empfohlene Lösung — siehe die Anmerkung
+      unter dem Impressum.
+    </p>
+  </div>
+
+  <h2><span class="nr">8</span> &nbsp;Keine Cookies, kein Tracking</h2>
+  <p>
+    Diese Website setzt keine Cookies und verwendet keine Reichweitenmessung,
+    Analysewerkzeuge, Werbenetzwerke, Karten- oder Videoeinbindungen und keine
+    Schaltflächen sozialer Netzwerke. Ein Einwilligungsbanner ist daher nicht erforderlich.
+  </p>
+
+  <h2><span class="nr">9</span> &nbsp;Ihre Rechte</h2>
+  <p>Sie haben im Rahmen der gesetzlichen Voraussetzungen jederzeit das Recht auf:</p>
+  <ul>
+    <li>Auskunft über die zu Ihrer Person verarbeiteten Daten (Art. 15 DSGVO)</li>
+    <li>Berichtigung unrichtiger Daten (Art. 16 DSGVO)</li>
+    <li>Löschung (Art. 17 DSGVO)</li>
+    <li>Einschränkung der Verarbeitung (Art. 18 DSGVO)</li>
+    <li>Datenübertragbarkeit (Art. 20 DSGVO)</li>
+    <li>
+      Widerspruch gegen Verarbeitungen, die auf einem berechtigten Interesse beruhen
+      (Art. 21 DSGVO)
+    </li>
+  </ul>
+  <p>
+    Zur Ausübung genügt eine formlose Nachricht an die in Abschnitt 1 genannte Adresse.
+  </p>
+
+  <h2><span class="nr">10</span> &nbsp;Beschwerderecht</h2>
+  <p>
+    Unbeschadet anderer Rechtsbehelfe haben Sie das Recht, sich bei einer
+    Datenschutz-Aufsichtsbehörde zu beschweren, wenn Sie der Ansicht sind, dass die
+    Verarbeitung Ihrer Daten gegen die DSGVO verstößt. Zuständig ist in der Regel die
+    Behörde Ihres Wohnsitzes oder die des Verantwortlichen:
+    <span class="lueck">[zuständige Landesdatenschutzbehörde eintragen]</span>.
+  </p>
+
+  <h2><span class="nr">11</span> &nbsp;Änderungen dieser Erklärung</h2>
+  <p>
+    Diese Erklärung wird angepasst, sobald sich die Funktionen dieser Website oder die
+    rechtlichen Anforderungen ändern. Es gilt jeweils die hier abrufbare Fassung mit dem
+    oben genannten Stand.
+  </p>
+
+  <footer>
+    <a href="leser.html">Startseite</a> · <a href="impressum.html">Impressum</a>
+  </footer>
+</div>

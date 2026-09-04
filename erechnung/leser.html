@@ -1153,18 +1153,22 @@
   var offen = /VORNAME|FIRMENNAME|01xx|deine@adresse/.test(
     KONTAKT.name + KONTAKT.firma + KONTAKT.telefon + KONTAKT.email);
 
-  if (offen) {
-    rechtliches.innerHTML =
-      '<div class="platzhalter"><strong>Vor dem Veröffentlichen:</strong> ' +
-      "In der Datei stehen noch Platzhalter. Trage im Abschnitt KONTAKT deinen Namen, " +
-      "Firmennamen, Telefonnummer und E-Mail-Adresse ein. Ohne Impressum nach § 5 DDG " +
-      "und Datenschutzerklärung darf die Seite in Deutschland nicht online gehen — " +
-      "dieser Hinweis verschwindet automatisch, sobald die Platzhalter ersetzt sind.</div>";
-  } else {
-    rechtliches.innerHTML =
-      KONTAKT.firma + " · " + KONTAKT.name + " · " + KONTAKT.telefon +
-      ' · <a href="' + KONTAKT.impressum + '">Impressum</a>' +
-      ' · <a href="' + KONTAKT.datenschutz + '">Datenschutz</a>';
+  /* Die Pflichtlinks stehen immer da -- ein Impressum darf nie an einer
+     Bedingung haengen. Der Warnkasten kommt nur zusaetzlich dazu. */
+  var zeile = '<a href="' + KONTAKT.impressum + '">Impressum</a>' +
+              ' · <a href="' + KONTAKT.datenschutz + '">Datenschutzerklärung</a>';
+  if (!offen) {
+    zeile = KONTAKT.firma + " · " + KONTAKT.name + " · " + KONTAKT.telefon + " · " + zeile;
   }
+  rechtliches.innerHTML =
+    "<div>" + zeile + "</div>" +
+    (offen
+      ? '<div class="platzhalter" style="margin-top:10px"><strong>Vor dem Veröffentlichen:</strong> ' +
+        "In dieser Datei stehen noch Platzhalter. Trage im Abschnitt KONTAKT deinen Namen, " +
+        "Firmennamen, Telefonnummer und E-Mail-Adresse ein — und fülle Impressum und " +
+        "Datenschutzerklärung aus. Ohne beides darf die Seite in Deutschland nicht online " +
+        "gehen. Dieser Hinweis verschwindet automatisch, sobald die Platzhalter hier " +
+        "ersetzt sind.</div>"
+      : "");
 })();
 </script>

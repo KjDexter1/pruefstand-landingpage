@@ -1,0 +1,190 @@
+<title>Impressum</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Serif:wght@600&display=swap">
+<style>
+  :root {
+    --ground:#F2F1EC; --surface:#FBFAF7; --ink:#1A1D1B; --ink-soft:#55605A;
+    --ink-faint:#8A938D; --rule:#D4D2C9; --accent:#0E5B50; --accent-soft:#DCEAE6;
+    --flag:#A93C1B; --flag-soft:#F6E3DC;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:#141715; --surface:#1C201E; --ink:#EDEEEA; --ink-soft:#A8B2AC;
+      --ink-faint:#6F7A74; --rule:#333B37; --accent:#5FBFAC; --accent-soft:#10322C;
+      --flag:#E08466; --flag-soft:#37201A;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:#141715; --surface:#1C201E; --ink:#EDEEEA; --ink-soft:#A8B2AC;
+    --ink-faint:#6F7A74; --rule:#333B37; --accent:#5FBFAC; --accent-soft:#10322C;
+    --flag:#E08466; --flag-soft:#37201A;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size:15px; line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  .wrap { max-width:72ch; margin:0 auto; padding:32px 20px 72px; }
+  a { color:var(--accent); }
+  h1 {
+    font-family:"IBM Plex Serif", Georgia, serif; font-weight:600;
+    font-size:clamp(26px,4.5vw,34px); margin:0 0 6px; line-height:1.15;
+  }
+  h2 {
+    font-family:"IBM Plex Sans", sans-serif; font-weight:600; font-size:16px;
+    margin:32px 0 8px; padding-bottom:5px; border-bottom:1px solid var(--rule);
+  }
+  p { margin:0 0 12px; }
+  .zurueck {
+    font-family:"IBM Plex Mono", ui-monospace, monospace; font-size:11px;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--accent);
+    text-decoration:none; display:inline-block; margin-bottom:14px;
+  }
+  .zurueck:hover { text-decoration:underline; }
+  .block {
+    background:var(--surface); border:1px solid var(--rule); border-radius:6px;
+    padding:14px 18px; margin:0 0 12px;
+  }
+  .block p:last-child { margin-bottom:0; }
+  .lueck {
+    background:var(--flag-soft); color:var(--flag); font-weight:600;
+    padding:1px 6px; border-radius:3px; font-size:14px;
+  }
+  .hinweis {
+    background:var(--flag-soft); border-left:3px solid var(--flag);
+    border-radius:0 4px 4px 0; padding:13px 16px; margin:0 0 26px; font-size:14px;
+  }
+  .hinweis strong { display:block; margin-bottom:4px; }
+  .betont {
+    background:var(--accent-soft); border-left:3px solid var(--accent);
+    border-radius:0 4px 4px 0; padding:13px 16px; margin:12px 0; font-size:14.5px;
+  }
+  footer {
+    margin-top:40px; padding-top:14px; border-top:1px solid var(--rule);
+    color:var(--ink-faint); font-size:12.5px;
+  }
+  footer a { color:var(--ink-soft); }
+</style>
+
+<div class="wrap">
+  <a class="zurueck" href="leser.html">← zurück zur Startseite</a>
+  <h1>Impressum</h1>
+
+  <div class="hinweis">
+    <strong>Vor dem Veröffentlichen ausfüllen</strong>
+    Alle rot markierten Stellen durch die eigenen Angaben ersetzen und diesen Kasten
+    anschließend aus der Datei löschen. Ein unvollständiges Impressum ist abmahnfähig.
+    Bei einem Einzelunternehmen genügen Vor- und Nachname, die ladungsfähige Anschrift
+    (kein Postfach), Telefonnummer und E-Mail-Adresse.
+  </div>
+
+  <h2>Angaben gemäß § 5 DDG</h2>
+  <div class="block">
+    <p>
+      <span class="lueck">[Vor- und Nachname]</span><br>
+      <span class="lueck">[Straße und Hausnummer]</span><br>
+      <span class="lueck">[Postleitzahl und Ort]</span><br>
+      Deutschland
+    </p>
+  </div>
+
+  <h2>Kontakt</h2>
+  <div class="block">
+    <p>
+      Telefon: <span class="lueck">[Telefonnummer]</span><br>
+      E-Mail: <span class="lueck">[E-Mail-Adresse]</span>
+    </p>
+  </div>
+
+  <h2>Umsatzsteuer-Identifikationsnummer</h2>
+  <p>
+    Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:
+    <span class="lueck">[USt-IdNr., falls vorhanden]</span>
+  </p>
+  <p style="color:var(--ink-faint);font-size:13.5px">
+    Diesen Abschnitt vollständig entfernen, falls keine Umsatzsteuer-Identifikationsnummer
+    vorliegt. Die Steuernummer gehört nicht ins Impressum.
+  </p>
+
+  <h2>Redaktionell verantwortlich</h2>
+  <p>
+    Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV:
+    <span class="lueck">[Vor- und Nachname]</span>,
+    Anschrift wie oben.
+  </p>
+
+  <h2>Art der Tätigkeit</h2>
+  <div class="betont">
+    <p>
+      Gegenstand des Angebots ist die <strong>technische Einrichtung vorhandener
+      Rechnungssoftware</strong> für den Empfang und Versand elektronischer Rechnungen
+      nach EN 16931.
+    </p>
+    <p style="margin-bottom:0">
+      Es wird <strong>keine Steuerberatung</strong> im Sinne des Steuerberatungsgesetzes
+      und <strong>keine Rechtsberatung</strong> im Sinne des Rechtsdienstleistungsgesetzes
+      erbracht. Fragen zur steuerlichen Behandlung von Umsätzen — etwa zur Anwendung des
+      § 13 b UStG oder der Kleinunternehmerregelung nach § 19 UStG — beantwortet
+      ausschließlich der Steuerberater des Auftraggebers.
+    </p>
+  </div>
+
+  <h2>Verbraucherstreitbeilegung</h2>
+  <p>
+    Ich bin nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer
+    Verbraucherschlichtungsstelle teilzunehmen (§ 36 Verbraucherstreitbeilegungsgesetz).
+  </p>
+  <p style="color:var(--ink-faint);font-size:13.5px">
+    Hinweis für die eigene Ablage: Die Plattform der Europäischen Kommission zur
+    Online-Streitbeilegung wurde zum 20. Juli 2025 eingestellt. Ein Hinweis darauf darf
+    nicht mehr im Impressum stehen — er ist mittlerweile selbst abmahnfähig.
+  </p>
+
+  <h2>Haftung für Inhalte</h2>
+  <p>
+    Als Diensteanbieter bin ich für eigene Inhalte auf diesen Seiten nach den allgemeinen
+    Gesetzen verantwortlich. Ich bin jedoch nicht verpflichtet, übermittelte oder
+    gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die
+    auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder
+    Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon
+    unberührt. Eine diesbezügliche Haftung ist erst ab dem Zeitpunkt der Kenntnis einer
+    konkreten Rechtsverletzung möglich. Bei Bekanntwerden entsprechender Rechtsverletzungen
+    werde ich diese Inhalte umgehend entfernen.
+  </p>
+
+  <h2>Angaben ohne Gewähr</h2>
+  <p>
+    Die auf dieser Website genannten Fristen, Formatangaben und Hinweise zu einzelnen
+    Softwareprodukten wurden nach bestem Wissen zusammengestellt und beziehen sich auf den
+    Stand der jeweils angegebenen Quelle. Sie ersetzen keine Prüfung des Einzelfalls und
+    stellen keine Zusicherung dar, dass eine bestimmte Rechnung von einem bestimmten
+    Empfänger angenommen wird.
+  </p>
+
+  <h2>Haftung für Links</h2>
+  <p>
+    Dieses Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte ich keinen
+    Einfluss habe. Deshalb kann ich für diese fremden Inhalte auch keine Gewähr übernehmen.
+    Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber
+    der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf
+    mögliche Rechtsverstöße überprüft; rechtswidrige Inhalte waren zu diesem Zeitpunkt nicht
+    erkennbar. Bei Bekanntwerden von Rechtsverletzungen werde ich derartige Links umgehend
+    entfernen.
+  </p>
+
+  <h2>Urheberrecht</h2>
+  <p>
+    Die durch den Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen
+    dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art
+    der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen
+    Zustimmung des jeweiligen Autors beziehungsweise Erstellers. Soweit die Inhalte auf
+    dieser Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte Dritter
+    beachtet. Sollten Sie dennoch auf eine Urheberrechtsverletzung aufmerksam werden, bitte
+    ich um einen entsprechenden Hinweis.
+  </p>
+
+  <footer>
+    <a href="leser.html">Startseite</a> · <a href="datenschutz.html">Datenschutzerklärung</a>
+  </footer>
+</div>
