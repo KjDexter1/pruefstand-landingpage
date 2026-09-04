@@ -240,9 +240,109 @@
   .feld-name { color: var(--ink-faint); }
   .feld-wert { color: var(--ink); text-align: right; word-break: break-word; }
 
+  /* ---------- Selbstauskunft ---------- */
+  .trenner {
+    margin: 44px 0 0; border: none; border-top: 1px solid var(--rule-strong);
+  }
+  .check-kopf { margin: 30px 0 4px; }
+  .check-kopf h2 {
+    font-family: "IBM Plex Serif", Georgia, serif;
+    font-size: clamp(21px, 3.4vw, 27px); font-weight: 600;
+    margin: 0 0 6px; text-wrap: balance;
+  }
+  .check-kopf p { color: var(--ink-soft); margin: 0; max-width: 62ch; }
+
+  .fragen {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+    gap: 14px; margin-top: 20px;
+  }
+  .frage {
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 6px; padding: 14px 16px;
+    display: flex; flex-direction: column; gap: 7px;
+  }
+  .frage label {
+    font-size: 13.5px; font-weight: 600; line-height: 1.35;
+  }
+  .frage .hilfe { font-size: 12px; color: var(--ink-faint); line-height: 1.4; }
+  select, input[type="text"], input[type="tel"], input[type="email"] {
+    font-family: inherit; font-size: 14.5px; color: var(--ink);
+    background: var(--ground); border: 1px solid var(--rule-strong);
+    border-radius: 4px; padding: 8px 10px; width: 100%;
+  }
+  select:focus-visible, input:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent);
+  }
+
+  .urteil {
+    margin-top: 18px; padding: 16px 18px; border-radius: 6px;
+    border-left: 4px solid var(--accent); background: var(--accent-soft);
+    display: flex; flex-direction: column; gap: 9px;
+  }
+  .urteil.warnung { border-left-color: var(--flag); background: var(--flag-soft); }
+  .urteil-titel { font-weight: 600; font-size: 16px; }
+  .urteil p { margin: 0; font-size: 14px; line-height: 1.5; }
+  .urteil ul { margin: 0; padding-left: 18px; font-size: 14px; line-height: 1.55; }
+  .urteil li + li { margin-top: 4px; }
+  .frist {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12px; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- Kontakt ---------- */
+  .kontakt {
+    margin-top: 22px; background: var(--surface);
+    border: 1px solid var(--rule); border-radius: 6px; overflow: hidden;
+  }
+  .kontakt-kopf {
+    padding: 16px 18px 12px; border-bottom: 1px solid var(--rule);
+  }
+  .kontakt-kopf h3 {
+    font-family: "IBM Plex Serif", Georgia, serif;
+    font-size: 18px; font-weight: 600; margin: 0 0 3px;
+  }
+  .kontakt-kopf p { margin: 0; font-size: 13.5px; color: var(--ink-soft); }
+  .kontakt-felder {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px; padding: 16px 18px;
+  }
+  .feldgruppe { display: flex; flex-direction: column; gap: 4px; }
+  .feldgruppe label {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .knopfleiste {
+    display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+    padding: 0 18px 18px;
+  }
+  button {
+    font-family: inherit; font-size: 14.5px; font-weight: 600;
+    padding: 10px 18px; border-radius: 5px; cursor: pointer;
+    border: 1px solid var(--accent); transition: opacity .15s;
+  }
+  button.haupt { background: var(--accent); color: var(--ground); }
+  button.neben { background: transparent; color: var(--accent); }
+  button:hover { opacity: .85; }
+  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .kopiert { font-size: 13px; color: var(--accent); font-weight: 600; }
+
+  .direkt {
+    padding: 0 18px 18px; font-size: 14px; color: var(--ink-soft);
+  }
+  .direkt strong { color: var(--ink); }
+
   footer {
     margin-top: 34px; padding-top: 16px; border-top: 1px solid var(--rule);
     color: var(--ink-faint); font-size: 12.5px; max-width: 70ch;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  footer a { color: var(--ink-soft); }
+  .platzhalter {
+    background: var(--flag-soft); border-left: 3px solid var(--flag);
+    padding: 10px 13px; border-radius: 0 4px 4px 0;
+    font-size: 12.5px; color: var(--ink);
   }
 
   @media (max-width: 620px) {
@@ -285,11 +385,110 @@
   <div id="fehlerfeld"></div>
   <div class="ergebnis" id="ergebnis" hidden></div>
 
+  <hr class="trenner">
+
+  <section class="check-kopf">
+    <h2>Und umgekehrt: Können Sie selbst schon E-Rechnungen verschicken?</h2>
+    <p>
+      Drei Fragen, dreißig Sekunden. Sie sehen sofort, welche Frist für Sie gilt
+      und wo bei Ihrer Software erfahrungsgemäß der Fehler sitzt.
+    </p>
+  </section>
+
+  <div class="fragen">
+    <div class="frage">
+      <label for="q-software">Womit schreiben Sie heute Ihre Rechnungen?</label>
+      <select id="q-software">
+        <option value="">bitte wählen</option>
+        <option value="lexoffice">lexoffice / Lexware Office</option>
+        <option value="sevdesk">sevdesk</option>
+        <option value="wiso">WISO Mein Büro</option>
+        <option value="easybill">easybill</option>
+        <option value="fastbill">FastBill</option>
+        <option value="andere-cloud">anderes Rechnungsprogramm</option>
+        <option value="branche">Handwerker- oder Branchensoftware</option>
+        <option value="datev">DATEV</option>
+        <option value="word">Word oder Excel</option>
+        <option value="nichts">gar kein Programm</option>
+        <option value="unbekannt">weiß ich nicht</option>
+      </select>
+    </div>
+
+    <div class="frage">
+      <label for="q-umsatz">Wie hoch war Ihr Umsatz im Vorjahr?</label>
+      <select id="q-umsatz">
+        <option value="">bitte wählen</option>
+        <option value="klein">Kleinunternehmer nach § 19 UStG</option>
+        <option value="unter">unter 800.000 €</option>
+        <option value="ueber">über 800.000 €</option>
+      </select>
+      <span class="hilfe">Entscheidet nur darüber, ob 2027 oder 2028 für Sie gilt.</span>
+    </div>
+
+    <div class="frage">
+      <label for="q-13b">Rechnen Sie Bauleistungen nach § 13b ab?</label>
+      <select id="q-13b">
+        <option value="">bitte wählen</option>
+        <option value="ja">ja, regelmäßig</option>
+        <option value="manchmal">gelegentlich</option>
+        <option value="nein">nein</option>
+        <option value="unbekannt">weiß ich nicht</option>
+      </select>
+      <span class="hilfe">
+        Rechnungen an andere Baubetriebe ohne Umsatzsteuer, mit dem Hinweis auf die
+        Steuerschuldnerschaft des Leistungsempfängers.
+      </span>
+    </div>
+  </div>
+
+  <div id="urteil" hidden></div>
+
+  <div class="kontakt" id="kontakt" hidden>
+    <div class="kontakt-kopf">
+      <h3>Soll ich mir das ansehen?</h3>
+      <p>Ich melde mich innerhalb eines Werktags und sage Ihnen am Telefon,
+         was zu tun ist — kostenlos und unverbindlich.</p>
+    </div>
+    <div class="kontakt-felder">
+      <div class="feldgruppe">
+        <label for="k-firma">Betrieb</label>
+        <input type="text" id="k-firma" autocomplete="organization">
+      </div>
+      <div class="feldgruppe">
+        <label for="k-name">Ansprechpartner</label>
+        <input type="text" id="k-name" autocomplete="name">
+      </div>
+      <div class="feldgruppe">
+        <label for="k-telefon">Telefon</label>
+        <input type="tel" id="k-telefon" autocomplete="tel">
+      </div>
+      <div class="feldgruppe">
+        <label for="k-mail">E-Mail</label>
+        <input type="email" id="k-mail" autocomplete="email">
+      </div>
+    </div>
+    <div class="knopfleiste">
+      <button type="button" class="haupt" id="senden">E-Mail schreiben</button>
+      <button type="button" class="neben" id="kopieren">Text kopieren</button>
+      <span class="kopiert" id="kopiert" hidden>kopiert</span>
+    </div>
+    <div class="direkt">
+      Lieber direkt anrufen? <strong id="direkt-tel">—</strong>
+    </div>
+  </div>
+
   <footer>
-    Seit 2025 muss jeder inländische Betrieb E-Rechnungen <strong>empfangen</strong> können.
-    Ab 2027 gilt für Umsätze über 800.000 € auch die Pflicht zum <strong>Versand</strong>,
-    ab 2028 für alle übrigen. Kleinunternehmer nach § 19 UStG bleiben vom Versand befreit,
-    müssen aber empfangen können.
+    <div>
+      Seit 2025 muss jeder inländische Betrieb E-Rechnungen <strong>empfangen</strong> können.
+      Ab 2027 gilt für Umsätze über 800.000 € auch die Pflicht zum <strong>Versand</strong>,
+      ab 2028 für alle übrigen. Kleinunternehmer nach § 19 UStG bleiben vom Versand befreit,
+      müssen aber empfangen können.
+    </div>
+    <div>
+      Ich richte vorhandene Software technisch ein. Das ist keine Steuerberatung —
+      ob § 13b oder § 19 UStG in Ihrem Fall gelten, entscheidet Ihr Steuerberater.
+    </div>
+    <div id="rechtliches"></div>
   </footer>
 </div>
 
@@ -782,5 +981,190 @@
   try {
     zeige(liesXML(BEISPIEL), "beispiel-rechnung.xml", true);
   } catch (e) { /* Beispiel darf die Seite nie blockieren */ }
+
+  /* =================================================================
+     SELBSTAUSKUNFT
+
+     >>> HIER DEINE DATEN EINTRAGEN <<<
+     Solange hier Platzhalter stehen, zeigt die Seite unten einen
+     roten Hinweis. Der verschwindet, sobald alles ausgefuellt ist.
+  ==================================================================*/
+  var KONTAKT = {
+    name:     "VORNAME NACHNAME",
+    firma:    "FIRMENNAME",
+    telefon:  "01xx xxxxxxx",
+    email:    "deine@adresse.de",
+    impressum:   "impressum.html",
+    datenschutz: "datenschutz.html"
+  };
+
+  var software = document.getElementById("q-software");
+  var umsatz   = document.getElementById("q-umsatz");
+  var b13      = document.getElementById("q-13b");
+  var urteilFeld = document.getElementById("urteil");
+  var kontakt  = document.getElementById("kontakt");
+
+  var NAMEN = {
+    lexoffice: "lexoffice / Lexware Office", sevdesk: "sevdesk",
+    wiso: "WISO Mein Büro", easybill: "easybill", fastbill: "FastBill",
+    "andere-cloud": "ein anderes Rechnungsprogramm",
+    branche: "Handwerker- oder Branchensoftware", datev: "DATEV",
+    word: "Word oder Excel", nichts: "kein Programm", unbekannt: "unbekannt"
+  };
+
+  function urteilBauen() {
+    var s = software.value, u = umsatz.value, d = b13.value;
+    if (!s || !u || !d) { urteilFeld.hidden = true; kontakt.hidden = true; return; }
+
+    var punkte = [], fristPunkt;
+    var warnung = false;
+    var frist, titel;
+
+    /* --- Frist ------------------------------------------------- */
+    if (u === "klein") {
+      frist = "Empfangen: seit 2025 · Versenden: dauerhaft befreit";
+      titel = "Sie müssen nur empfangen können — und das schon jetzt";
+      fristPunkt = ("Als Kleinunternehmer nach § 19 UStG sind Sie vom Versand dauerhaft befreit. " +
+                  "Empfangen müssen Sie E-Rechnungen aber seit dem 1. Januar 2025. " +
+                  "Diese Pflicht läuft bereits, sie kommt nicht erst.");
+    } else if (u === "ueber") {
+      frist = "Empfangen: seit 2025 · Versenden: ab 1. Januar 2027";
+      titel = "Für Sie gilt die frühere Frist";
+      fristPunkt = ("Über 800.000 € Vorjahresumsatz bedeutet: Ab dem 1. Januar 2027 müssen Sie " +
+                  "E-Rechnungen auch selbst verschicken. Empfangen müssen Sie seit 2025.");
+    } else {
+      frist = "Empfangen: seit 2025 · Versenden: ab 1. Januar 2028";
+      titel = "Für Sie gilt der 1. Januar 2028";
+      fristPunkt = ("Unter 800.000 € Vorjahresumsatz: Versandpflicht ab dem 1. Januar 2028. " +
+                  "Empfangen müssen Sie allerdings schon seit 2025 — das wird am häufigsten übersehen.");
+    }
+
+    /* --- Der Befund, der den Unterschied macht ------------------ */
+    var baut = (d === "ja" || d === "manchmal");
+
+    if (s === "lexoffice" && baut) {
+      warnung = true;
+      titel = "Achtung — hier gibt es ein konkretes Problem";
+      punkte.push("Lexware Office kann § 13b-Bauleistungen derzeit <strong>nicht</strong> als " +
+                  "XRechnung oder ZUGFeRD ausgeben. Der Hersteller schreibt das selbst: Diese " +
+                  "Rechnungen sind dort nur als PDF möglich. Bis 2027/2028 ist PDF noch zulässig, " +
+                  "danach nicht mehr.");
+      punkte.push("Das heißt für Sie: Mit Ihrer jetzigen Software können Sie Ihre " +
+                  "§ 13b-Rechnungen zum Stichtag nicht rechtskonform stellen. Das ist keine " +
+                  "Einstellungssache, sondern eine Frage, ob die Software nachrüstet oder Sie wechseln.");
+    } else if (baut && (s === "sevdesk" || s === "wiso" || s === "easybill" ||
+                        s === "fastbill" || s === "andere-cloud" || s === "branche")) {
+      punkte.push("Weil Sie nach § 13b abrechnen, ist das Ihr wichtigster Prüfpunkt. In der " +
+                  "E-Rechnung müssen vier Angaben zusammenpassen: Steuerkategorie „AE“, Steuersatz 0, " +
+                  "der Befreiungsgrund-Code und der Hinweistext auf die Steuerschuldnerschaft des " +
+                  "Leistungsempfängers. Stimmt eines nicht, wird die Rechnung abgewiesen — und die " +
+                  "Grundeinstellung jeder Software ist der Normalfall mit 19 %.");
+    } else if (d === "unbekannt") {
+      punkte.push("Ob § 13b für Sie gilt, klärt Ihr Steuerberater. Falls ja, ist das " +
+                  "erfahrungsgemäß die größte Fehlerquelle — dann sollten wir zuerst dort hinsehen.");
+    }
+
+    /* --- Software-spezifisch ----------------------------------- */
+    if (s === "word" || s === "nichts") {
+      punkte.push("Ohne Rechnungsprogramm lässt sich keine E-Rechnung erzeugen. Ein Ausdruck oder " +
+                  "ein PDF erfüllt die Pflicht nicht, auch nicht als Scan. Hier geht es also nicht " +
+                  "um eine Einstellung, sondern um den Umstieg auf ein passendes Programm.");
+    } else if (s === "lexoffice") {
+      punkte.push("Bei Lexware Office ist die E-Rechnung erst ab Paket M verfügbar, und zum " +
+                  "Aktivieren braucht es Admin-Rechte. Prüfen Sie das zuerst — daran scheitert es oft " +
+                  "schon vor allem anderen.");
+    } else if (s === "datev") {
+      punkte.push("Wenn Ihre Rechnungen über die Steuerkanzlei laufen, ist das dort aufgehoben — " +
+                  "sprechen Sie Ihren Steuerberater darauf an. Schreiben Sie die Rechnungen selbst am " +
+                  "Rechner, melden Sie sich gern trotzdem.");
+    } else if (s === "unbekannt") {
+      punkte.push("Kein Problem — das finden wir in zwei Minuten am Telefon heraus.");
+    }
+
+    punkte = warnung ? punkte.concat([fristPunkt])
+                     : [fristPunkt].concat(punkte);
+
+    urteilFeld.className = "urteil" + (warnung ? " warnung" : "");
+    urteilFeld.innerHTML =
+      '<div class="frist">' + frist + "</div>" +
+      '<div class="urteil-titel">' + titel + "</div>" +
+      "<ul><li>" + punkte.join("</li><li>") + "</li></ul>";
+    urteilFeld.hidden = false;
+    kontakt.hidden = false;
+  }
+
+  [software, umsatz, b13].forEach(function (feld) {
+    feld.addEventListener("change", urteilBauen);
+  });
+
+  /* --- Nachricht zusammenstellen ------------------------------- */
+  function wert(id) { return (document.getElementById(id).value || "").trim(); }
+
+  function nachricht() {
+    return [
+      "Anfrage E-Rechnung",
+      "",
+      "Betrieb:          " + (wert("k-firma") || "—"),
+      "Ansprechpartner:  " + (wert("k-name") || "—"),
+      "Telefon:          " + (wert("k-telefon") || "—"),
+      "E-Mail:           " + (wert("k-mail") || "—"),
+      "",
+      "Rechnungsprogramm: " + (NAMEN[software.value] || "—"),
+      "Umsatz Vorjahr:    " + ({ klein: "Kleinunternehmer § 19 UStG",
+                                 unter: "unter 800.000 €",
+                                 ueber: "über 800.000 €" }[umsatz.value] || "—"),
+      "§ 13b Bauleistung: " + ({ ja: "ja, regelmäßig", manchmal: "gelegentlich",
+                                 nein: "nein", unbekannt: "weiß nicht" }[b13.value] || "—"),
+      "",
+      "Über die Selbstauskunft auf der Website erstellt."
+    ].join("\n");
+  }
+
+  document.getElementById("senden").addEventListener("click", function () {
+    var betreff = "Anfrage E-Rechnung" + (wert("k-firma") ? " — " + wert("k-firma") : "");
+    window.location.href = "mailto:" + KONTAKT.email +
+      "?subject=" + encodeURIComponent(betreff) +
+      "&body=" + encodeURIComponent(nachricht());
+  });
+
+  document.getElementById("kopieren").addEventListener("click", function () {
+    var hinweis = document.getElementById("kopiert");
+    function zeigen() {
+      hinweis.hidden = false;
+      setTimeout(function () { hinweis.hidden = true; }, 2500);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(nachricht()).then(zeigen, zeigen);
+    } else {
+      var hilfsfeld = document.createElement("textarea");
+      hilfsfeld.value = nachricht();
+      document.body.appendChild(hilfsfeld);
+      hilfsfeld.select();
+      try { document.execCommand("copy"); } catch (e) {}
+      document.body.removeChild(hilfsfeld);
+      zeigen();
+    }
+  });
+
+  /* --- Kontaktdaten einsetzen, Platzhalter melden -------------- */
+  document.getElementById("direkt-tel").textContent = KONTAKT.telefon;
+
+  var rechtliches = document.getElementById("rechtliches");
+  var offen = /VORNAME|FIRMENNAME|01xx|deine@adresse/.test(
+    KONTAKT.name + KONTAKT.firma + KONTAKT.telefon + KONTAKT.email);
+
+  if (offen) {
+    rechtliches.innerHTML =
+      '<div class="platzhalter"><strong>Vor dem Veröffentlichen:</strong> ' +
+      "In der Datei stehen noch Platzhalter. Trage im Abschnitt KONTAKT deinen Namen, " +
+      "Firmennamen, Telefonnummer und E-Mail-Adresse ein. Ohne Impressum nach § 5 DDG " +
+      "und Datenschutzerklärung darf die Seite in Deutschland nicht online gehen — " +
+      "dieser Hinweis verschwindet automatisch, sobald die Platzhalter ersetzt sind.</div>";
+  } else {
+    rechtliches.innerHTML =
+      KONTAKT.firma + " · " + KONTAKT.name + " · " + KONTAKT.telefon +
+      ' · <a href="' + KONTAKT.impressum + '">Impressum</a>' +
+      ' · <a href="' + KONTAKT.datenschutz + '">Datenschutz</a>';
+  }
 })();
 </script>
