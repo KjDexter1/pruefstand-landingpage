@@ -1,0 +1,786 @@
+<title>E-Rechnung im Klartext</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500;600&display=swap">
+<style>
+  :root {
+    --ground:      #F2F1EC;
+    --surface:     #FBFAF7;
+    --surface-alt: #E9E7E0;
+    --ink:         #1A1D1B;
+    --ink-soft:    #55605A;
+    --ink-faint:   #8A938D;
+    --rule:        #D4D2C9;
+    --rule-strong: #B4B2A7;
+    --accent:      #0E5B50;
+    --accent-soft: #DCEAE6;
+    --flag:        #A93C1B;
+    --flag-soft:   #F6E3DC;
+    --shadow:      0 1px 2px rgba(26,29,27,.06), 0 8px 24px -12px rgba(26,29,27,.18);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:      #141715;
+      --surface:     #1C201E;
+      --surface-alt: #262B28;
+      --ink:         #EDEEEA;
+      --ink-soft:    #A8B2AC;
+      --ink-faint:   #6F7A74;
+      --rule:        #333B37;
+      --rule-strong: #4A544E;
+      --accent:      #5FBFAC;
+      --accent-soft: #10322C;
+      --flag:        #E08466;
+      --flag-soft:   #37201A;
+      --shadow:      0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:      #141715;
+    --surface:     #1C201E;
+    --surface-alt: #262B28;
+    --ink:         #EDEEEA;
+    --ink-soft:    #A8B2AC;
+    --ink-faint:   #6F7A74;
+    --rule:        #333B37;
+    --rule-strong: #4A544E;
+    --accent:      #5FBFAC;
+    --accent-soft: #10322C;
+    --flag:        #E08466;
+    --flag-soft:   #37201A;
+    --shadow:      0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 28px 20px 64px; }
+
+  /* ---------- Kopf ---------- */
+  header { display: flex; flex-direction: column; gap: 6px; margin-bottom: 22px; }
+  .eyebrow {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--accent);
+  }
+  h1 {
+    font-family: "IBM Plex Serif", Georgia, serif;
+    font-weight: 600; font-size: clamp(26px, 4.5vw, 36px);
+    margin: 0; line-height: 1.15; text-wrap: balance;
+  }
+  .sub { color: var(--ink-soft); max-width: 62ch; margin: 0; }
+
+  /* ---------- Datenschutz-Zeile ---------- */
+  .privat {
+    display: flex; align-items: center; gap: 9px;
+    margin: 16px 0 24px; padding: 9px 13px;
+    background: var(--accent-soft); border-left: 3px solid var(--accent);
+    border-radius: 0 4px 4px 0;
+    font-size: 13.5px; color: var(--ink);
+  }
+  .privat svg { flex: none; }
+
+  /* ---------- Ablage ---------- */
+  .ablage {
+    border: 2px dashed var(--rule-strong);
+    border-radius: 8px;
+    background: var(--surface);
+    padding: 30px 22px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color .15s, background .15s;
+    display: flex; flex-direction: column; align-items: center; gap: 5px;
+  }
+  .ablage:hover, .ablage:focus-visible { border-color: var(--accent); background: var(--surface-alt); }
+  .ablage.aktiv { border-color: var(--accent); background: var(--accent-soft); border-style: solid; }
+  .ablage:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .ablage-haupt { font-weight: 600; font-size: 16px; }
+  .ablage-neben { color: var(--ink-soft); font-size: 13px; }
+  .ablage-formate {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 11.5px; color: var(--ink-faint); margin-top: 5px;
+    letter-spacing: .02em;
+  }
+
+  .fehler {
+    margin-top: 14px; padding: 11px 14px;
+    background: var(--flag-soft); border-left: 3px solid var(--flag);
+    border-radius: 0 4px 4px 0; font-size: 14px; color: var(--ink);
+  }
+
+  /* ---------- Ergebnis ---------- */
+  .ergebnis { margin-top: 26px; display: flex; flex-direction: column; gap: 16px; }
+
+  .beleg-hinweis {
+    display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap;
+    font-size: 12.5px; color: var(--ink-soft);
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+  }
+  .marke {
+    display: inline-block; padding: 2px 7px; border-radius: 3px;
+    background: var(--surface-alt); color: var(--ink-soft);
+    font-size: 11px; letter-spacing: .06em; text-transform: uppercase;
+    border: 1px solid var(--rule);
+  }
+  .marke.gruen { background: var(--accent-soft); color: var(--accent); border-color: transparent; font-weight: 500; }
+
+  .dokument {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .dok-kopf {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 20px; flex-wrap: wrap;
+    padding: 20px 22px 16px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .dok-titel {
+    font-family: "IBM Plex Serif", Georgia, serif;
+    font-size: 21px; font-weight: 600; margin: 0 0 2px;
+  }
+  .dok-nummer {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 13px; color: var(--ink-soft);
+  }
+
+  .parteien {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 0; border-bottom: 1px solid var(--rule);
+  }
+  .partei { padding: 16px 22px; }
+  .partei + .partei { border-left: 1px solid var(--rule); }
+  .partei-rolle {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--ink-faint); margin-bottom: 5px;
+  }
+  .partei-name { font-weight: 600; font-size: 15.5px; }
+  .partei-zeile { color: var(--ink-soft); font-size: 13.5px; }
+
+  .meta {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    border-bottom: 1px solid var(--rule);
+  }
+  .meta-feld { padding: 12px 22px; }
+  .meta-feld + .meta-feld { border-left: 1px solid var(--rule); }
+  .meta-name {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--ink-faint); margin-bottom: 3px;
+  }
+  .meta-wert { font-size: 14.5px; font-variant-numeric: tabular-nums; }
+
+  .tabelle-huelle { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  thead th {
+    text-align: left; padding: 10px 12px;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--ink-faint); font-weight: 400;
+    border-bottom: 1px solid var(--rule-strong);
+    white-space: nowrap;
+  }
+  thead th:first-child { padding-left: 22px; }
+  thead th:last-child  { padding-right: 22px; }
+  tbody td { padding: 10px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  tbody td:first-child { padding-left: 22px; }
+  tbody td:last-child  { padding-right: 22px; }
+  tbody tr:last-child td { border-bottom: none; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .artikelnr {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 11.5px; color: var(--ink-faint); display: block; margin-top: 2px;
+  }
+
+  .summen {
+    display: flex; flex-direction: column; align-items: flex-end; gap: 5px;
+    padding: 16px 22px 20px; border-top: 1px solid var(--rule-strong);
+    background: var(--surface-alt);
+  }
+  .summen-zeile {
+    display: flex; gap: 26px; justify-content: space-between;
+    min-width: 260px; font-size: 14px; color: var(--ink-soft);
+  }
+  .summen-zeile .num { color: var(--ink); }
+  .summen-zeile.gesamt {
+    font-size: 17px; font-weight: 600; color: var(--ink);
+    padding-top: 7px; margin-top: 3px;
+    border-top: 1px solid var(--rule-strong); min-width: 260px;
+  }
+
+  /* ---------- Technikpanel ---------- */
+  details.technik {
+    border: 1px solid var(--rule); border-radius: 6px;
+    background: var(--surface); overflow: hidden;
+  }
+  details.technik summary {
+    padding: 12px 18px; cursor: pointer; font-size: 13.5px;
+    color: var(--ink-soft); user-select: none;
+  }
+  details.technik summary:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+  details.technik[open] summary { border-bottom: 1px solid var(--rule); }
+  .felder { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+  .feld {
+    padding: 9px 18px; border-bottom: 1px solid var(--rule);
+    display: flex; justify-content: space-between; gap: 14px;
+    font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 12px;
+  }
+  .feld-name { color: var(--ink-faint); }
+  .feld-wert { color: var(--ink); text-align: right; word-break: break-word; }
+
+  footer {
+    margin-top: 34px; padding-top: 16px; border-top: 1px solid var(--rule);
+    color: var(--ink-faint); font-size: 12.5px; max-width: 70ch;
+  }
+
+  @media (max-width: 620px) {
+    .partei + .partei, .meta-feld + .meta-feld { border-left: none; border-top: 1px solid var(--rule); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Kostenlos · ohne Anmeldung</div>
+    <h1>E-Rechnung im Klartext</h1>
+    <p class="sub">
+      Sie haben eine XRechnung oder ZUGFeRD-Datei bekommen und sehen nur Buchstabensalat?
+      Hier reinziehen — Sie lesen sie sofort.
+    </p>
+  </header>
+
+  <div class="privat">
+    <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path d="M8 1.5 3 3.5v4c0 3 2.1 5.8 5 6.9 2.9-1.1 5-3.9 5-6.9v-4L8 1.5Z"
+            stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+      <path d="m5.9 7.9 1.5 1.5 2.9-3" stroke="currentColor" stroke-width="1.3"
+            stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span><strong>Ihre Datei verlässt Ihren Rechner nicht.</strong>
+      Sie wird direkt im Browser gelesen — kein Hochladen, keine Speicherung, kein Server.</span>
+  </div>
+
+  <div class="ablage" id="ablage" tabindex="0" role="button"
+       aria-label="Rechnungsdatei auswählen oder hierher ziehen">
+    <div class="ablage-haupt">Rechnung hierher ziehen</div>
+    <div class="ablage-neben">oder klicken, um eine Datei zu wählen</div>
+    <div class="ablage-formate">XRechnung (.xml) · ZUGFeRD / Factur-X (.pdf)</div>
+  </div>
+  <input type="file" id="datei" accept=".xml,.pdf,text/xml,application/xml,application/pdf" hidden>
+
+  <div id="fehlerfeld"></div>
+  <div class="ergebnis" id="ergebnis" hidden></div>
+
+  <footer>
+    Seit 2025 muss jeder inländische Betrieb E-Rechnungen <strong>empfangen</strong> können.
+    Ab 2027 gilt für Umsätze über 800.000 € auch die Pflicht zum <strong>Versand</strong>,
+    ab 2028 für alle übrigen. Kleinunternehmer nach § 19 UStG bleiben vom Versand befreit,
+    müssen aber empfangen können.
+  </footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var ablage    = document.getElementById("ablage");
+  var dateifeld = document.getElementById("datei");
+  var ergebnis  = document.getElementById("ergebnis");
+  var fehlerfeld= document.getElementById("fehlerfeld");
+
+  /* ---------------------------------------------------------------
+     XML-Zugriff über lokale Namen. Die Namensräume unterscheiden
+     sich je nach Format und Version; der lokale Name bleibt gleich.
+  ----------------------------------------------------------------*/
+  function kinder(knoten, name) {
+    var treffer = [];
+    if (!knoten) return treffer;
+    for (var i = 0; i < knoten.children.length; i++) {
+      if (knoten.children[i].localName === name) treffer.push(knoten.children[i]);
+    }
+    return treffer;
+  }
+
+  function pfad(knoten, namen) {
+    var aktuell = knoten;
+    for (var i = 0; i < namen.length && aktuell; i++) {
+      aktuell = kinder(aktuell, namen[i])[0];
+    }
+    return aktuell || null;
+  }
+
+  function text(knoten, namen) {
+    var k = namen ? pfad(knoten, namen) : knoten;
+    return k ? k.textContent.trim() : "";
+  }
+
+  function tief(knoten, name) {
+    if (!knoten) return null;
+    var alle = knoten.getElementsByTagName("*");
+    for (var i = 0; i < alle.length; i++) {
+      if (alle[i].localName === name) return alle[i];
+    }
+    return null;
+  }
+
+  function zahl(wert) {
+    if (wert === null || wert === undefined || wert === "") return null;
+    var n = parseFloat(String(wert).replace(/\s/g, "").replace(",", "."));
+    return isNaN(n) ? null : n;
+  }
+
+  function euro(n) {
+    if (n === null || n === undefined) return "—";
+    return n.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";
+  }
+
+  function menge(n) {
+    if (n === null || n === undefined) return "—";
+    return n.toLocaleString("de-DE", { maximumFractionDigits: 3 });
+  }
+
+  function datum(roh) {
+    if (!roh) return "";
+    var s = roh.trim();
+    var m = s.match(/^(\d{4})-?(\d{2})-?(\d{2})/);
+    if (!m) return s;
+    return m[3] + "." + m[2] + "." + m[1];
+  }
+
+  /* Einheitenschlüssel nach UN/ECE Rec. 20 — die gebräuchlichsten. */
+  var EINHEITEN = {
+    C62: "Stück", H87: "Stück", XPP: "Stück", NAR: "Stück",
+    MTR: "m", MTK: "m²", MTQ: "m³", MMT: "mm", CMT: "cm", KMT: "km",
+    KGM: "kg", GRM: "g", TNE: "t", LTR: "l", MLT: "ml",
+    HUR: "Std.", DAY: "Tage", MON: "Monate", ANN: "Jahre",
+    SET: "Satz", PR: "Paar", XBX: "Karton", XPA: "Paket", XSA: "Sack",
+    P1: "%", LS: "pauschal"
+  };
+  function einheit(code) {
+    if (!code) return "";
+    return EINHEITEN[code.toUpperCase()] || code;
+  }
+
+  /* ---------------------------------------------------------------
+     UBL — XRechnung im Syntax 2 (Invoice / CreditNote)
+  ----------------------------------------------------------------*/
+  function liesUBL(wurzel) {
+    var r = { format: "XRechnung (UBL)", positionen: [] };
+
+    r.nummer   = text(wurzel, ["ID"]);
+    r.datum    = datum(text(wurzel, ["IssueDate"]));
+    r.faellig  = datum(text(wurzel, ["DueDate"]));
+    r.waehrung = text(wurzel, ["DocumentCurrencyCode"]);
+    r.leitweg  = text(wurzel, ["BuyerReference"]);
+    r.bestell  = text(pfad(wurzel, ["OrderReference"]), ["ID"]);
+
+    function partei(rolle) {
+      var p = pfad(wurzel, [rolle, "Party"]);
+      if (!p) return null;
+      return {
+        name: text(p, ["PartyLegalEntity", "RegistrationName"]) || text(p, ["PartyName", "Name"]),
+        ort:  [text(p, ["PostalAddress", "PostalZone"]), text(p, ["PostalAddress", "CityName"])]
+                .filter(Boolean).join(" "),
+        ustid: text(pfad(p, ["PartyTaxScheme"]), ["CompanyID"])
+      };
+    }
+    r.verkaeufer = partei("AccountingSupplierParty");
+    r.kaeufer    = partei("AccountingCustomerParty");
+
+    var zeilen = kinder(wurzel, "InvoiceLine").concat(kinder(wurzel, "CreditNoteLine"));
+    for (var i = 0; i < zeilen.length; i++) {
+      var z = zeilen[i];
+      var mengeKnoten = kinder(z, "InvoicedQuantity")[0] || kinder(z, "CreditedQuantity")[0];
+      var artikel = pfad(z, ["Item"]);
+      r.positionen.push({
+        nr:       text(z, ["ID"]),
+        name:     artikel ? text(artikel, ["Name"]) : "",
+        nummer:   artikel ? (text(pfad(artikel, ["SellersItemIdentification"]), ["ID"]) ||
+                             text(pfad(artikel, ["StandardItemIdentification"]), ["ID"])) : "",
+        menge:    mengeKnoten ? zahl(mengeKnoten.textContent) : null,
+        einheit:  mengeKnoten ? einheit(mengeKnoten.getAttribute("unitCode")) : "",
+        preis:    zahl(text(pfad(z, ["Price"]), ["PriceAmount"])),
+        gesamt:   zahl(text(z, ["LineExtensionAmount"]))
+      });
+    }
+
+    var s = pfad(wurzel, ["LegalMonetaryTotal"]);
+    r.netto  = zahl(text(s, ["TaxExclusiveAmount"]));
+    r.brutto = zahl(text(s, ["TaxInclusiveAmount"]));
+    r.zahlen = zahl(text(s, ["PayableAmount"]));
+    var steuer = pfad(wurzel, ["TaxTotal"]);
+    r.steuer = zahl(text(steuer, ["TaxAmount"]));
+
+    return r;
+  }
+
+  /* ---------------------------------------------------------------
+     CII — ZUGFeRD / Factur-X / XRechnung im Syntax 1
+  ----------------------------------------------------------------*/
+  function liesCII(wurzel) {
+    var r = { format: "ZUGFeRD / Factur-X (CII)", positionen: [] };
+
+    var kopf = pfad(wurzel, ["ExchangedDocument"]);
+    r.nummer = text(kopf, ["ID"]);
+    r.datum  = datum(text(pfad(kopf, ["IssueDateTime"]), ["DateTimeString"]));
+
+    var vorgang   = pfad(wurzel, ["SupplyChainTradeTransaction"]);
+    var vereinb   = pfad(vorgang, ["ApplicableHeaderTradeAgreement"]);
+    var abrechnung= pfad(vorgang, ["ApplicableHeaderTradeSettlement"]);
+
+    r.leitweg  = text(vereinb, ["BuyerReference"]);
+    r.bestell  = text(pfad(vereinb, ["BuyerOrderReferencedDocument"]), ["IssuerAssignedID"]);
+    r.waehrung = text(abrechnung, ["InvoiceCurrencyCode"]);
+
+    function partei(knoten) {
+      if (!knoten) return null;
+      var adresse = pfad(knoten, ["PostalTradeAddress"]);
+      var steuer  = kinder(knoten, "SpecifiedTaxRegistration")[0];
+      return {
+        name: text(knoten, ["Name"]),
+        ort:  adresse ? [text(adresse, ["PostcodeCode"]), text(adresse, ["CityName"])]
+                          .filter(Boolean).join(" ") : "",
+        ustid: steuer ? text(steuer, ["ID"]) : ""
+      };
+    }
+    r.verkaeufer = partei(pfad(vereinb, ["SellerTradeParty"]));
+    r.kaeufer    = partei(pfad(vereinb, ["BuyerTradeParty"]));
+
+    var frist = pfad(abrechnung, ["SpecifiedTradePaymentTerms"]);
+    r.faellig = datum(text(pfad(frist, ["DueDateDateTime"]), ["DateTimeString"]));
+
+    var zeilen = kinder(vorgang, "IncludedSupplyChainTradeLineItem");
+    for (var i = 0; i < zeilen.length; i++) {
+      var z = zeilen[i];
+      var produkt   = pfad(z, ["SpecifiedTradeProduct"]);
+      var vereinbZ  = pfad(z, ["SpecifiedLineTradeAgreement"]);
+      var lieferung = pfad(z, ["SpecifiedLineTradeDelivery"]);
+      var mengeKnoten = lieferung ? kinder(lieferung, "BilledQuantity")[0] : null;
+      var preisKnoten = pfad(vereinbZ, ["NetPriceProductTradePrice"]) ||
+                        pfad(vereinbZ, ["GrossPriceProductTradePrice"]);
+
+      r.positionen.push({
+        nr:      text(pfad(z, ["AssociatedDocumentLineDocument"]), ["LineID"]),
+        name:    produkt ? text(produkt, ["Name"]) : "",
+        nummer:  produkt ? (text(produkt, ["SellerAssignedID"]) ||
+                            text(produkt, ["GlobalID"])) : "",
+        menge:   mengeKnoten ? zahl(mengeKnoten.textContent) : null,
+        einheit: mengeKnoten ? einheit(mengeKnoten.getAttribute("unitCode")) : "",
+        preis:   zahl(text(preisKnoten, ["ChargeAmount"])),
+        gesamt:  zahl(text(pfad(z, ["SpecifiedLineTradeSettlement",
+                                    "SpecifiedTradeSettlementLineMonetarySummation"]),
+                           ["LineTotalAmount"]))
+      });
+    }
+
+    var s = pfad(abrechnung, ["SpecifiedTradeSettlementHeaderMonetarySummation"]);
+    r.netto  = zahl(text(s, ["TaxBasisTotalAmount"]));
+    r.steuer = zahl(text(s, ["TaxTotalAmount"]));
+    r.brutto = zahl(text(s, ["GrandTotalAmount"]));
+    r.zahlen = zahl(text(s, ["DuePayableAmount"]));
+
+    return r;
+  }
+
+  function liesXML(inhalt) {
+    var doc = new DOMParser().parseFromString(inhalt, "application/xml");
+    if (doc.getElementsByTagName("parsererror").length) {
+      throw new Error("Die Datei ist kein gültiges XML.");
+    }
+    var wurzel = doc.documentElement;
+    var name = wurzel.localName;
+
+    if (name === "Invoice" || name === "CreditNote") return liesUBL(wurzel);
+    if (name === "CrossIndustryInvoice" || name === "CrossIndustryDocument") return liesCII(wurzel);
+
+    if (tief(wurzel, "SupplyChainTradeTransaction")) return liesCII(wurzel);
+    if (tief(wurzel, "AccountingSupplierParty"))     return liesUBL(wurzel);
+
+    throw new Error(
+      "Das ist zwar XML, aber keine E-Rechnung nach EN 16931. " +
+      "Erkannt wurde das Element „" + name + "“."
+    );
+  }
+
+  /* ---------------------------------------------------------------
+     ZUGFeRD: die eingebettete XML-Datei aus dem PDF holen.
+     Die Anhänge liegen als Streams im PDF, meist mit Flate gepackt.
+  ----------------------------------------------------------------*/
+  function suche(bytes, muster, ab) {
+    var m = [];
+    for (var i = 0; i < muster.length; i++) m.push(muster.charCodeAt(i));
+    for (var p = ab; p <= bytes.length - m.length; p++) {
+      var treffer = true;
+      for (var j = 0; j < m.length; j++) {
+        if (bytes[p + j] !== m[j]) { treffer = false; break; }
+      }
+      if (treffer) return p;
+    }
+    return -1;
+  }
+
+  function entpacke(bytes) {
+    // Rohe Deflate-Daten mit zlib-Kopf entpacken.
+    var strom = new Blob([bytes]).stream().pipeThrough(new DecompressionStream("deflate"));
+    return new Response(strom).text();
+  }
+
+  function istRechnungsXML(s) {
+    return s.indexOf("CrossIndustryInvoice") !== -1 ||
+           s.indexOf("CrossIndustryDocument") !== -1 ||
+           (s.indexOf("<Invoice") !== -1 && s.indexOf("oasis") !== -1);
+  }
+
+  async function liesPDF(puffer) {
+    var bytes = new Uint8Array(puffer);
+    var roh   = new TextDecoder("latin1").decode(bytes);
+
+    // 1. Fall: die XML-Daten liegen ungepackt im PDF.
+    var direkt = roh.match(/<\?xml[\s\S]{0,80000}?<\/(rsm:)?CrossIndustryInvoice>/);
+    if (direkt && istRechnungsXML(direkt[0])) return direkt[0];
+
+    // 2. Fall: gepackte Streams durchgehen und den passenden finden.
+    var position = 0;
+    while (true) {
+      var start = suche(bytes, "stream", position);
+      if (start === -1) break;
+      var anfang = start + 6;
+      if (bytes[anfang] === 13) anfang++;      // CR
+      if (bytes[anfang] === 10) anfang++;      // LF
+      var ende = suche(bytes, "endstream", anfang);
+      if (ende === -1) break;
+      position = ende + 9;
+
+      if (ende - anfang < 200) continue;       // zu klein für eine Rechnung
+      try {
+        var inhalt = await entpacke(bytes.subarray(anfang, ende));
+        if (istRechnungsXML(inhalt)) return inhalt;
+      } catch (e) { /* kein Flate-Strom — weitersuchen */ }
+    }
+
+    throw new Error(
+      "In diesem PDF steckt keine Rechnungsdatei. " +
+      "Vermutlich ist es ein normales PDF und keine ZUGFeRD-Rechnung — " +
+      "dann kann es auch keine Software automatisch verarbeiten."
+    );
+  }
+
+  /* ---------------------------------------------------------------
+     Darstellung
+  ----------------------------------------------------------------*/
+  function esc(s) {
+    return String(s === null || s === undefined ? "" : s)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function metaFeld(name, wert) {
+    if (!wert) return "";
+    return '<div class="meta-feld"><div class="meta-name">' + esc(name) +
+           '</div><div class="meta-wert">' + esc(wert) + "</div></div>";
+  }
+
+  function parteiBlock(rolle, p) {
+    if (!p) return "";
+    var zeilen = "";
+    if (p.ort)   zeilen += '<div class="partei-zeile">' + esc(p.ort) + "</div>";
+    if (p.ustid) zeilen += '<div class="partei-zeile">USt-IdNr. ' + esc(p.ustid) + "</div>";
+    return '<div class="partei"><div class="partei-rolle">' + esc(rolle) + "</div>" +
+           '<div class="partei-name">' + esc(p.name || "nicht angegeben") + "</div>" +
+           zeilen + "</div>";
+  }
+
+  function zeige(r, dateiname, beispiel) {
+    var teile = [];
+
+    teile.push('<div class="beleg-hinweis">' +
+      '<span class="marke gruen">gelesen</span>' +
+      '<span class="marke">' + esc(r.format) + "</span>" +
+      "<span>" + esc(dateiname) + "</span>" +
+      (beispiel ? '<span class="marke">Beispieldatei</span>' : "") +
+      "</div>");
+
+    var kopf =
+      '<div class="dok-kopf"><div>' +
+        '<div class="dok-titel">' + esc(r.verkaeufer && r.verkaeufer.name ? r.verkaeufer.name : "Rechnung") + "</div>" +
+        '<div class="dok-nummer">Rechnung ' + esc(r.nummer || "ohne Nummer") + "</div>" +
+      "</div><div class=\"dok-nummer\">" + esc(r.datum || "") + "</div></div>";
+
+    var parteien = '<div class="parteien">' +
+      parteiBlock("Rechnungssteller", r.verkaeufer) +
+      parteiBlock("Rechnungsempfänger", r.kaeufer) + "</div>";
+
+    var meta =
+      metaFeld("Rechnungsdatum", r.datum) +
+      metaFeld("Fällig am", r.faellig) +
+      metaFeld("Bestellnummer", r.bestell) +
+      metaFeld("Leitweg-ID", r.leitweg) +
+      metaFeld("Währung", r.waehrung);
+    meta = meta ? '<div class="meta">' + meta + "</div>" : "";
+
+    var tabelle = "";
+    if (r.positionen.length) {
+      var reihen = r.positionen.map(function (p) {
+        return "<tr>" +
+          "<td>" + esc(p.name || "ohne Bezeichnung") +
+            (p.nummer ? '<span class="artikelnr">' + esc(p.nummer) + "</span>" : "") + "</td>" +
+          '<td class="num">' + esc(menge(p.menge)) + (p.einheit ? " " + esc(p.einheit) : "") + "</td>" +
+          '<td class="num">' + esc(euro(p.preis)) + "</td>" +
+          '<td class="num">' + esc(euro(p.gesamt)) + "</td>" +
+        "</tr>";
+      }).join("");
+      tabelle =
+        '<div class="tabelle-huelle"><table><thead><tr>' +
+          "<th>Position</th><th class=\"num\">Menge</th>" +
+          "<th class=\"num\">Einzelpreis</th><th class=\"num\">Gesamt</th>" +
+        "</tr></thead><tbody>" + reihen + "</tbody></table></div>";
+    }
+
+    var summen = '<div class="summen">' +
+      (r.netto  !== null ? '<div class="summen-zeile"><span>Netto</span><span class="num">' + euro(r.netto) + "</span></div>" : "") +
+      (r.steuer !== null ? '<div class="summen-zeile"><span>Umsatzsteuer</span><span class="num">' + euro(r.steuer) + "</span></div>" : "") +
+      '<div class="summen-zeile gesamt"><span>Zahlbetrag</span><span class="num">' +
+        euro(r.zahlen !== null ? r.zahlen : r.brutto) + "</span></div>" +
+      "</div>";
+
+    teile.push('<div class="dokument">' + kopf + parteien + meta + tabelle + summen + "</div>");
+
+    var felder = [
+      ["Format",         r.format],
+      ["Rechnungsnummer",r.nummer],
+      ["Positionen",     String(r.positionen.length)],
+      ["Leitweg-ID",     r.leitweg || "nicht enthalten"],
+      ["USt-IdNr. Steller", (r.verkaeufer && r.verkaeufer.ustid) || "nicht enthalten"],
+      ["Währung",        r.waehrung || "nicht angegeben"]
+    ].map(function (f) {
+      return '<div class="feld"><span class="feld-name">' + esc(f[0]) +
+             '</span><span class="feld-wert">' + esc(f[1]) + "</span></div>";
+    }).join("");
+
+    teile.push('<details class="technik"><summary>Was technisch in der Datei steht</summary>' +
+               '<div class="felder">' + felder + "</div></details>");
+
+    ergebnis.innerHTML = teile.join("");
+    ergebnis.hidden = false;
+  }
+
+  function zeigeFehler(nachricht) {
+    fehlerfeld.innerHTML = '<div class="fehler">' + esc(nachricht) + "</div>";
+    ergebnis.hidden = true;
+  }
+
+  async function verarbeite(datei) {
+    fehlerfeld.innerHTML = "";
+    try {
+      var name = datei.name.toLowerCase();
+      var inhalt;
+      if (name.endsWith(".pdf") || datei.type === "application/pdf") {
+        inhalt = await liesPDF(await datei.arrayBuffer());
+      } else {
+        inhalt = await datei.text();
+      }
+      zeige(liesXML(inhalt), datei.name, false);
+      ergebnis.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    } catch (e) {
+      zeigeFehler(e.message || "Die Datei konnte nicht gelesen werden.");
+    }
+  }
+
+  ablage.addEventListener("click", function () { dateifeld.click(); });
+  ablage.addEventListener("keydown", function (e) {
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); dateifeld.click(); }
+  });
+  dateifeld.addEventListener("change", function () {
+    if (dateifeld.files[0]) verarbeite(dateifeld.files[0]);
+  });
+  ["dragenter", "dragover"].forEach(function (art) {
+    ablage.addEventListener(art, function (e) { e.preventDefault(); ablage.classList.add("aktiv"); });
+  });
+  ["dragleave", "drop"].forEach(function (art) {
+    ablage.addEventListener(art, function (e) { e.preventDefault(); ablage.classList.remove("aktiv"); });
+  });
+  ablage.addEventListener("drop", function (e) {
+    if (e.dataTransfer.files[0]) verarbeite(e.dataTransfer.files[0]);
+  });
+
+  /* Beim Öffnen eine Beispielrechnung zeigen, damit sofort sichtbar
+     ist, was das Werkzeug tut. */
+  var BEISPIEL = [
+'<?xml version="1.0" encoding="UTF-8"?>',
+'<rsm:CrossIndustryInvoice xmlns:rsm="urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100"',
+'  xmlns:ram="urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:100"',
+'  xmlns:udt="urn:un:unece:uncefact:data:standard:UnqualifiedDataType:100">',
+'  <rsm:ExchangedDocument><ram:ID>RE-2026-4471</ram:ID>',
+'    <ram:IssueDateTime><udt:DateTimeString format="102">20260828</udt:DateTimeString></ram:IssueDateTime>',
+'  </rsm:ExchangedDocument>',
+'  <rsm:SupplyChainTradeTransaction>',
+'    <ram:IncludedSupplyChainTradeLineItem>',
+'      <ram:AssociatedDocumentLineDocument><ram:LineID>1</ram:LineID></ram:AssociatedDocumentLineDocument>',
+'      <ram:SpecifiedTradeProduct><ram:SellerAssignedID>TB-25-C2530</ram:SellerAssignedID>',
+'        <ram:Name>Trockenbeton C25/30, 25 kg Sack</ram:Name></ram:SpecifiedTradeProduct>',
+'      <ram:SpecifiedLineTradeAgreement><ram:NetPriceProductTradePrice>',
+'        <ram:ChargeAmount>6.45</ram:ChargeAmount></ram:NetPriceProductTradePrice></ram:SpecifiedLineTradeAgreement>',
+'      <ram:SpecifiedLineTradeDelivery><ram:BilledQuantity unitCode="XSA">60</ram:BilledQuantity></ram:SpecifiedLineTradeDelivery>',
+'      <ram:SpecifiedLineTradeSettlement><ram:SpecifiedTradeSettlementLineMonetarySummation>',
+'        <ram:LineTotalAmount>387.00</ram:LineTotalAmount>',
+'      </ram:SpecifiedTradeSettlementLineMonetarySummation></ram:SpecifiedLineTradeSettlement>',
+'    </ram:IncludedSupplyChainTradeLineItem>',
+'    <ram:IncludedSupplyChainTradeLineItem>',
+'      <ram:AssociatedDocumentLineDocument><ram:LineID>2</ram:LineID></ram:AssociatedDocumentLineDocument>',
+'      <ram:SpecifiedTradeProduct><ram:SellerAssignedID>BST-500-10</ram:SellerAssignedID>',
+'        <ram:Name>Betonstahl B500B, Ø 10 mm, Stabl&#228;nge 6 m</ram:Name></ram:SpecifiedTradeProduct>',
+'      <ram:SpecifiedLineTradeAgreement><ram:NetPriceProductTradePrice>',
+'        <ram:ChargeAmount>1.12</ram:ChargeAmount></ram:NetPriceProductTradePrice></ram:SpecifiedLineTradeAgreement>',
+'      <ram:SpecifiedLineTradeDelivery><ram:BilledQuantity unitCode="KGM">840</ram:BilledQuantity></ram:SpecifiedLineTradeDelivery>',
+'      <ram:SpecifiedLineTradeSettlement><ram:SpecifiedTradeSettlementLineMonetarySummation>',
+'        <ram:LineTotalAmount>940.80</ram:LineTotalAmount>',
+'      </ram:SpecifiedTradeSettlementLineMonetarySummation></ram:SpecifiedLineTradeSettlement>',
+'    </ram:IncludedSupplyChainTradeLineItem>',
+'    <ram:ApplicableHeaderTradeAgreement>',
+'      <ram:BuyerReference>04011000-12345-52</ram:BuyerReference>',
+'      <ram:SellerTradeParty><ram:Name>Nordmann Baustoffe GmbH</ram:Name>',
+'        <ram:PostalTradeAddress><ram:PostcodeCode>63225</ram:PostcodeCode>',
+'          <ram:CityName>Langen</ram:CityName></ram:PostalTradeAddress>',
+'        <ram:SpecifiedTaxRegistration><ram:ID schemeID="VA">DE811907980</ram:ID>',
+'        </ram:SpecifiedTaxRegistration></ram:SellerTradeParty>',
+'      <ram:BuyerTradeParty><ram:Name>Vogel Hochbau GmbH &amp; Co. KG</ram:Name>',
+'        <ram:PostalTradeAddress><ram:PostcodeCode>60326</ram:PostcodeCode>',
+'          <ram:CityName>Frankfurt am Main</ram:CityName></ram:PostalTradeAddress></ram:BuyerTradeParty>',
+'      <ram:BuyerOrderReferencedDocument><ram:IssuerAssignedID>B-2026-0912</ram:IssuerAssignedID>',
+'      </ram:BuyerOrderReferencedDocument>',
+'    </ram:ApplicableHeaderTradeAgreement>',
+'    <ram:ApplicableHeaderTradeSettlement>',
+'      <ram:InvoiceCurrencyCode>EUR</ram:InvoiceCurrencyCode>',
+'      <ram:SpecifiedTradePaymentTerms><ram:DueDateDateTime>',
+'        <udt:DateTimeString format="102">20260927</udt:DateTimeString>',
+'      </ram:DueDateDateTime></ram:SpecifiedTradePaymentTerms>',
+'      <ram:SpecifiedTradeSettlementHeaderMonetarySummation>',
+'        <ram:TaxBasisTotalAmount>1327.80</ram:TaxBasisTotalAmount>',
+'        <ram:TaxTotalAmount currencyID="EUR">252.28</ram:TaxTotalAmount>',
+'        <ram:GrandTotalAmount>1580.08</ram:GrandTotalAmount>',
+'        <ram:DuePayableAmount>1580.08</ram:DuePayableAmount>',
+'      </ram:SpecifiedTradeSettlementHeaderMonetarySummation>',
+'    </ram:ApplicableHeaderTradeSettlement>',
+'  </rsm:SupplyChainTradeTransaction>',
+'</rsm:CrossIndustryInvoice>'
+  ].join("\n");
+
+  try {
+    zeige(liesXML(BEISPIEL), "beispiel-rechnung.xml", true);
+  } catch (e) { /* Beispiel darf die Seite nie blockieren */ }
+})();
+</script>
