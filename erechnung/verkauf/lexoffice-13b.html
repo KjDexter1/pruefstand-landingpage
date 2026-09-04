@@ -11,7 +11,7 @@
   body {
     margin:0; background:var(--ground); color:var(--ink);
     font-family:"IBM Plex Sans", Arial, sans-serif;
-    font-size:9.4pt; line-height:1.42; -webkit-font-smoothing:antialiased;
+    font-size:9.2pt; line-height:1.38; -webkit-font-smoothing:antialiased;
   }
   .seite { max-width:190mm; margin:0 auto; padding:4mm 0 8mm; }
   .kopf {
@@ -59,14 +59,14 @@
   .sagen p { font-size:9.6pt; margin:0; }
   .sagen p + p { margin-top:5px; }
 
-  table { width:100%; border-collapse:collapse; font-size:8.7pt; margin-bottom:7px; }
+  table { width:100%; border-collapse:collapse; font-size:8.4pt; margin-bottom:7px; }
   th {
     text-align:left; font-family:"IBM Plex Mono", monospace; font-size:7.2pt;
     letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint);
     font-weight:400; padding:0 7px 3px 0; border-bottom:1px solid var(--rule);
     vertical-align:bottom;
   }
-  td { padding:5px 7px 5px 0; border-bottom:1px solid var(--rule); vertical-align:top; }
+  td { padding:4px 7px 4px 0; border-bottom:1px solid var(--rule); vertical-align:top; }
   td:last-child, th:last-child { padding-right:0; }
   .einwand { font-weight:600; width:33%; }
 
@@ -159,6 +159,10 @@
           noch nicht wissen — und das steht bei Lexware selbst auf der Hilfeseite.
           Haben Sie zwei Minuten?“
         </p>
+        <p>
+          <em>Und immer noch im selben Atemzug:</em> „Wie viele solche Rechnungen sind
+          das ungefähr im Monat?“
+        </p>
       </div>
       <div class="rot">
         <strong>Nicht sagen:</strong> „Ihre Software ist schlecht.“ Der Betrieb hat sie
@@ -183,11 +187,13 @@
             Testrechnung und prüfst die erzeugte Datei.</li>
         <li>Eine Seite Anleitung fürs Büro, damit es ohne dich weiterläuft.</li>
       </ol>
-      <p>
-        Bei den meisten Baubetrieben sind § 13 b-Rechnungen eine Handvoll im Monat,
-        nicht das Tagesgeschäft. Damit bleibt der Betrieb in aller Regel in der
-        kostenlosen Stufe der Zusatzsoftware.
-      </p>
+      <div class="rot">
+        <strong>Wie viele § 13 b-Rechnungen im Monat?</strong> Das musst du fragen,
+        bevor du über Kosten redest. Ein Subunternehmer, der fast nur für
+        Generalunternehmer arbeitet, rechnet <em>alles</em> nach § 13 b ab — bei dem
+        ist es das Tagesgeschäft. Ein Betrieb mit Privatkunden und gelegentlich einem
+        GU hat eine Handvoll. Zwei völlig verschiedene Fälle.
+      </div>
     </div>
     <div>
       <div class="preis">
@@ -198,7 +204,7 @@
       <ul class="kurz">
         <li>ein Problem gelöst, von dem er nichts wusste</li>
         <li>keine Umstellung seiner gewohnten Software</li>
-        <li>in der Regel keine laufenden Softwarekosten</li>
+        <li>keine laufenden Softwarekosten — die Zusatzsoftware ist entweder kostenlos oder einmalig zu zahlen, kein Abo</li>
         <li>eine geprüfte Testrechnung als Nachweis, dass es funktioniert</li>
       </ul>
       <div class="rot">
@@ -231,19 +237,16 @@
       <tr>
         <td class="einwand">„Das macht mein Steuerberater.“</td>
         <td>
-          „Der macht Ihre Buchhaltung — der schreibt aber nicht Ihre Ausgangsrechnungen.
-          Die schreiben Sie selbst in lexoffice, und genau da sitzt die Lücke. Fragen Sie
-          ihn ruhig, ob lexoffice § 13 b als E-Rechnung ausgeben kann. Er wird dieselbe
-          Antwort bekommen wie ich.“
+          „Der macht Ihre Buchhaltung — Ihre Ausgangsrechnungen schreiben Sie selbst in
+          lexoffice, und genau da sitzt die Lücke. Fragen Sie ihn ruhig, ob lexoffice
+          § 13 b als E-Rechnung ausgeben kann.“
         </td>
       </tr>
       <tr>
         <td class="einwand">„Bis 2028 ist doch noch lange hin.“</td>
         <td>
-          „Stimmt, bis dahin dürfen Sie PDF schicken. Nur endet das nicht langsam,
-          sondern an einem Stichtag. Wer im Januar 2028 anfängt zu suchen, sucht
-          gleichzeitig mit allen anderen — und Sie schreiben in der Zeit Rechnungen,
-          die zurückkommen können.“
+          „Stimmt, bis dahin dürfen Sie PDF schicken. Nur endet das nicht langsam, sondern
+          an einem Stichtag — und dann suchen alle gleichzeitig.“
         </td>
       </tr>
       <tr>
@@ -258,17 +261,21 @@
       <tr>
         <td class="einwand">„Was kostet mich die Software?“</td>
         <td>
-          „Bis zehn Rechnungen im Monat nichts. Wie viele § 13 b-Rechnungen schreiben
-          Sie ungefähr?“ — <em>Bei bis zu zehn:</em> „Dann kostet Sie die Software gar
-          nichts, nur meine Einrichtung.“
+          <strong>Erst die Zahl, dann die Antwort.</strong> „Wie viele § 13 b-Rechnungen
+          schreiben Sie im Monat?“<br>
+          <em>Bis zehn:</em> „Dann fällt für die Software voraussichtlich nichts an —
+          bis zehn im Monat ist sie kostenlos. Sie zahlen nur meine Einrichtung.“<br>
+          <em>Mehr:</em> „Dann brauchen Sie die Vollversion: einmalig knapp 300 Euro,
+          kein Abo, keine Folgekosten. Dazu meine Einrichtung.“
+          <br><strong>Nie „kostet Sie nichts“ sagen, bevor die Zahl auf dem Tisch
+          liegt.</strong>
         </td>
       </tr>
       <tr>
         <td class="einwand">„Dann wechsle ich lieber gleich ganz.“</td>
         <td>
-          „Können Sie machen, kostet aber deutlich mehr und dauert länger — neues
-          Programm, ganze Buchhaltung, Ihr Team muss umlernen. Ich würde erst das
-          Problem lösen, das eine Frist hat. Wechseln können Sie später immer noch.“
+          „Können Sie machen, kostet aber deutlich mehr und dauert länger. Ich würde erst
+          das Problem lösen, das eine Frist hat — wechseln können Sie später immer noch.“
         </td>
       </tr>
       <tr>
@@ -291,7 +298,7 @@
 
   <div class="spalten">
     <div>
-      <h2>Drei Sätze, die nicht fallen dürfen</h2>
+      <h2>Vier Sätze, die nicht fallen dürfen</h2>
       <div class="rot">
         <p style="margin:0 0 5px">
           <strong>„Sie machen sich strafbar.“</strong> Falsch und einschüchternd. Eine
@@ -302,9 +309,15 @@
           <strong>„Lexware taugt nichts.“</strong> Du bewertest kein fremdes Produkt.
           Du zeigst eine Lücke, die der Hersteller selbst benennt.
         </p>
-        <p style="margin:0">
+        <p style="margin:0 0 5px">
           <strong>„Das kann sonst keiner.“</strong> Weißt du nicht. Behaupte nie etwas
           über Wettbewerber, das du nicht geprüft hast.
+        </p>
+        <p style="margin:0">
+          <strong>„Die Software kostet Sie nichts.“</strong> Nicht, bevor du die Zahl
+          gefragt hast. Wer erst Kostenfreiheit verspricht und dann eine Rechnung
+          schickt, ist beim Kunden für immer verbrannt — und zwar du, nicht der
+          Softwareanbieter.
         </p>
       </div>
     </div>
@@ -338,6 +351,7 @@
         Befreiungsgrund, Hinweistext</li>
     <li>Offline getestet — Netzwerk aus, Rechnung schreiben, funktioniert es trotzdem</li>
     <li>Festpreis für dich selbst festgelegt: 450 oder 650, nicht „kommt drauf an“</li>
+    <li>Beide Preisantworten geübt — die für wenige und die für viele § 13 b-Rechnungen</li>
   </ul>
 
   <footer>
