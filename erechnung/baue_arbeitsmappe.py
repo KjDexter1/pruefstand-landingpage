@@ -160,6 +160,8 @@ schritte = [
         "Rechnungsprogramm auf Blatt 1 nachschlagen — Menuepfad und Stammdaten notieren",
         "Pruefen: faellt der Kunde unter 2027 (ueber 800.000 €) oder 2028?",
         "Kleinunternehmer nach § 19 UStG? Dann nur Empfang, kein Versand — kleineres Paket",
+        "Rechnet der Betrieb ueberwiegend Kleinbetraege unter 250 € brutto ab? Dann ist er weitgehend gar nicht betroffen — vorher klaeren, nicht erst im Gespraech",
+        "Nur Privatkunden? Dann besteht keine Ausstellungspflicht. Mischbetriebe nur fuer den gewerblichen Teil",
     ]),
     ("Bestandsaufnahme", [
         "Rechnungsprogramm und Version am Bildschirm bestaetigen lassen",
