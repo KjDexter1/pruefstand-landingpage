@@ -1,19 +1,18 @@
-# Was hier steht, wird nicht auf die Website ausgeliefert.
-# Die Dateien bleiben im Repository, sind aber nicht öffentlich abrufbar.
+# Projekt eingestellt am 04.09.2026. Es wird nichts mehr ausgeliefert.
+# Die Dateien bleiben im Repository erhalten — siehe ABSCHLUSS.md.
+
+# Die komplette ehemalige Website
+archiv/
 
 # Interne Strategieunterlagen
 strategie/
 
-# Werkzeuge, Kataloge, Risikonotizen — und die Ordner, in denen später
-# echte Kundendaten liegen
+# Werkzeuge, Kataloge, Risikonotizen
 ops/
 
-# Entwurf: Fördermittel-Modul. Kernmechanismus ungeklärt (Antrag muss vor
-# Vorhabenbeginn gestellt werden, gefundene Rechnungen sind bereits bezahlt)
-# und rechtlich nicht freigegeben. Zeile entfernen, um die Seite wieder
-# auszuliefern.
-foerdermittel-check.html
-
-# Sonstiges, das nicht auf die Website gehört
+# Automatiken (deaktiviert)
 .github/
+
+# Sonstiges
 README.md
+ABSCHLUSS.md
