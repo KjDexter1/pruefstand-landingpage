@@ -51,3 +51,34 @@ FES steht der Durchlauf noch aus.
 
 Der Test muss mit Firmen wiederholt werden, die dem ECONSOR-Muster entsprechen:
 inhabergefuehrt, 10 bis 200 Leute, eigene Website, eigene Karriereseite.
+
+---
+
+## Abbruch — 04.09.2026
+
+Das Projekt wird nicht weiterverfolgt. Grund ist **nicht** die Qualitaet des
+Werkzeugs: Der ECONSOR-Durchlauf hat drei belastbare, nicht offensichtliche
+Signale geliefert. Das Produkt funktioniert.
+
+Es fehlt der Zugang zur Zielgruppe. Auf die Frage, ob Agenturinhaber und
+Vertriebsleiter erreichbar sind, lautet die Antwort nein — und es liess sich
+keine einzige Firma aus dem Muster benennen, an die man sich wenden koennte.
+
+Ein Produkt ohne Zugang zum Kaeufer ist kein Geschaeft, egal wie gut es ist.
+
+## Das Muster ueber beide Projekte
+
+| | Zielgruppe | Zugang | Bedarf |
+|---|---|---|---|
+| Pruefstand | Handwerksbetriebe | **ja** — 7 Anrufe gefuehrt | nein — pruefen selbst |
+| Pre-Call-Briefing | Digitalagenturen | **nein** | vermutlich ja |
+
+Zweimal fehlte eine der beiden Haelften. Beide Male wurde zuerst das Produkt
+gewaehlt und danach gefragt, wer es kaufen soll.
+
+Die naechste Idee faengt an der anderen Seite an: **Wozu gibt es Zugang, und
+was wird dort heute schon bezahlt?** Vorhandener Zugang laut Testlauf 01:
+Luftfahrt-Bodendienste, Entsorgung, Bahnbetrieb, Paketlogistik, Automaten-
+service — Industrie- und Logistikbetriebe, von innen gekannt.
+
+Der Code bleibt erhalten und ist lauffaehig.
