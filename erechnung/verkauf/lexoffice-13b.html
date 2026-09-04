@@ -1,0 +1,347 @@
+<title>Der lexoffice-Fall</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@600&display=swap">
+<style>
+  @page { size: A4; margin: 12mm 13mm; }
+  :root {
+    --ground:#FFFFFF; --surface:#F5F4EF; --ink:#161917; --ink-soft:#4E5854;
+    --ink-faint:#87908B; --rule:#D2D0C7; --accent:#0E5B50; --accent-soft:#E2EEEB;
+    --flag:#A93C1B; --flag-soft:#FAEBE4;
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:"IBM Plex Sans", Arial, sans-serif;
+    font-size:9.4pt; line-height:1.42; -webkit-font-smoothing:antialiased;
+  }
+  .seite { max-width:190mm; margin:0 auto; padding:4mm 0 8mm; }
+  .kopf {
+    display:flex; justify-content:space-between; align-items:baseline;
+    border-bottom:2px solid var(--accent); padding-bottom:5px; margin-bottom:12px;
+  }
+  h1 {
+    font-family:"IBM Plex Serif", Georgia, serif; font-size:17pt; font-weight:600;
+    margin:0; line-height:1.1;
+  }
+  .kopf-neben {
+    font-family:"IBM Plex Mono", monospace; font-size:7.4pt;
+    letter-spacing:.08em; text-transform:uppercase; color:var(--accent);
+  }
+  h2 {
+    font-family:"IBM Plex Mono", monospace; font-size:7.8pt; font-weight:500;
+    letter-spacing:.12em; text-transform:uppercase; color:var(--accent);
+    margin:13px 0 5px; padding-bottom:3px; border-bottom:1px solid var(--rule);
+  }
+  p { margin:0 0 6px; }
+  .spalten { display:grid; grid-template-columns:1fr 1fr; gap:0 16px; }
+
+  .beleg {
+    background:var(--accent-soft); border-left:3px solid var(--accent);
+    padding:8px 11px; border-radius:0 3px 3px 0; margin:0 0 8px;
+  }
+  .beleg .zitat { font-size:9.6pt; line-height:1.45; }
+  .beleg .quelle {
+    font-family:"IBM Plex Mono", monospace; font-size:7.4pt;
+    color:var(--ink-soft); margin-top:5px;
+  }
+  .rot {
+    background:var(--flag-soft); border-left:3px solid var(--flag);
+    padding:8px 11px; border-radius:0 3px 3px 0; margin:0 0 8px;
+    font-size:8.9pt; color:#6E2812;
+  }
+  .sagen {
+    background:var(--surface); border:1px solid var(--rule); border-radius:3px;
+    padding:8px 11px; margin:0 0 7px;
+  }
+  .sagen .du {
+    font-family:"IBM Plex Mono", monospace; font-size:7.2pt; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--accent); display:block; margin-bottom:3px;
+  }
+  .sagen p { font-size:9.6pt; margin:0; }
+  .sagen p + p { margin-top:5px; }
+
+  table { width:100%; border-collapse:collapse; font-size:8.7pt; margin-bottom:7px; }
+  th {
+    text-align:left; font-family:"IBM Plex Mono", monospace; font-size:7.2pt;
+    letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint);
+    font-weight:400; padding:0 7px 3px 0; border-bottom:1px solid var(--rule);
+    vertical-align:bottom;
+  }
+  td { padding:5px 7px 5px 0; border-bottom:1px solid var(--rule); vertical-align:top; }
+  td:last-child, th:last-child { padding-right:0; }
+  .einwand { font-weight:600; width:33%; }
+
+  ol.schritte { margin:0 0 7px; padding-left:15px; }
+  ol.schritte li { margin-bottom:4px; }
+  ul.kurz { margin:0 0 6px; padding-left:14px; }
+  ul.kurz li { margin-bottom:2.5px; }
+
+  .preis {
+    display:flex; gap:10px; align-items:baseline; background:var(--accent);
+    color:#fff; padding:8px 12px; border-radius:3px; margin:0 0 8px;
+  }
+  .preis .zahl { font-size:15pt; font-weight:700; }
+  .preis .was { font-size:8.6pt; opacity:.92; }
+
+  footer {
+    margin-top:12px; padding-top:6px; border-top:1px solid var(--rule);
+    font-family:"IBM Plex Mono", monospace; font-size:7pt; color:var(--ink-faint);
+    display:flex; justify-content:space-between;
+  }
+  .umbruch { page-break-before:always; }
+</style>
+
+<div class="seite">
+
+  <div class="kopf">
+    <h1>Der lexoffice-Fall</h1>
+    <div class="kopf-neben">Baubetrieb · § 13 b · Frist 2028</div>
+  </div>
+
+  <div class="spalten">
+    <div>
+      <h2>Wann dieser Zettel gilt</h2>
+      <p>
+        Der Betrieb rechnet <strong>Bauleistungen nach § 13 b</strong> ab — also ohne
+        Umsatzsteuer an andere Baubetriebe — <strong>und</strong> schreibt seine Rechnungen
+        mit <strong>lexoffice / Lexware Office</strong>.
+      </p>
+      <p>
+        Trifft beides zu, hat er ein Problem, von dem er mit hoher Wahrscheinlichkeit
+        nichts weiß. Trifft nur eins zu, ist es ein normaler Einrichtungsauftrag.
+      </p>
+
+      <h2>Der Beleg — das ist der ganze Hebel</h2>
+      <div class="beleg">
+        <div class="zitat">
+          „Da Lexware Office §13b-Bauleistungen aktuell <strong>nicht</strong> im
+          XRechnung- oder ZUGFeRD-Format (beides sind gesetzlich vorgeschriebene
+          E-Rechnungsformate) unterstützt, können diese Rechnungen
+          <strong>nur als PDF</strong> erstellt werden. Für die Übergangsphase bis
+          2027/2028 ist eine PDF-Rechnung noch zulässig.“
+        </div>
+        <div class="quelle">
+          Lexware Office Hilfe-Center, Artikel 547981 · abgerufen 04.09.2026<br>
+          help.lexware.de/de-form/articles/547981
+        </div>
+      </div>
+      <p>
+        <strong>Das sagt der Hersteller selbst.</strong> Du behauptest nichts über ein
+        fremdes Produkt — du liest vor, was dort steht. Screenshot aufs Handy, im
+        Gespräch zeigen.
+      </p>
+    </div>
+
+    <div>
+      <h2>Was das für den Betrieb heißt</h2>
+      <p>
+        Bis Ende 2027 ist die PDF-Rechnung noch erlaubt. Ab dem <strong>1. Januar
+        2028</strong> nicht mehr — und dann von einem Tag auf den anderen.
+      </p>
+      <p>
+        Ab da stellt er für jede Bauleistung eine Rechnung aus, die formal
+        <strong>keine gültige Rechnung ist</strong>. Der Empfänger — ein anderes
+        Bauunternehmen, oft ein Generalunternehmer — kann sie zurückweisen. Und
+        zurückgewiesen heißt: nicht bezahlt, bis sie korrekt ankommt.
+      </p>
+
+      <h2>Der Einstieg am Telefon</h2>
+      <div class="sagen">
+        <span class="du">Du</span>
+        <p>
+          „Eine Frage vorweg: Rechnen Sie auch nach dreizehn b ab, also Bauleistungen
+          an andere Baubetriebe?“
+        </p>
+        <p>
+          <em>Wenn ja:</em> „Und schreiben Sie die Rechnungen mit lexoffice?“
+        </p>
+        <p>
+          <em>Wenn wieder ja:</em> „Dann habe ich etwas für Sie, das Sie vermutlich
+          noch nicht wissen — und das steht bei Lexware selbst auf der Hilfeseite.
+          Haben Sie zwei Minuten?“
+        </p>
+      </div>
+      <div class="rot">
+        <strong>Nicht sagen:</strong> „Ihre Software ist schlecht.“ Der Betrieb hat sie
+        ausgesucht und bezahlt. Du kritisierst nicht seine Wahl — du zeigst ihm eine
+        Lücke, die der Hersteller selbst benennt.
+      </div>
+    </div>
+  </div>
+
+  <h2>Die Lösung, die du verkaufst</h2>
+  <div class="spalten">
+    <div>
+      <p>
+        <strong>Nicht alles wechseln.</strong> Das wäre teuer, langwierig und würde ihn
+        abschrecken. Stattdessen ein zweiter Weg nur für die betroffenen Rechnungen:
+      </p>
+      <ol class="schritte">
+        <li>lexoffice bleibt für das gesamte normale Geschäft unverändert.</li>
+        <li>Für § 13 b-Rechnungen ein separates Programm, das die Steuerkategorie
+            korrekt setzt.</li>
+        <li>Du richtest es ein, überträgst Kunden- und Artikelstamm, erzeugst eine
+            Testrechnung und prüfst die erzeugte Datei.</li>
+        <li>Eine Seite Anleitung fürs Büro, damit es ohne dich weiterläuft.</li>
+      </ol>
+      <p>
+        Bei den meisten Baubetrieben sind § 13 b-Rechnungen eine Handvoll im Monat,
+        nicht das Tagesgeschäft. Damit bleibt der Betrieb in aller Regel in der
+        kostenlosen Stufe der Zusatzsoftware.
+      </p>
+    </div>
+    <div>
+      <div class="preis">
+        <span class="zahl">450 – 650 €</span>
+        <span class="was">Festpreis · Rechnung nach Abnahme der Testrechnung</span>
+      </div>
+      <p><strong>Was der Kunde dafür bekommt:</strong></p>
+      <ul class="kurz">
+        <li>ein Problem gelöst, von dem er nichts wusste</li>
+        <li>keine Umstellung seiner gewohnten Software</li>
+        <li>in der Regel keine laufenden Softwarekosten</li>
+        <li>eine geprüfte Testrechnung als Nachweis, dass es funktioniert</li>
+      </ul>
+      <div class="rot">
+        <strong>Bevor du das anbietest:</strong> Die Zusatzsoftware selbst testen und
+        die erzeugte XML-Datei mit dem eigenen Leser öffnen. Steuerkategorie
+        <strong>AE</strong>, Steuersatz <strong>0</strong>, Befreiungsgrund und
+        Hinweistext müssen drin sein. Was du nicht selbst geprüft hast, empfiehlst du
+        nicht.
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>Stand 04.09.2026 · Fristen und Herstellerangaben vor jedem Einsatz gegenprüfen</span>
+    <span>Seite 1 / 2</span>
+  </footer>
+</div>
+
+<div class="seite umbruch">
+  <div class="kopf">
+    <h1>Einwände</h1>
+    <div class="kopf-neben">Der lexoffice-Fall · Rückseite</div>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>Er sagt</th><th>Du antwortest</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="einwand">„Das macht mein Steuerberater.“</td>
+        <td>
+          „Der macht Ihre Buchhaltung — der schreibt aber nicht Ihre Ausgangsrechnungen.
+          Die schreiben Sie selbst in lexoffice, und genau da sitzt die Lücke. Fragen Sie
+          ihn ruhig, ob lexoffice § 13 b als E-Rechnung ausgeben kann. Er wird dieselbe
+          Antwort bekommen wie ich.“
+        </td>
+      </tr>
+      <tr>
+        <td class="einwand">„Bis 2028 ist doch noch lange hin.“</td>
+        <td>
+          „Stimmt, bis dahin dürfen Sie PDF schicken. Nur endet das nicht langsam,
+          sondern an einem Stichtag. Wer im Januar 2028 anfängt zu suchen, sucht
+          gleichzeitig mit allen anderen — und Sie schreiben in der Zeit Rechnungen,
+          die zurückkommen können.“
+        </td>
+      </tr>
+      <tr>
+        <td class="einwand">„Lexware rüstet das bestimmt noch nach.“</td>
+        <td>
+          „Kann gut sein, das würde ich sogar erwarten. Zugesagt hat es bisher aber
+          niemand, und es steht kein Termin dabei. Wenn es kommt, haben Sie zweihundert
+          Euro Software zu viel — wenn es nicht kommt, stehen Sie im Januar 2028 da.
+          Ich würde das nicht auf ein Vielleicht setzen.“
+        </td>
+      </tr>
+      <tr>
+        <td class="einwand">„Was kostet mich die Software?“</td>
+        <td>
+          „Bis zehn Rechnungen im Monat nichts. Wie viele § 13 b-Rechnungen schreiben
+          Sie ungefähr?“ — <em>Bei bis zu zehn:</em> „Dann kostet Sie die Software gar
+          nichts, nur meine Einrichtung.“
+        </td>
+      </tr>
+      <tr>
+        <td class="einwand">„Dann wechsle ich lieber gleich ganz.“</td>
+        <td>
+          „Können Sie machen, kostet aber deutlich mehr und dauert länger — neues
+          Programm, ganze Buchhaltung, Ihr Team muss umlernen. Ich würde erst das
+          Problem lösen, das eine Frist hat. Wechseln können Sie später immer noch.“
+        </td>
+      </tr>
+      <tr>
+        <td class="einwand">„Woher weiß ich, dass das stimmt?“</td>
+        <td>
+          „Müssen Sie mir nicht glauben — das steht auf der Hilfeseite von Lexware.
+          Hier, lesen Sie selbst.“ <em>(Screenshot zeigen.)</em>
+        </td>
+      </tr>
+      <tr>
+        <td class="einwand">„Schicken Sie mir was zu.“</td>
+        <td>
+          „Mach ich. Damit ich Ihnen nichts Allgemeines schicke: Womit rechnen Sie
+          ungefähr im Monat, und wie viele davon sind Bauleistungen?“
+          <em>(Zwei Angaben mitnehmen, sonst ist der Kontakt wertlos.)</em>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="spalten">
+    <div>
+      <h2>Drei Sätze, die nicht fallen dürfen</h2>
+      <div class="rot">
+        <p style="margin:0 0 5px">
+          <strong>„Sie machen sich strafbar.“</strong> Falsch und einschüchternd. Eine
+          formal fehlerhafte Rechnung ist keine Straftat. Es geht um Zurückweisung und
+          verzögerte Zahlung — das genügt.
+        </p>
+        <p style="margin:0 0 5px">
+          <strong>„Lexware taugt nichts.“</strong> Du bewertest kein fremdes Produkt.
+          Du zeigst eine Lücke, die der Hersteller selbst benennt.
+        </p>
+        <p style="margin:0">
+          <strong>„Das kann sonst keiner.“</strong> Weißt du nicht. Behaupte nie etwas
+          über Wettbewerber, das du nicht geprüft hast.
+        </p>
+      </div>
+    </div>
+    <div>
+      <h2>Was du über die Zusatzsoftware sagst</h2>
+      <p>
+        Offen und ohne Werbung — das ist glaubwürdiger als eine Empfehlung:
+      </p>
+      <div class="sagen">
+        <span class="du">Du</span>
+        <p>
+          „Das ist ein kleiner Anbieter. Ich habe die Rechnungen, die das Programm
+          erzeugt, selbst geprüft — die Steuerkategorie und der Hinweistext sind
+          korrekt drin. Es arbeitet ausschließlich auf Ihrem Rechner, es geht nichts
+          nach außen. Wenn Ihnen das zu klein ist, suchen wir einen anderen Weg,
+          dann wird es aber teurer.“
+        </p>
+      </div>
+      <p>
+        Damit gehört die Entscheidung dem Kunden, und du hast nichts versprochen,
+        wofür du nicht geradestehen kannst.
+      </p>
+    </div>
+  </div>
+
+  <h2>Vor dem ersten Gespräch erledigt?</h2>
+  <ul class="kurz">
+    <li>Screenshot der Lexware-Hilfeseite auf dem Handy</li>
+    <li>Zusatzsoftware installiert, § 13 b-Testrechnung erzeugt</li>
+    <li>Erzeugte XML mit dem eigenen Leser geprüft: Kategorie AE, Satz 0,
+        Befreiungsgrund, Hinweistext</li>
+    <li>Offline getestet — Netzwerk aus, Rechnung schreiben, funktioniert es trotzdem</li>
+    <li>Festpreis für dich selbst festgelegt: 450 oder 650, nicht „kommt drauf an“</li>
+  </ul>
+
+  <footer>
+    <span>Technische Einrichtung, keine Steuerberatung — ob § 13 b gilt, entscheidet der Steuerberater</span>
+    <span>Seite 2 / 2</span>
+  </footer>
+</div>
