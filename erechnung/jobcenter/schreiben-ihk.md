@@ -1,7 +1,15 @@
 # Anfrage an die IHK — Gründungsberatung
 
-Als E-Mail schicken. Adresse steht auf der Website deiner IHK unter
-„Existenzgründung" oder „Startercenter".
+Zuständig für dich ist die **IHK Frankfurt am Main** (Wohnsitz Frankfurt).
+
+**Empfänger:** unternehmensfoerderung@frankfurt-main.ihk.de
+**Rückfragen telefonisch:** 069 2197-2010 (Team Unternehmensförderung),
+allgemeine Beratung 069 2197-1280
+**Postanschrift:** IHK Frankfurt am Main, Börsenplatz 4, 60313 Frankfurt am Main
+
+Stand der Angaben: September 2026, von frankfurt-main.ihk.de. Wenn die Mail
+zurückkommt, nimm info@frankfurt-main.ihk.de und bitte um Weiterleitung an die
+Existenzgründungsberatung.
 
 ---
 
@@ -33,6 +41,9 @@ zwei Anliegen:
 Den Businessplan bringe ich zum Termin mit oder sende ihn Ihnen auf Wunsch
 vorab zu.
 
+Ergänzend bitte ich um den nächsten Termin des Seminars „Grundlagen der
+Existenzgründung", an dem ich gerne teilnehmen würde.
+
 Über einen Terminvorschlag würde ich mich freuen. Sie erreichen mich unter
 [Telefon] oder unter dieser E-Mail-Adresse.
 
@@ -53,6 +64,11 @@ verlierst Zeit.
 **Warum du den Leistungsbezug offen nennst:** Die IHK kennt diesen Fall
 hundertfach und hat oft eigene Angebote dafür. Verschweigen bringt nichts und
 kostet dich die passende Beratung.
+
+**Kostenloses Seminar nebenbei:** Die IHK Frankfurt hält jeden ersten Mittwoch
+im Monat das Seminar „Grundlagen der Existenzgründung". Frag in der Mail
+ruhig nach dem nächsten Termin. Ein Seminarbesuch ist keine Aufnahme der
+Tätigkeit und gefährdet das Einstiegsgeld nicht.
 
 **Frag im Jobcenter zuerst,** ob eine Tragfähigkeitsbescheinigung überhaupt
 verlangt wird und von welcher Stelle. Nicht jedes Jobcenter besteht darauf.
