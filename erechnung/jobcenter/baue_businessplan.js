@@ -352,6 +352,8 @@ inhalt.push(
     ],
     { ersteFett: true, summeLetzte: true },
   ),
+  abstand(80),
+  p("Der Durchschnittserlös liegt im ersten Jahr bei 600 Euro, im zweiten bei 620 und im dritten bei 640 Euro je Auftrag. Der Anstieg beruht allein darauf, dass sich der Auftragsmix zur Frist 2028 hin zum Paket Umstieg verschiebt: Betriebe ohne Rechnungsprogramm können bis zuletzt warten und müssen dann mehr umstellen. Die Preise selbst bleiben in der Planung unverändert.", { italics: true, color: "444444" }),
   abstand(160),
   h2("Betriebsausgaben im ersten Jahr"),
   tabelle(
