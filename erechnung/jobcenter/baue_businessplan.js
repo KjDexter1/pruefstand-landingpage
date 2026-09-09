@@ -225,7 +225,22 @@ inhalt.push(
     { ersteFett: true, rechtsAb: false },
   ),
   abstand(120),
-  p("In der Kalkulation wird durchgehend mit einem vorsichtig angesetzten Durchschnittserlös von 600 Euro je Auftrag gerechnet.", { italics: true, color: "444444" }),
+  abstand(60),
+  h2("Herleitung des Durchschnittserlöses"),
+  p("Die Vorschau rechnet nicht mit einem einzelnen Preis, sondern mit einem angenommenen Auftragsmix. Je zehn Aufträge wird unterstellt:"),
+  tabelle(
+    [2600, 1500, 2470, 2500],
+    ["Paket", "Anteil", "Angesetzt", "Erlös"],
+    [
+      ["Einrichtung Standard", "6 von 10", "550 €", "3.300 €"],
+      ["Umstieg", "2 von 10", "1.150 €", "2.300 €"],
+      ["Nur Empfang", "2 von 10", "240 €", "480 €"],
+      ["Summe je zehn Aufträge", "", "", "6.080 €"],
+    ],
+    { ersteFett: true, rechtsAb: false },
+  ),
+  abstand(80),
+  p("Daraus ergibt sich ein Durchschnittserlös von 608 Euro. In der Vorschau wird auf 600 Euro abgerundet. Angesetzt ist jeweils die Mitte der Preisspanne, nicht der obere Rand. Die Zusatzleistung Datenbereinigung bleibt vollständig unberücksichtigt, obwohl sie erfahrungsgemäß bei einem Teil der Aufträge anfällt.", { italics: true, color: "444444" }),
 );
 
 // 4
