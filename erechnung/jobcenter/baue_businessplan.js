@@ -119,6 +119,10 @@ const abstand = (h = 160) => new Paragraph({ spacing: { after: h }, children: []
 
 // ---------------------------------------------------------------- Inhalt
 
+// Aufruf mit "ihk" erzeugt die Fassung für die IHK-Durchsicht: ohne die
+// Kundennummer des Jobcenters, sonst wortgleich.
+const FUER_IHK = process.argv.includes("ihk");
+
 const inhalt = [];
 
 // Titel
@@ -135,9 +139,9 @@ inhalt.push(
   p("Gründer: Faruk Polat"),
   p("Anschrift: In den Rübgärten 17, 61476 Kronberg im Taunus"),
   p("Telefon / E-Mail: 0152 28487769 / farukpolat@mail.de"),
-  platzhalter("Kundennummer Jobcenter: ", "[Nummer]"),
-  platzhalter("Geplanter Beginn der Tätigkeit: ", "[Monat / Jahr]"),
-  platzhalter("Stand: ", "[Datum]"),
+  ...(FUER_IHK ? [] : [platzhalter("Kundennummer Jobcenter: ", "[Nummer]")]),
+  p("Geplanter Beginn der Tätigkeit: nach Bewilligung des Einstiegsgelds, voraussichtlich viertes Quartal 2026"),
+  p("Stand: September 2026"),
   abstand(240),
   new Paragraph({
     spacing: { after: 200 },
@@ -462,6 +466,7 @@ const doc = new Document({
 });
 
 Packer.toBuffer(doc).then((buf) => {
-  fs.writeFileSync("Businessplan-E-Rechnung.docx", buf);
-  console.log("geschrieben:", buf.length, "Bytes");
+  const datei = FUER_IHK ? "Businessplan-E-Rechnung-IHK.docx" : "Businessplan-E-Rechnung.docx";
+  fs.writeFileSync(datei, buf);
+  console.log("geschrieben:", datei, buf.length, "Bytes");
 });
