@@ -1,0 +1,248 @@
+<title>Vortragsangebot Kreishandwerkerschaft</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@600&display=swap">
+<style>
+  @page { size:A4; margin:18mm 20mm; }
+  :root {
+    --ground:#FFFFFF; --surface:#F5F4EF; --ink:#161917; --ink-soft:#4E5854;
+    --ink-faint:#87908B; --rule:#D2D0C7; --accent:#0E5B50; --accent-soft:#E2EEEB;
+    --flag:#A93C1B; --flag-soft:#FAEBE4;
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:"IBM Plex Sans", Arial, sans-serif;
+    font-size:10.4pt; line-height:1.5; -webkit-font-smoothing:antialiased;
+  }
+  .brief { max-width:170mm; margin:0 auto; }
+  .lueck {
+    background:var(--flag-soft); color:var(--flag); font-weight:600;
+    padding:0 4px; border-radius:2px;
+  }
+  .absender {
+    font-size:8.6pt; color:var(--ink-soft); line-height:1.45;
+    border-bottom:1px solid var(--rule); padding-bottom:8px; margin-bottom:22px;
+  }
+  .empfaenger { margin-bottom:22px; line-height:1.45; }
+  .datum { text-align:right; font-size:9.4pt; color:var(--ink-soft); margin-bottom:22px; }
+  .betreff { font-weight:600; margin-bottom:16px; }
+  p { margin:0 0 11px; }
+  ul { margin:0 0 11px; padding-left:18px; }
+  li { margin-bottom:4px; }
+  .gruss { margin-top:18px; }
+  .name { margin-top:26px; }
+
+  /* Zweite Seite: Hinweise */
+  .umbruch { page-break-before:always; }
+  .kopf {
+    display:flex; justify-content:space-between; align-items:baseline;
+    border-bottom:2px solid var(--accent); padding-bottom:5px; margin-bottom:14px;
+  }
+  h1 { font-family:"IBM Plex Serif", Georgia, serif; font-size:16pt; font-weight:600; margin:0; }
+  .kopf-neben {
+    font-family:"IBM Plex Mono", monospace; font-size:7.4pt;
+    letter-spacing:.08em; text-transform:uppercase; color:var(--accent);
+  }
+  h2 {
+    font-family:"IBM Plex Mono", monospace; font-size:7.8pt; font-weight:500;
+    letter-spacing:.12em; text-transform:uppercase; color:var(--accent);
+    margin:14px 0 6px; padding-bottom:3px; border-bottom:1px solid var(--rule);
+  }
+  .hinweise { font-size:9.2pt; line-height:1.42; }
+  .hinweise p { margin:0 0 7px; }
+  .hinweise ul { padding-left:15px; }
+  .hinweise li { margin-bottom:3px; }
+  .spalten { display:grid; grid-template-columns:1fr 1fr; gap:0 16px; }
+  .rot {
+    background:var(--flag-soft); border-left:3px solid var(--flag);
+    padding:8px 11px; border-radius:0 3px 3px 0; margin:0 0 8px;
+    font-size:8.9pt; color:#6E2812;
+  }
+  .gruen {
+    background:var(--accent-soft); border-left:3px solid var(--accent);
+    padding:8px 11px; border-radius:0 3px 3px 0; margin:0 0 8px; font-size:9pt;
+  }
+  .sagen {
+    background:var(--surface); border:1px solid var(--rule); border-radius:3px;
+    padding:8px 11px; margin:0 0 8px; font-size:9.4pt;
+  }
+  .sagen .du {
+    font-family:"IBM Plex Mono", monospace; font-size:7.2pt; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--accent); display:block; margin-bottom:3px;
+  }
+</style>
+
+<div class="brief">
+  <div class="absender">
+    <span class="lueck">[Vor- und Nachname]</span> ·
+    <span class="lueck">[Straße]</span> ·
+    <span class="lueck">[PLZ Ort]</span> ·
+    <span class="lueck">[Telefon]</span> ·
+    <span class="lueck">[E-Mail]</span>
+  </div>
+
+  <div class="empfaenger">
+    <span class="lueck">[Kreishandwerkerschaft / Innung]</span><br>
+    <span class="lueck">[Ansprechpartner, falls bekannt]</span><br>
+    <span class="lueck">[Straße]</span><br>
+    <span class="lueck">[PLZ Ort]</span>
+  </div>
+
+  <div class="datum"><span class="lueck">[Ort]</span>, <span class="lueck">[Datum]</span></div>
+
+  <div class="betreff">
+    Angebot: Kurzvortrag für Ihre Mitgliedsbetriebe zur E-Rechnungspflicht
+  </div>
+
+  <p>Sehr geehrte Damen und Herren,</p>
+
+  <p>
+    zum 1. Januar 2028 müssen alle inländischen Betriebe im Geschäftsverkehr
+    untereinander elektronische Rechnungen ausstellen — für Betriebe mit mehr als
+    800.000 Euro Vorjahresumsatz gilt das bereits ein Jahr früher. Die Pflicht,
+    E-Rechnungen zu <em>empfangen</em>, besteht sogar schon seit Januar 2025.
+  </p>
+
+  <p>
+    In Gesprächen mit Handwerksbetrieben stelle ich immer wieder fest, dass die
+    Empfangspflicht kaum bekannt ist und dass insbesondere bei Bauleistungen nach
+    § 13 b UStG eine Lücke besteht, die viele Betriebe nicht kennen: Verbreitete
+    Rechnungsprogramme können solche Rechnungen derzeit nicht als E-Rechnung
+    ausgeben — der jeweilige Hersteller weist selbst darauf hin.
+  </p>
+
+  <p>
+    Ich biete Ihren Mitgliedsbetrieben dazu einen <strong>kostenlosen Kurzvortrag
+    von etwa zwanzig Minuten</strong> an, gern im Rahmen einer
+    Mitgliederversammlung, eines Innungsabends oder einer Informationsveranstaltung:
+  </p>
+
+  <ul>
+    <li>Welche Frist für welchen Betrieb gilt — und welche Ausnahmen es gibt</li>
+    <li>Was der Unterschied zwischen einer PDF-Rechnung und einer E-Rechnung ist</li>
+    <li>Warum Bauleistungen nach § 13 b ein Sonderfall sind</li>
+    <li>Woran die Umstellung in der Praxis am häufigsten scheitert</li>
+    <li>Was ein Betrieb bis wann konkret tun sollte</li>
+  </ul>
+
+  <p>
+    Der Vortrag ist herstellerneutral und kostet Ihre Organisation nichts. Ich bringe
+    kein Produkt mit und werbe im Vortrag nicht für eine bestimmte Software.
+  </p>
+
+  <p>
+    Damit Sie wissen, mit wem Sie es zu tun haben: Ich richte die E-Rechnung für
+    Handwerksbetriebe technisch ein — Software konfigurieren, Stammdaten prüfen,
+    Testrechnung erzeugen. Steuerberatung erbringe ich ausdrücklich nicht; die
+    steuerliche Beurteilung bleibt beim Steuerberater des Betriebs. Dass ich mit dem
+    Thema auch mein Geld verdiene, will ich Ihnen gegenüber nicht verschweigen — der
+    Vortrag selbst bleibt davon unberührt.
+  </p>
+
+  <p>
+    Wenn Sie möchten, schicke ich Ihnen vorab eine Gliederung. Für Rückfragen
+    erreichen Sie mich unter <span class="lueck">[Telefon]</span>.
+  </p>
+
+  <p class="gruss">Mit freundlichen Grüßen</p>
+  <p class="name"><span class="lueck">[Vor- und Nachname]</span></p>
+</div>
+
+<div class="umbruch">
+  <div class="kopf">
+    <h1>Hinweise zum Anschreiben</h1>
+    <div class="kopf-neben">Nicht mitschicken</div>
+  </div>
+
+  <div class="hinweise">
+    <div class="spalten">
+      <div>
+        <h2>Warum es so geschrieben ist</h2>
+        <p>
+          Kreishandwerkerschaften und Innungen bekommen täglich Post von Firmen, die
+          an ihre Mitglieder verkaufen wollen. Ihre Aufgabe ist es, genau das
+          fernzuhalten. Jeder Brief, der nach Werbung riecht, landet im Papierkorb.
+        </p>
+        <p>
+          Deshalb steht im Brief <strong>zuerst die Pflicht der Mitglieder</strong>,
+          dann das Angebot, und erst danach, wer du bist. Und deshalb steht dort
+          offen, dass du mit dem Thema Geld verdienst.
+        </p>
+        <div class="gruen">
+          <strong>Der Satz, der über alles entscheidet:</strong> „Dass ich mit dem
+          Thema auch mein Geld verdiene, will ich Ihnen gegenüber nicht verschweigen.“
+          Wer das selbst sagt, wirkt anständig. Wer es verschweigt und dabei ertappt
+          wird, ist für immer draußen — und die Innungen reden untereinander.
+        </div>
+      </div>
+      <div>
+        <h2>Wen anschreiben</h2>
+        <ul>
+          <li><strong>Kreishandwerkerschaft</strong> deines Landkreises — die
+              betreut mehrere Innungen auf einmal</li>
+          <li><strong>Einzelne Innungen</strong>: Bau, Elektro, Sanitär-Heizung-Klima,
+              Maler, Tischler</li>
+          <li>Ansprechpartner ist meist der <strong>Geschäftsführer</strong> der
+              Kreishandwerkerschaft</li>
+        </ul>
+        <p>
+          Adressen und Namen stehen auf deren Websites. Namentlich anschreiben, nicht
+          „Sehr geehrte Damen und Herren“ — der Name steht im Brief nur deshalb als
+          Platzhalter, weil du ihn heraussuchen sollst.
+        </p>
+        <div class="rot">
+          <strong>Per E-Mail schicken, nicht per Post.</strong> Schneller, wird
+          weitergeleitet, und du kannst nachfassen. Der Brief oben funktioniert als
+          E-Mail-Text unverändert — Absenderblock und Datum entfallen dann.
+        </div>
+      </div>
+    </div>
+
+    <h2>Nachfassen — der eigentliche Schritt</h2>
+    <div class="spalten">
+      <div>
+        <p>
+          Auf ein Anschreiben allein antwortet fast niemand. <strong>Nach fünf
+          Werktagen anrufen.</strong>
+        </p>
+        <div class="sagen">
+          <span class="du">Du</span>
+          <p>
+            „Guten Tag, ich hatte Ihnen vergangene Woche geschrieben — wegen eines
+            Kurzvortrags zur E-Rechnung für Ihre Mitgliedsbetriebe. Haben Sie den
+            Brief bekommen?“
+          </p>
+          <p style="margin-top:5px">
+            <em>Dann sofort:</em> „Ist bei Ihnen in den nächsten Monaten eine
+            Versammlung oder ein Innungsabend geplant, wo so etwas hineinpassen
+            würde?“
+          </p>
+        </div>
+        <p>
+          Die zweite Frage ist die wichtige. Sie verschiebt das Gespräch von
+          <em>ob</em> auf <em>wann</em>.
+        </p>
+      </div>
+      <div>
+        <h2>Wenn sie zusagen</h2>
+        <ul>
+          <li>Zwanzig Minuten heißt zwanzig Minuten. Wer überzieht, wird nicht wieder
+              eingeladen.</li>
+          <li>Keine Folien mit Firmenlogo auf jeder Seite. Ein Hinweis am Ende
+              genügt.</li>
+          <li><strong>Den Leser vorführen.</strong> Eine echte XML-Datei am Beamer
+              öffnen und lesbar machen — das ist der Moment, an den sich die Leute
+              erinnern.</li>
+          <li>Zettel zum Mitnehmen auslegen: die Fristen auf einer Seite, mit deinem
+              Namen und deiner Nummer unten.</li>
+          <li>Nach dem Vortrag nicht verkaufen. Dastehen und Fragen beantworten. Wer
+              ein Problem hat, kommt von selbst.</li>
+        </ul>
+        <div class="gruen">
+          <strong>Ein Abend, dreißig Betriebe im Raum, alle mit derselben Frist.</strong>
+          Das ist mehr Reichweite als hundert Anrufe — und du stehst vorne als
+          derjenige, der sich auskennt, statt am Telefon als jemand, der etwas will.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
