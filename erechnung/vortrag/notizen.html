@@ -1,0 +1,369 @@
+<title>Moderationskarten Vortrag</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@600&display=swap">
+<style>
+  @page { size:A4; margin:13mm 14mm; }
+  :root {
+    --ground:#FFFFFF; --surface:#F5F4EF; --ink:#161917; --ink-soft:#4E5854;
+    --ink-faint:#87908B; --rule:#D2D0C7; --accent:#0E5B50; --accent-soft:#E2EEEB;
+    --flag:#A93C1B; --flag-soft:#FAEBE4;
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:"IBM Plex Sans", Arial, sans-serif;
+    font-size:9.4pt; line-height:1.42; -webkit-font-smoothing:antialiased;
+  }
+  .kopf {
+    display:flex; justify-content:space-between; align-items:baseline;
+    border-bottom:2px solid var(--accent); padding-bottom:5px; margin-bottom:12px;
+  }
+  h1 { font-family:"IBM Plex Serif", Georgia, serif; font-size:17pt; font-weight:600; margin:0; }
+  .kopf-neben {
+    font-family:"IBM Plex Mono", monospace; font-size:7.4pt;
+    letter-spacing:.08em; text-transform:uppercase; color:var(--accent);
+  }
+  h2 {
+    font-family:"IBM Plex Mono", monospace; font-size:7.8pt; font-weight:500;
+    letter-spacing:.12em; text-transform:uppercase; color:var(--accent);
+    margin:14px 0 6px; padding-bottom:3px; border-bottom:1px solid var(--rule);
+  }
+  p { margin:0 0 6px; }
+  ul { margin:0 0 7px; padding-left:15px; }
+  li { margin-bottom:3px; }
+
+  .karte {
+    border:1px solid var(--rule); border-radius:3px; margin-bottom:7px;
+    page-break-inside:avoid; overflow:hidden;
+  }
+  .karte-kopf {
+    display:flex; align-items:baseline; gap:9px;
+    background:var(--surface); padding:5px 10px; border-bottom:1px solid var(--rule);
+  }
+  .karte-nr {
+    font-family:"IBM Plex Mono", monospace; font-size:12pt; font-weight:500;
+    color:var(--accent); min-width:16px;
+  }
+  .karte-titel { font-weight:600; font-size:10.5pt; }
+  .karte-zeit {
+    margin-left:auto; font-family:"IBM Plex Mono", monospace;
+    font-size:8pt; color:var(--ink-faint);
+  }
+  .karte-inhalt { padding:8px 10px; }
+  .sagen {
+    background:var(--accent-soft); border-left:3px solid var(--accent);
+    padding:6px 9px; border-radius:0 3px 3px 0; margin:0 0 6px; font-size:9.6pt;
+  }
+  .warum {
+    font-size:8.7pt; color:var(--ink-soft); border-top:1px dotted var(--rule);
+    padding-top:5px; margin-top:2px;
+  }
+  .warum strong { color:var(--accent); }
+  .rot {
+    background:var(--flag-soft); border-left:3px solid var(--flag);
+    padding:6px 9px; border-radius:0 3px 3px 0; margin:6px 0 0;
+    font-size:8.7pt; color:#6E2812;
+  }
+  .spalten { display:grid; grid-template-columns:1fr 1fr; gap:0 14px; }
+  .umbruch { page-break-before:always; }
+  footer {
+    margin-top:10px; padding-top:6px; border-top:1px solid var(--rule);
+    font-family:"IBM Plex Mono", monospace; font-size:7pt; color:var(--ink-faint);
+    display:flex; justify-content:space-between;
+  }
+</style>
+
+<div class="kopf">
+  <h1>Moderationskarten</h1>
+  <div class="kopf-neben">20 Minuten · 11 Folien</div>
+</div>
+
+<div class="spalten">
+  <div>
+    <h2>Bevor du anfängst</h2>
+    <ul>
+      <li><strong>Nie die Folie vorlesen.</strong> Die Leute lesen schneller als du
+          sprichst. Die Folie ist das Plakat, du bist der Ton.</li>
+      <li><strong>Eine Datei auf dem Rechner haben</strong> für die Vorführung —
+          eine echte XRechnung oder ZUGFeRD-Datei, vorher getestet.</li>
+      <li>Rechnungsleser <strong>vorher im Browser geöffnet</strong>, im Vollbild.
+          Nicht vor Publikum nach der Adresse suchen.</li>
+      <li>Zwanzig Minuten heißt zwanzig. Wer überzieht, wird nicht wieder
+          eingeladen.</li>
+    </ul>
+  </div>
+  <div>
+    <h2>Der Ton, in dem du sprichst</h2>
+    <p>
+      Du bist nicht der Warner und nicht der Verkäufer. Du bist der, der es
+      nachgeschlagen hat.
+    </p>
+    <div class="rot" style="margin-top:0">
+      <strong>Kein Angstmachen.</strong> „Sonst kriegen Sie Ärger mit dem Finanzamt“
+      oder „Das ist strafbar“ ist falsch und die Meister riechen es sofort. Der
+      Grund reicht auch so: eine abgewiesene Rechnung wird nicht bezahlt.
+    </div>
+  </div>
+</div>
+
+<h2>Folie für Folie</h2>
+
+<div class="karte">
+  <div class="karte-kopf">
+    <span class="karte-nr">1</span><span class="karte-titel">Titel</span>
+    <span class="karte-zeit">1 Min</span>
+  </div>
+  <div class="karte-inhalt">
+    <div class="sagen">
+      „Guten Abend. Mein Name ist … . Ich richte die E-Rechnung für Handwerksbetriebe
+      technisch ein. Zwanzig Minuten, keine Werbung — danach wissen Sie, welche Frist
+      für Sie gilt und was Sie tun müssen. Fragen gern zwischendurch.“
+    </div>
+    <div class="warum">
+      <strong>Warum so:</strong> Wer sofort sagt, was er beruflich macht, wirkt
+      offen. Wer es verschweigt und am Ende doch verkauft, verliert den Raum. Und
+      „keine Werbung“ musst du sagen, weil alle genau das erwarten.
+    </div>
+  </div>
+</div>
+
+<div class="karte">
+  <div class="karte-kopf">
+    <span class="karte-nr">2</span><span class="karte-titel">Drei Termine</span>
+    <span class="karte-zeit">2 Min</span>
+  </div>
+  <div class="karte-inhalt">
+    <div class="sagen">
+      „Es gibt drei Termine. Zwei liegen in der Zukunft — und einer läuft schon.
+      Der rote da links ist der, über den kaum jemand redet.“
+    </div>
+    <div class="warum">
+      <strong>Warum so:</strong> Die Übersicht zuerst, damit jeder sich einordnen
+      kann. Und die rote Karte erzeugt genau die Frage, die du auf der nächsten
+      Folie beantwortest. Nicht schon hier auflösen.
+    </div>
+  </div>
+</div>
+
+<div class="karte">
+  <div class="karte-kopf">
+    <span class="karte-nr">3</span><span class="karte-titel">Seit 2025</span>
+    <span class="karte-zeit">2 Min</span>
+  </div>
+  <div class="karte-inhalt">
+    <div class="sagen">
+      „Sie müssen heute schon E-Rechnungen empfangen können. Seit Januar 2025, ohne
+      Übergangsfrist. Kurze Frage in den Raum: <strong>Wer von Ihnen hat schon mal
+      eine Rechnung bekommen, die er nicht öffnen konnte?</strong>“
+    </div>
+    <div class="warum">
+      <strong>Warum so:</strong> Das ist der wichtigste Moment des Abends. Die Frage
+      holt die Leute aus der Zuhörerrolle, und es gehen fast immer ein paar Hände
+      hoch. Ab da ist es nicht mehr dein Thema, sondern ihres. Warte die Antwort ab,
+      auch wenn es still wird.
+    </div>
+  </div>
+</div>
+
+<div class="karte">
+  <div class="karte-kopf">
+    <span class="karte-nr">4</span><span class="karte-titel">PDF ist keine E-Rechnung</span>
+    <span class="karte-zeit">2 Min</span>
+  </div>
+  <div class="karte-inhalt">
+    <div class="sagen">
+      „Der häufigste Irrtum: Ein PDF ist keine E-Rechnung. Ein PDF ist ein Bild von
+      einer Rechnung — Sie können es lesen, die Software nicht. Auch ein Scan oder
+      ein Ausdruck zählen nicht.“
+    </div>
+    <div class="warum">
+      <strong>Warum so:</strong> Das ist der Denkfehler, mit dem die meisten aus dem
+      Saal hereingekommen sind. Wenn du nur eine Sache vermittelst, dann diese.
+    </div>
+  </div>
+</div>
+
+<div class="karte">
+  <div class="karte-kopf">
+    <span class="karte-nr">5</span><span class="karte-titel">Vorführung</span>
+    <span class="karte-zeit">3 Min</span>
+  </div>
+  <div class="karte-inhalt">
+    <div class="sagen">
+      „Ich zeige es Ihnen kurz.“ <em>(XML-Datei im Texteditor öffnen.)</em>
+      „So kommt das an. Das ist eine Rechnung.“ <em>(Lachen abwarten.)</em>
+      „Und jetzt dieselbe Datei.“ <em>(In den Leser ziehen.)</em>
+      „Zwei Sekunden. Und das läuft komplett auf meinem Rechner — es wird nichts
+      hochgeladen.“
+    </div>
+    <div class="warum">
+      <strong>Warum so:</strong> Das ist der Moment, an den sich die Leute morgen
+      noch erinnern. Der Kontrast zwischen Buchstabensalat und lesbarer Rechnung
+      macht das ganze Thema in zehn Sekunden begreifbar — und nebenbei zeigst du,
+      dass du etwas kannst, ohne es zu behaupten.
+    </div>
+    <div class="rot">
+      Vorher testen. Am fremden Beamer, mit fremder Auflösung, ohne WLAN. Wenn die
+      Vorführung hakt, ist der Abend gelaufen. Notfalls Screenshots in der
+      Hinterhand.
+    </div>
+  </div>
+</div>
+
+<div class="karte">
+  <div class="karte-kopf">
+    <span class="karte-nr">6</span><span class="karte-titel">Die Tabelle</span>
+    <span class="karte-zeit">2 Min</span>
+  </div>
+  <div class="karte-inhalt">
+    <div class="sagen">
+      „Suchen Sie sich Ihre Zeile. Oben die Empfangspflicht — die betrifft jeden im
+      Raum. Unten die Kleinunternehmer: dauerhaft befreit vom Verschicken, empfangen
+      müssen sie trotzdem.“
+    </div>
+    <div class="warum">
+      <strong>Warum so:</strong> Hier darf es kurz still sein, während jeder sich
+      selbst sucht. Nicht in die Stille hineinreden.
+    </div>
+  </div>
+</div>
+
+<div class="karte umbruch">
+  <div class="karte-kopf">
+    <span class="karte-nr">7</span><span class="karte-titel">Ausnahmen</span>
+    <span class="karte-zeit">2 Min</span>
+  </div>
+  <div class="karte-inhalt">
+    <div class="sagen">
+      „Jetzt die Entwarnung: Nicht jede Rechnung ist betroffen. Kleinbeträge bis 250
+      Euro brutto nicht, Privatkunden nicht, bestimmte steuerfreie Umsätze nicht.
+      Wer fast nur so abrechnet, hat ein kleineres Problem, als es zurzeit überall
+      klingt.“
+    </div>
+    <div class="warum">
+      <strong>Warum diese Folie unbedingt bleibt:</strong> Sie kostet dich scheinbar
+      Kunden — und ist genau deshalb die wichtigste des Abends. Ein Handwerksmeister
+      erkennt sofort, ob jemand ihm Angst verkauft oder ihm hilft. Wer von sich aus
+      sagt „vielleicht betrifft Sie das gar nicht“, ist glaubwürdig. Und die
+      Empfehlung im Handwerk läuft über Glaubwürdigkeit, nicht über Abschlüsse.
+    </div>
+  </div>
+</div>
+
+<div class="karte">
+  <div class="karte-kopf">
+    <span class="karte-nr">8</span><span class="karte-titel">§ 13 b</span>
+    <span class="karte-zeit">3 Min</span>
+  </div>
+  <div class="karte-inhalt">
+    <div class="sagen">
+      „Ein Sonderfall, der hier im Raum viele betrifft: Bauleistungen nach dreizehn b
+      — wenn Sie ohne Umsatzsteuer an einen anderen Baubetrieb abrechnen.“
+      <em>(Kurz warten, es nicken meist welche.)</em>
+      „In der E-Rechnung müssen dafür vier Angaben zusammenpassen. Stimmt eine nicht,
+      wird die Rechnung abgewiesen. Und — das ist der Punkt —
+      <strong>verbreitete Programme können das derzeit gar nicht.</strong> Das steht
+      so auf den Hilfeseiten der Hersteller.“
+    </div>
+    <div class="warum">
+      <strong>Warum so:</strong> Das ist dein Fachwissen, und es unterscheidet dich
+      von jedem allgemeinen Vortrag zum Thema. Wer das hört und selbst nach § 13 b
+      abrechnet, kommt nach dem Vortrag zu dir.
+    </div>
+    <div class="rot">
+      <strong>Keinen Herstellernamen von der Bühne nennen.</strong> Nicht weil es
+      unwahr wäre, sondern weil es von vorne wie ein Angriff auf eine Firma klingt.
+      Wenn nachher jemand fragt „welches Programm denn?“, zeigst du ihm die
+      Hilfeseite auf dem Handy. Unter vier Augen ist das ein Beleg, von der Bühne
+      wäre es Schlechtreden.
+    </div>
+  </div>
+</div>
+
+<div class="karte">
+  <div class="karte-kopf">
+    <span class="karte-nr">9</span><span class="karte-titel">Praxisfehler</span>
+    <span class="karte-zeit">2 Min</span>
+  </div>
+  <div class="karte-inhalt">
+    <div class="sagen">
+      „Woran es tatsächlich scheitert, ist selten das große Ganze. Ein Cent
+      Rundungsdifferenz reicht. Und abgewiesen heißt: nicht bezahlt, bis es korrekt
+      ankommt.“
+    </div>
+    <div class="warum">
+      <strong>Warum so:</strong> Konkrete kleine Fehler wirken glaubwürdiger als
+      große Warnungen — sie zeigen, dass du das schon gesehen hast. Und der letzte
+      Satz ist das eigentliche Argument: Es geht um Geld, das später kommt, nicht um
+      Strafe.
+    </div>
+  </div>
+</div>
+
+<div class="karte">
+  <div class="karte-kopf">
+    <span class="karte-nr">10</span><span class="karte-titel">Drei Schritte</span>
+    <span class="karte-zeit">2 Min</span>
+  </div>
+  <div class="karte-inhalt">
+    <div class="sagen">
+      „Was Sie tun sollten: Erstens — klären, wo eingehende E-Rechnungen landen, das
+      läuft schon. Zweitens — beim Hersteller nachsehen, ob Ihr Programm es kann.
+      Drittens — eine Testrechnung machen, bis Mitte 2027. Nicht im Dezember, wenn
+      alle gleichzeitig anfangen.“
+    </div>
+    <div class="warum">
+      <strong>Warum so:</strong> Ein Vortrag ohne Handlungsanweisung verpufft. Drei
+      Schritte kann sich jeder merken; fünf nicht mehr.
+    </div>
+  </div>
+</div>
+
+<div class="karte">
+  <div class="karte-kopf">
+    <span class="karte-nr">11</span><span class="karte-titel">Fragen</span>
+    <span class="karte-zeit">Rest</span>
+  </div>
+  <div class="karte-inhalt">
+    <div class="sagen">
+      „Das war es. Den Leser von vorhin können Sie kostenlos nutzen, die Adresse
+      steht hier. Fragen?“
+    </div>
+    <div class="warum">
+      <strong>Warum so:</strong> Ein Satz zum kostenlosen Werkzeug, dann Schluss.
+      Kein Angebot, kein Preis, keine Aufforderung, sich zu melden.
+    </div>
+    <div class="rot">
+      <strong>Nach dem Vortrag nicht verkaufen.</strong> Stehen bleiben, Fragen
+      beantworten, Zettel auslegen. Wer ein Problem hat, kommt von selbst — und
+      genau der ist dein Kunde. Wer angesprochen wird, geht.
+    </div>
+  </div>
+</div>
+
+<div class="spalten" style="margin-top:10px">
+  <div>
+    <h2>Was du mitnimmst</h2>
+    <ul>
+      <li>Zettel zum Auslegen: die Fristen auf einer Seite, dein Name und deine
+          Nummer unten</li>
+      <li>Laptop, Ladekabel, <strong>HDMI-Adapter</strong> — der fehlt immer</li>
+      <li>Die Testdatei lokal, nicht in der Cloud</li>
+      <li>Die Lexware-Hilfeseite als Screenshot auf dem Handy</li>
+    </ul>
+  </div>
+  <div>
+    <h2>Danach</h2>
+    <ul>
+      <li>Beim Geschäftsführer der Innung bedanken und fragen, ob es einen
+          Newsletter gibt, in dem eine Kurzfassung stehen könnte</li>
+      <li>Wer dich angesprochen hat: Name notieren, <strong>am nächsten Tag</strong>
+          anrufen, nicht in einer Woche</li>
+      <li>Fragen aus dem Publikum aufschreiben — das ist deine beste Marktforschung</li>
+    </ul>
+  </div>
+</div>
+
+<footer>
+  <span>Kein Angstmachen, keine Herstellernamen von der Bühne, nach dem Vortrag nicht verkaufen</span>
+  <span>Moderationskarten · E-Rechnung 2028</span>
+</footer>

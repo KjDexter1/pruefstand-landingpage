@@ -1,0 +1,347 @@
+<title>E-Rechnung 2028 Vortrag</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@600;700&display=swap">
+<style>
+  @page { size: 254mm 143mm; margin: 0; }
+  :root {
+    --ground:#F4F3EE; --ink:#141715; --ink-soft:#4A544F;
+    --rule:#CFCDC3; --accent:#0E5B50; --accent-soft:#DCEAE6;
+    --flag:#A93C1B; --flag-soft:#F8E6DE;
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:"IBM Plex Sans", Arial, sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .folie {
+    width:254mm; height:143mm; padding:16mm 20mm 12mm;
+    page-break-after:always; position:relative;
+    display:flex; flex-direction:column; justify-content:center;
+    background:var(--ground);
+  }
+  .folie:last-child { page-break-after:auto; }
+  .nr {
+    position:absolute; bottom:7mm; right:20mm;
+    font-family:"IBM Plex Mono", monospace; font-size:10pt; color:#9AA29D;
+  }
+  .marke {
+    position:absolute; bottom:7mm; left:20mm;
+    font-family:"IBM Plex Mono", monospace; font-size:9.5pt;
+    letter-spacing:.1em; text-transform:uppercase; color:#9AA29D;
+  }
+  h1 {
+    font-family:"IBM Plex Serif", Georgia, serif; font-weight:700;
+    font-size:44pt; line-height:1.08; margin:0 0 8mm; letter-spacing:-.01em;
+  }
+  h2 {
+    font-family:"IBM Plex Serif", Georgia, serif; font-weight:600;
+    font-size:30pt; line-height:1.12; margin:0 0 7mm;
+  }
+  .eyebrow {
+    font-family:"IBM Plex Mono", monospace; font-size:11pt;
+    letter-spacing:.14em; text-transform:uppercase; color:var(--accent);
+    margin-bottom:5mm;
+  }
+  .gross { font-size:20pt; line-height:1.35; color:var(--ink-soft); max-width:75%; }
+  .gross strong { color:var(--ink); }
+
+  .drei { display:grid; grid-template-columns:repeat(3,1fr); gap:8mm; margin-top:2mm; }
+  .jahr {
+    background:#fff; border:1px solid var(--rule); border-radius:3mm;
+    padding:7mm 6mm; display:flex; flex-direction:column; gap:3mm;
+  }
+  .jahr.jetzt { border:2px solid var(--flag); background:var(--flag-soft); }
+  .jahr .zahl {
+    font-family:"IBM Plex Serif", Georgia, serif; font-weight:700;
+    font-size:40pt; line-height:1; color:var(--accent);
+  }
+  .jahr.jetzt .zahl { color:var(--flag); }
+  .jahr .was { font-size:14pt; line-height:1.3; font-weight:600; }
+  .jahr .wer { font-size:12pt; color:var(--ink-soft); line-height:1.3; }
+
+  ul.punkte { margin:0; padding:0; list-style:none; font-size:19pt; line-height:1.5; }
+  ul.punkte li { padding-left:11mm; position:relative; margin-bottom:5mm; }
+  ul.punkte li:before {
+    content:"—"; position:absolute; left:0; color:var(--accent); font-weight:600;
+  }
+  ul.punkte li strong { font-weight:600; }
+
+  .gegen { display:grid; grid-template-columns:1fr 1fr; gap:10mm; align-items:stretch; }
+  .karte {
+    background:#fff; border:1px solid var(--rule); border-radius:3mm; padding:8mm;
+    display:flex; flex-direction:column; gap:4mm;
+  }
+  .karte.falsch { border:2px solid var(--flag); background:var(--flag-soft); }
+  .karte.richtig { border:2px solid var(--accent); background:var(--accent-soft); }
+  .karte .titel { font-size:22pt; font-weight:600; line-height:1.15; }
+  .karte .text { font-size:14.5pt; line-height:1.4; color:var(--ink-soft); }
+  .karte .text strong { color:var(--ink); }
+
+  .riesig {
+    font-family:"IBM Plex Serif", Georgia, serif; font-weight:700;
+    font-size:74pt; line-height:1; color:var(--flag); margin-bottom:5mm;
+  }
+  .demo {
+    border:3px dashed var(--accent); border-radius:4mm; padding:12mm;
+    text-align:center; background:#fff;
+  }
+  .demo .was {
+    font-family:"IBM Plex Mono", monospace; font-size:12pt; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--accent); margin-bottom:4mm;
+  }
+  .demo .titel { font-size:30pt; font-weight:600; font-family:"IBM Plex Serif", serif; }
+
+  table { width:100%; border-collapse:collapse; font-size:15pt; }
+  th {
+    text-align:left; font-family:"IBM Plex Mono", monospace; font-size:10.5pt;
+    letter-spacing:.1em; text-transform:uppercase; color:#8A928D; font-weight:400;
+    padding:0 6mm 3mm 0; border-bottom:2px solid var(--rule);
+  }
+  td { padding:4.5mm 6mm 4.5mm 0; border-bottom:1px solid var(--rule); vertical-align:top; }
+  td:last-child, th:last-child { padding-right:0; }
+  td.wann { font-weight:600; width:26%; color:var(--accent); }
+  tr.jetzt td { background:var(--flag-soft); }
+  tr.jetzt td.wann { color:var(--flag); }
+
+  .fuss {
+    margin-top:6mm; font-size:13pt; color:var(--ink-soft); line-height:1.4;
+    border-top:1px solid var(--rule); padding-top:4mm;
+  }
+  .kontakt { margin-top:8mm; font-size:17pt; line-height:1.6; }
+  .kontakt .lueck {
+    background:var(--flag-soft); color:var(--flag); font-weight:600;
+    padding:0 2mm; border-radius:1mm;
+  }
+</style>
+
+<!-- 1 -->
+<div class="folie">
+  <div class="eyebrow">Informationsabend</div>
+  <h1>Die E-Rechnung kommt.<br>Was Ihr Betrieb jetzt<br>wissen muss.</h1>
+  <div class="gross">
+    Zwanzig Minuten. Keine Software-Werbung.<br>
+    Danach wissen Sie, welche Frist für Sie gilt und was zu tun ist.
+  </div>
+  <div class="marke">E-Rechnung 2028</div>
+  <div class="nr">1</div>
+</div>
+
+<!-- 2 -->
+<div class="folie">
+  <div class="eyebrow">Die Fristen</div>
+  <h2>Drei Termine. Einer läuft schon.</h2>
+  <div class="drei">
+    <div class="jahr jetzt">
+      <div class="zahl">2025</div>
+      <div class="was">E-Rechnungen empfangen</div>
+      <div class="wer">Gilt seit dem 1. Januar 2025.<br><strong>Für jeden Betrieb.</strong>
+        Auch für Kleinunternehmer.</div>
+    </div>
+    <div class="jahr">
+      <div class="zahl">2027</div>
+      <div class="was">E-Rechnungen verschicken</div>
+      <div class="wer">Ab 1. Januar 2027 für Betriebe mit mehr als 800.000 €
+        Vorjahresumsatz.</div>
+    </div>
+    <div class="jahr">
+      <div class="zahl">2028</div>
+      <div class="was">E-Rechnungen verschicken</div>
+      <div class="wer">Ab 1. Januar 2028 für alle übrigen — unabhängig vom
+        Umsatz.</div>
+    </div>
+  </div>
+  <div class="marke">E-Rechnung 2028</div>
+  <div class="nr">2</div>
+</div>
+
+<!-- 3 -->
+<div class="folie">
+  <div class="eyebrow">Der Punkt, den fast keiner kennt</div>
+  <div class="riesig">Seit 2025.</div>
+  <div class="gross">
+    Sie müssen <strong>heute schon</strong> E-Rechnungen empfangen und verarbeiten
+    können. Diese Pflicht kommt nicht — <strong>sie läuft seit über einem Jahr.</strong>
+  </div>
+  <div class="fuss">
+    Für diese Stufe gab es keine Übergangsfrist. Wenn ein Lieferant Ihnen heute eine
+    E-Rechnung schickt, müssen Sie sie annehmen und lesbar machen können.
+  </div>
+  <div class="marke">E-Rechnung 2028</div>
+  <div class="nr">3</div>
+</div>
+
+<!-- 4 -->
+<div class="folie">
+  <div class="eyebrow">Der häufigste Irrtum</div>
+  <h2>Ein PDF ist keine E-Rechnung.</h2>
+  <div class="gegen">
+    <div class="karte falsch">
+      <div class="titel">PDF</div>
+      <div class="text">
+        Ein Bild von einer Rechnung. Der Mensch kann es lesen,
+        <strong>die Software nicht.</strong><br><br>
+        Auch ein Scan, ein Ausdruck oder ein Foto erfüllen die Pflicht nicht.
+      </div>
+    </div>
+    <div class="karte richtig">
+      <div class="titel">E-Rechnung</div>
+      <div class="text">
+        Ein strukturierter Datensatz nach der Norm EN 16931.
+        <strong>Die Software liest die Zahlen direkt aus.</strong><br><br>
+        In Deutschland: XRechnung oder ZUGFeRD.
+      </div>
+    </div>
+  </div>
+  <div class="marke">E-Rechnung 2028</div>
+  <div class="nr">4</div>
+</div>
+
+<!-- 5 -->
+<div class="folie">
+  <div class="eyebrow">Kurze Vorführung</div>
+  <div class="demo">
+    <div class="was">Live am Bildschirm</div>
+    <div class="titel">So sieht eine E-Rechnung aus —<br>und so macht man sie lesbar.</div>
+  </div>
+  <div class="fuss">
+    Erst die Datei so, wie sie ankommt. Dann dieselbe Datei als Rechnung, die man
+    lesen kann. Beides dauert zusammen keine zwei Minuten.
+  </div>
+  <div class="marke">E-Rechnung 2028</div>
+  <div class="nr">5</div>
+</div>
+
+<!-- 6 -->
+<div class="folie">
+  <div class="eyebrow">Wen es wann trifft</div>
+  <h2>Finden Sie sich in dieser Tabelle.</h2>
+  <table>
+    <thead>
+      <tr><th>Ab wann</th><th>Wer</th><th>Was</th></tr>
+    </thead>
+    <tbody>
+      <tr class="jetzt">
+        <td class="wann">läuft bereits</td>
+        <td>jeder inländische Betrieb</td>
+        <td>E-Rechnungen <strong>empfangen</strong> können</td>
+      </tr>
+      <tr>
+        <td class="wann">1. Januar 2027</td>
+        <td>über 800.000 € Vorjahresumsatz</td>
+        <td>E-Rechnungen <strong>ausstellen</strong></td>
+      </tr>
+      <tr>
+        <td class="wann">1. Januar 2028</td>
+        <td>alle übrigen Betriebe</td>
+        <td>E-Rechnungen <strong>ausstellen</strong></td>
+      </tr>
+      <tr>
+        <td class="wann">nie</td>
+        <td>Kleinunternehmer nach § 19 UStG</td>
+        <td>vom Ausstellen dauerhaft befreit — <strong>empfangen müssen sie
+          trotzdem</strong></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="marke">E-Rechnung 2028</div>
+  <div class="nr">6</div>
+</div>
+
+<!-- 7 -->
+<div class="folie">
+  <div class="eyebrow">Entwarnung</div>
+  <h2>Nicht jede Rechnung ist betroffen.</h2>
+  <ul class="punkte">
+    <li><strong>Kleinbeträge bis 250 € brutto</strong> — bleiben wie bisher möglich</li>
+    <li><strong>Rechnungen an Privatkunden</strong> — die Pflicht gilt nur zwischen
+        Unternehmen</li>
+    <li><strong>Bestimmte steuerfreie Umsätze</strong> nach § 4 UStG</li>
+  </ul>
+  <div class="fuss">
+    Wer fast nur Kleinbeträge oder fast nur an Privatleute abrechnet, hat ein
+    deutlich kleineres Problem, als es zurzeit überall klingt. Was für Sie genau
+    gilt, sagt Ihnen Ihr Steuerberater.
+  </div>
+  <div class="marke">E-Rechnung 2028</div>
+  <div class="nr">7</div>
+</div>
+
+<!-- 8 -->
+<div class="folie">
+  <div class="eyebrow">Der Sonderfall für Bauleistungen</div>
+  <h2>§ 13 b — hier wird es eng.</h2>
+  <div class="gross" style="max-width:100%">
+    Wer <strong>Bauleistungen an andere Baubetriebe</strong> abrechnet, schreibt
+    ohne Umsatzsteuer, mit dem Hinweis auf die Steuerschuldnerschaft des
+    Leistungsempfängers.
+  </div>
+  <div class="karte falsch" style="margin-top:6mm">
+    <div class="text" style="font-size:16pt">
+      In der E-Rechnung müssen dafür <strong>vier Angaben zusammenpassen</strong> —
+      Steuerkategorie, Steuersatz null, Befreiungsgrund und Hinweistext. Stimmt eine
+      nicht, wird die Rechnung abgewiesen.<br><br>
+      <strong>Und: Verbreitete Rechnungsprogramme können § 13 b derzeit gar nicht als
+      E-Rechnung ausgeben.</strong> Die Hersteller schreiben das selbst in ihre
+      Hilfeseiten.
+    </div>
+  </div>
+  <div class="marke">E-Rechnung 2028</div>
+  <div class="nr">8</div>
+</div>
+
+<!-- 9 -->
+<div class="folie">
+  <div class="eyebrow">Aus der Praxis</div>
+  <h2>Woran es tatsächlich scheitert.</h2>
+  <ul class="punkte">
+    <li><strong>Ein Cent Rundungsdifferenz</strong> — Positionen und Summe passen
+        nicht zusammen, die Rechnung wird abgewiesen</li>
+    <li><strong>Der falsche Steuerschlüssel</strong> — besonders bei § 13 b und bei
+        Kleinunternehmern</li>
+    <li><strong>Fehlende Leitweg-ID</strong> bei Rechnungen an Behörden</li>
+    <li><strong>Unvollständige Stammdaten</strong> — meist fehlt die
+        Umsatzsteuer-Identifikationsnummer</li>
+  </ul>
+  <div class="fuss">
+    Abgewiesen heißt: nicht bezahlt, bis die Rechnung korrekt ankommt.
+  </div>
+  <div class="marke">E-Rechnung 2028</div>
+  <div class="nr">9</div>
+</div>
+
+<!-- 10 -->
+<div class="folie">
+  <div class="eyebrow">Was Sie tun sollten</div>
+  <h2>Drei Schritte. Keine Eile, aber auch kein Warten.</h2>
+  <ul class="punkte">
+    <li><strong>Jetzt:</strong> Klären, wo eingehende E-Rechnungen landen und wer sie
+        lesen kann. Diese Pflicht läuft bereits.</li>
+    <li><strong>Dieses Jahr:</strong> Beim Hersteller Ihres Rechnungsprogramms
+        nachsehen, ob es E-Rechnungen ausgeben kann — und ob auch § 13 b dabei ist.</li>
+    <li><strong>Bis Mitte 2027:</strong> Eine Testrechnung erzeugen und prüfen lassen.
+        Nicht erst im Dezember, wenn alle gleichzeitig anfangen.</li>
+  </ul>
+  <div class="marke">E-Rechnung 2028</div>
+  <div class="nr">10</div>
+</div>
+
+<!-- 11 -->
+<div class="folie">
+  <div class="eyebrow">Fragen</div>
+  <h1>Fragen?</h1>
+  <div class="gross">
+    Den Rechnungsleser von vorhin können Sie kostenlos nutzen —
+    ohne Anmeldung, die Datei bleibt auf Ihrem Rechner.
+  </div>
+  <div class="kontakt">
+    <span class="lueck">[Vor- und Nachname]</span><br>
+    <span class="lueck">[Telefon]</span> · <span class="lueck">[E-Mail]</span><br>
+    <span class="lueck">[Website]</span>
+  </div>
+  <div class="fuss">
+    Dieser Vortrag ist keine Steuer- oder Rechtsberatung. Was für Ihren Betrieb
+    genau gilt, klären Sie mit Ihrem Steuerberater.
+  </div>
+  <div class="marke">E-Rechnung 2028</div>
+  <div class="nr">11</div>
+</div>
