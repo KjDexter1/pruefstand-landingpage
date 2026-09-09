@@ -1,0 +1,418 @@
+<title>Startplan</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@600&display=swap">
+<style>
+  @page { size:A4; margin:13mm 14mm; }
+  :root {
+    --ground:#FFFFFF; --surface:#F5F4EF; --ink:#161917; --ink-soft:#4E5854;
+    --ink-faint:#87908B; --rule:#D2D0C7; --accent:#0E5B50; --accent-soft:#E2EEEB;
+    --flag:#A93C1B; --flag-soft:#FAEBE4; --warte:#F3EEDD; --warte-rand:#B08A2E;
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:"IBM Plex Sans", Arial, sans-serif;
+    font-size:9.2pt; line-height:1.4; -webkit-font-smoothing:antialiased;
+  }
+  .kopf {
+    display:flex; justify-content:space-between; align-items:baseline;
+    border-bottom:2px solid var(--accent); padding-bottom:5px; margin-bottom:12px;
+  }
+  h1 { font-family:"IBM Plex Serif", Georgia, serif; font-size:19pt; font-weight:600; margin:0; }
+  .kopf-neben {
+    font-family:"IBM Plex Mono", monospace; font-size:7.4pt;
+    letter-spacing:.08em; text-transform:uppercase; color:var(--accent);
+  }
+  p { margin:0 0 6px; }
+
+  .heute {
+    background:var(--accent-soft); border-left:4px solid var(--accent);
+    border-radius:0 3px 3px 0; padding:10px 13px; margin:0 0 14px;
+  }
+  .heute h2 {
+    font-family:"IBM Plex Serif", serif; font-size:13pt; font-weight:600;
+    margin:0 0 5px; color:var(--accent);
+  }
+  .heute ol { margin:0; padding-left:16px; font-size:9.6pt; }
+  .heute li { margin-bottom:3px; }
+
+  .schritt {
+    border:1px solid var(--rule); border-radius:3px; margin-bottom:8px;
+    page-break-inside:avoid; overflow:hidden;
+  }
+  .s-kopf {
+    display:flex; align-items:baseline; gap:9px;
+    background:var(--surface); padding:5px 11px; border-bottom:1px solid var(--rule);
+  }
+  .s-nr {
+    font-family:"IBM Plex Mono", monospace; font-size:12pt; font-weight:500;
+    color:var(--accent); min-width:18px;
+  }
+  .s-titel { font-weight:600; font-size:11pt; }
+  .s-behoerde {
+    margin-left:auto; font-family:"IBM Plex Mono", monospace;
+    font-size:8pt; color:var(--ink-soft); text-align:right;
+  }
+  .s-inhalt { padding:8px 11px; }
+  .zeile { display:grid; grid-template-columns:26mm 1fr; gap:4px 8px; margin-bottom:4px; }
+  .zeile .was {
+    font-family:"IBM Plex Mono", monospace; font-size:7.4pt;
+    letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint);
+    padding-top:1.5px;
+  }
+  .zeile .inhalt { font-size:9.2pt; }
+  .zeile ul { margin:0; padding-left:14px; }
+  .zeile li { margin-bottom:1.5px; }
+  .haken {
+    display:inline-block; width:3.6mm; height:3.6mm; border:1.2px solid var(--ink-faint);
+    border-radius:1px; margin-right:5px; vertical-align:-0.5mm;
+  }
+  .rot {
+    background:var(--flag-soft); border-left:3px solid var(--flag);
+    padding:6px 9px; border-radius:0 3px 3px 0; margin:6px 0 0;
+    font-size:8.6pt; color:#6E2812;
+  }
+  .warten {
+    background:var(--warte); border:1px dashed var(--warte-rand); border-radius:3px;
+    padding:8px 12px; margin:0 0 8px; font-size:9.2pt; text-align:center;
+  }
+  .warten strong { display:block; font-size:10.5pt; margin-bottom:2px; }
+  .frist {
+    display:inline-block; background:var(--flag); color:#fff;
+    font-family:"IBM Plex Mono", monospace; font-size:7.2pt; font-weight:500;
+    letter-spacing:.05em; padding:1px 6px; border-radius:2px; margin-left:6px;
+  }
+  h2.abschnitt {
+    font-family:"IBM Plex Mono", monospace; font-size:8pt; font-weight:500;
+    letter-spacing:.12em; text-transform:uppercase; color:var(--accent);
+    margin:16px 0 7px; padding-bottom:3px; border-bottom:1px solid var(--rule);
+  }
+  .umbruch { page-break-before:always; }
+  footer {
+    margin-top:12px; padding-top:6px; border-top:1px solid var(--rule);
+    font-family:"IBM Plex Mono", monospace; font-size:7pt; color:var(--ink-faint);
+    display:flex; justify-content:space-between;
+  }
+  .lueck { background:var(--flag-soft); color:var(--flag); font-weight:600;
+           padding:0 3px; border-radius:2px; }
+</style>
+
+<div class="kopf">
+  <h1>Startplan</h1>
+  <div class="kopf-neben">Von heute bis zum ersten Auftrag</div>
+</div>
+
+<div class="heute">
+  <h2>Heute, ohne eine einzige Behörde</h2>
+  <ol>
+    <li><strong>Businessplan ausfüllen</strong> — die roten Platzhalter, vor allem Abschnitt 2
+        (dein Werdegang) und dein tatsächlicher Bedarf in Abschnitt 8.</li>
+    <li><strong>Unterlagenmappe anlegen</strong> — Personalausweis kopieren, Lebenslauf
+        schreiben, letzten Bewilligungsbescheid vom Jobcenter heraussuchen, Kundennummer
+        notieren.</li>
+    <li><strong>Beim Jobcenter anrufen</strong> und einen Termin bei deiner
+        Sachbearbeitung vereinbaren. Anliegen: „Aufnahme einer selbstständigen
+        Tätigkeit und Antrag auf Einstiegsgeld.“</li>
+    <li><strong>ELSTER-Benutzerkonto anlegen</strong> auf elster.de. Der Aktivierungscode
+        kommt per Post und braucht ein bis zwei Wochen — deshalb heute schon starten,
+        auch wenn du ihn erst in Schritt 5 brauchst.</li>
+  </ol>
+</div>
+
+<h2 class="abschnitt">Teil 1 — Bevor du irgendetwas anmeldest</h2>
+
+<div class="schritt">
+  <div class="s-kopf">
+    <span class="s-nr">1</span><span class="s-titel">Selbstständigkeit anzeigen und Einstiegsgeld beantragen</span>
+    <span class="s-behoerde">Jobcenter<br>am Wohnort</span>
+  </div>
+  <div class="s-inhalt">
+    <div class="zeile"><span class="was">Was du beantragst</span><span class="inhalt">
+      Einstiegsgeld nach <strong>§ 16b SGB II</strong> — und im selben Schreiben
+      Leistungen zur Eingliederung Selbstständiger nach <strong>§ 16c SGB II</strong>
+      für die Anschaffungen.
+    </span></div>
+    <div class="zeile"><span class="was">Mitbringen</span><span class="inhalt"><ul>
+      <li>Schreiben „Anzeige und Antrag“ (liegt fertig bei, nur ausfüllen)</li>
+      <li>Businessplan, ausgedruckt</li>
+      <li>Lebenslauf</li>
+      <li>Personalausweis</li>
+      <li>Letzter Bewilligungsbescheid, Kundennummer</li>
+    </ul></span></div>
+    <div class="zeile"><span class="was">Kosten</span><span class="inhalt">keine</span></div>
+    <div class="zeile"><span class="was">Dauer</span><span class="inhalt">
+      Termin je nach Auslastung 1–3 Wochen, Entscheidung danach 2–6 Wochen
+    </span></div>
+    <div class="rot">
+      <strong>Das Schreiben persönlich abgeben und den Eingang stempeln lassen</strong> —
+      oder per Einschreiben. Eine mündliche Antragstellung kann später niemand belegen.
+      Und: In dem Schreiben steht ausdrücklich, dass du die Tätigkeit erst nach
+      Bewilligung aufnimmst. Genau dieser Satz sichert deinen Anspruch.
+    </div>
+  </div>
+</div>
+
+<div class="schritt">
+  <div class="s-kopf">
+    <span class="s-nr">2</span><span class="s-titel">Gründungsberatung und Tragfähigkeitsbescheinigung</span>
+    <span class="s-behoerde">IHK<br>deines Bezirks</span>
+  </div>
+  <div class="s-inhalt">
+    <div class="zeile"><span class="was">Warum IHK</span><span class="inhalt">
+      Deine Tätigkeit ist eine technische Dienstleistung, <strong>kein zulassungspflichtiges
+      Handwerk</strong> — auch wenn deine Kunden Handwerker sind. Zuständig ist die
+      Industrie- und Handelskammer, nicht die Handwerkskammer.
+    </span></div>
+    <div class="zeile"><span class="was">Was du willst</span><span class="inhalt">
+      Kostenloses Gründungsgespräch, Durchsicht des Businessplans und — falls das
+      Jobcenter sie verlangt — eine <strong>Stellungnahme zur Tragfähigkeit</strong>.
+    </span></div>
+    <div class="zeile"><span class="was">Mitbringen</span><span class="inhalt">
+      Businessplan, Lebenslauf
+    </span></div>
+    <div class="zeile"><span class="was">Kosten</span><span class="inhalt">
+      Erstberatung in aller Regel kostenfrei; eine förmliche Bescheinigung kann etwas kosten
+    </span></div>
+    <div class="rot">
+      Frag im Jobcenter-Termin, <strong>ob überhaupt eine Bescheinigung verlangt wird</strong>
+      und von welcher Stelle. Nicht jedes Jobcenter besteht darauf. Erst fragen, dann
+      besorgen — sonst zahlst du für etwas, das keiner haben wollte.
+    </div>
+  </div>
+</div>
+
+<div class="warten">
+  <strong>Warten auf den schriftlichen Bewilligungsbescheid</strong>
+  Ab hier nichts anmelden. Wer jetzt zum Gewerbeamt geht, hat die Tätigkeit aufgenommen —
+  und damit den Anspruch auf Einstiegsgeld verloren.
+</div>
+
+<h2 class="abschnitt">Teil 2 — Erst nach der Bewilligung</h2>
+
+<div class="schritt">
+  <div class="s-kopf">
+    <span class="s-nr">3</span><span class="s-titel">Gewerbe anmelden</span>
+    <span class="s-behoerde">Gewerbeamt oder Ordnungsamt<br>deiner Stadt / Gemeinde</span>
+  </div>
+  <div class="s-inhalt">
+    <div class="zeile"><span class="was">Formular</span><span class="inhalt">
+      <strong>GewA 1</strong> — Gewerbe-Anmeldung. Vielerorts auch online möglich.
+    </span></div>
+    <div class="zeile"><span class="was">Mitbringen</span><span class="inhalt"><ul>
+      <li>Personalausweis oder Reisepass mit Meldebescheinigung</li>
+      <li>Wenn du kein EU-Staatsangehöriger bist: Aufenthaltstitel, der eine
+          selbstständige Tätigkeit erlaubt</li>
+      <li>Geld für die Gebühr</li>
+    </ul></span></div>
+    <div class="zeile"><span class="was">Als Tätigkeit angeben</span><span class="inhalt">
+      „Technische Einrichtung und Konfiguration von Software für elektronische
+      Rechnungsstellung; EDV-Dienstleistungen“ — <strong>keine</strong> Steuerberatung,
+      keine Rechtsberatung nennen.
+    </span></div>
+    <div class="zeile"><span class="was">Kosten</span><span class="inhalt">
+      je nach Kommune etwa 20 – 65 €
+    </span></div>
+    <div class="zeile"><span class="was">Du bekommst</span><span class="inhalt">
+      den <strong>Gewerbeschein</strong>, meist sofort
+    </span></div>
+    <div class="zeile"><span class="was">Danach</span><span class="inhalt">
+      Kopie des Gewerbescheins ans Jobcenter
+    </span></div>
+  </div>
+</div>
+
+<div class="schritt">
+  <div class="s-kopf">
+    <span class="s-nr">4</span><span class="s-titel">Berufsgenossenschaft anmelden<span class="frist">1 Woche</span></span>
+    <span class="s-behoerde">VBG<br>Verwaltungs-Berufsgenossenschaft</span>
+  </div>
+  <div class="s-inhalt">
+    <div class="zeile"><span class="was">Pflicht</span><span class="inhalt">
+      Anmeldung <strong>binnen einer Woche</strong> nach Aufnahme der Tätigkeit — auch
+      ohne Angestellte. Für EDV- und Bürodienstleistungen ist die VBG zuständig.
+    </span></div>
+    <div class="zeile"><span class="was">Mitbringen</span><span class="inhalt">
+      Gewerbeschein, Angaben zur Tätigkeit
+    </span></div>
+    <div class="zeile"><span class="was">Kosten</span><span class="inhalt">
+      Als Unternehmer ohne Beschäftigte bist du meist nicht pflichtversichert — die
+      <strong>Anmeldung</strong> ist trotzdem Pflicht. Frag dort nach, ob eine
+      freiwillige Versicherung sinnvoll ist.
+    </span></div>
+    <div class="rot">
+      Das vergisst fast jeder Gründer. Das Gewerbeamt meldet dich zwar weiter, das
+      entbindet dich aber nicht von der eigenen Anmeldung.
+    </div>
+  </div>
+</div>
+
+<div class="schritt umbruch">
+  <div class="s-kopf">
+    <span class="s-nr">5</span><span class="s-titel">Fragebogen zur steuerlichen Erfassung<span class="frist">1 Monat</span></span>
+    <span class="s-behoerde">Finanzamt<br>über elster.de</span>
+  </div>
+  <div class="s-inhalt">
+    <div class="zeile"><span class="was">Pflicht</span><span class="inhalt">
+      <strong>Elektronisch über ELSTER</strong>, innerhalb eines Monats nach Aufnahme
+      der Tätigkeit. <strong>Unaufgefordert</strong> — das Finanzamt erinnert dich nicht.
+    </span></div>
+    <div class="zeile"><span class="was">Du brauchst</span><span class="inhalt">
+      Ein aktiviertes ELSTER-Benutzerkonto. <strong>Deshalb heute schon anlegen</strong> —
+      der Code kommt per Post.
+    </span></div>
+    <div class="zeile"><span class="was">Die Entscheidung darin</span><span class="inhalt">
+      <strong>Kleinunternehmerregelung nach § 19 UStG</strong>: keine Umsatzsteuer auf
+      deinen Rechnungen, dafür kein Vorsteuerabzug. Im ersten Jahr meist sinnvoll.
+      Besprich das mit der Gründungsberatung oder einem Steuerberater, bevor du das
+      Kreuz setzt — die Bindung gilt länger als ein Jahr.
+    </span></div>
+    <div class="zeile"><span class="was">Du bekommst</span><span class="inhalt">
+      deine <strong>Steuernummer</strong> — ohne die darfst du keine Rechnung schreiben
+    </span></div>
+  </div>
+</div>
+
+<div class="schritt">
+  <div class="s-kopf">
+    <span class="s-nr">6</span><span class="s-titel">Krankenkasse informieren</span>
+    <span class="s-behoerde">Deine gesetzliche<br>Krankenkasse</span>
+  </div>
+  <div class="s-inhalt">
+    <div class="zeile"><span class="was">Was</span><span class="inhalt">
+      Schriftlich mitteilen, dass du eine selbstständige Tätigkeit aufgenommen hast, und
+      fragen, was sich an deinem Versicherungsstatus ändert.
+    </span></div>
+    <div class="zeile"><span class="was">Warum wichtig</span><span class="inhalt">
+      Solange du im Leistungsbezug bist, läuft die Versicherung meist über das Jobcenter
+      weiter. Sobald du herauskommst, zahlst du selbst — rund 260 € im Monat. Das steht
+      genau so in deinem Businessplan.
+    </span></div>
+  </div>
+</div>
+
+<div class="schritt">
+  <div class="s-kopf">
+    <span class="s-nr">7</span><span class="s-titel">Geschäftskonto eröffnen</span>
+    <span class="s-behoerde">Bank oder<br>Direktbank</span>
+  </div>
+  <div class="s-inhalt">
+    <div class="zeile"><span class="was">Pflicht?</span><span class="inhalt">
+      Für ein Einzelunternehmen rechtlich nicht — <strong>praktisch aber unverzichtbar</strong>.
+    </span></div>
+    <div class="zeile"><span class="was">Warum</span><span class="inhalt">
+      Das Jobcenter rechnet Betriebseinnahmen minus Betriebsausgaben ab. Wenn geschäftliche
+      und private Zahlungen auf einem Konto liegen, wird jede Abrechnung zur Qual — und
+      bei einer Prüfung zum Problem.
+    </span></div>
+    <div class="zeile"><span class="was">Mitbringen</span><span class="inhalt">
+      Gewerbeschein, Personalausweis, Steuernummer
+    </span></div>
+  </div>
+</div>
+
+<div class="schritt">
+  <div class="s-kopf">
+    <span class="s-nr">8</span><span class="s-titel">Betriebshaftpflicht abschließen</span>
+    <span class="s-behoerde">Versicherer<br>oder Makler</span>
+  </div>
+  <div class="s-inhalt">
+    <div class="zeile"><span class="was">Wann</span><span class="inhalt">
+      <strong>Vor dem ersten Kundentermin</strong>, nicht danach.
+    </span></div>
+    <div class="zeile"><span class="was">Worauf achten</span><span class="inhalt">
+      Sag ausdrücklich, dass du an fremden EDV-Systemen arbeitest. Frag nach
+      Vermögensschäden — nicht nur nach Sach- und Personenschäden.
+    </span></div>
+    <div class="zeile"><span class="was">Kosten</span><span class="inhalt">
+      im Businessplan mit 300 € im Jahr angesetzt
+    </span></div>
+  </div>
+</div>
+
+<div class="schritt">
+  <div class="s-kopf">
+    <span class="s-nr">9</span><span class="s-titel">Geschäftsbedingungen erstellen lassen</span>
+    <span class="s-behoerde">Rechtsanwalt<br>für Vertragsrecht</span>
+  </div>
+  <div class="s-inhalt">
+    <div class="zeile"><span class="was">Drei Punkte</span><span class="inhalt"><ul>
+      <li>Gegenstand ist die technische Einrichtung, keine Steuerberatung</li>
+      <li>Keine Zusicherung, dass ein bestimmter Empfänger eine Rechnung annimmt; keine
+          Haftung für Zahlungseingänge oder Zahlungsverzug</li>
+      <li>Die steuerliche Richtigkeit verantwortet der Kunde beziehungsweise sein
+          Steuerberater</li>
+    </ul></span></div>
+    <div class="zeile"><span class="was">Kosten</span><span class="inhalt">
+      im Businessplan mit 500 € einmalig angesetzt — Teil des § 16c-Antrags
+    </span></div>
+  </div>
+</div>
+
+<div class="schritt">
+  <div class="s-kopf">
+    <span class="s-nr">10</span><span class="s-titel">Internetseite fertigstellen und online nehmen</span>
+    <span class="s-behoerde">selbst<br>· kein Amt</span>
+  </div>
+  <div class="s-inhalt">
+    <div class="zeile"><span class="was">Zu tun</span><span class="inhalt"><ul>
+      <li>Domain und Hosting buchen (rund 10 € im Monat)</li>
+      <li>Kontaktdaten in <span class="lueck">leser.html</span>, Impressum und
+          Datenschutzerklärung eintragen</li>
+      <li><strong>Schriftarten lokal einbinden</strong> statt von Google laden — sonst
+          droht eine Abmahnung</li>
+      <li>Rote Warnkästen aus allen drei Dateien löschen</li>
+    </ul></span></div>
+    <div class="zeile"><span class="was">Grundlage</span><span class="inhalt">
+      steht vollständig in <span class="lueck">VOR-DEM-LIVEGANG.md</span>
+    </span></div>
+  </div>
+</div>
+
+<h2 class="abschnitt">Teil 3 — Erst jetzt Kunden ansprechen</h2>
+
+<div class="schritt">
+  <div class="s-kopf">
+    <span class="s-nr">11</span><span class="s-titel">Die drei Kanäle, in dieser Reihenfolge</span>
+    <span class="s-behoerde">Unterlagen liegen<br>fertig bereit</span>
+  </div>
+  <div class="s-inhalt">
+    <div class="zeile"><span class="was">Zuerst</span><span class="inhalt">
+      <strong>Zehn Steuerkanzleien anrufen.</strong> Leitfaden:
+      <span class="lueck">Kanzleien-ansprechen.pdf</span>. Zwei Rückmeldungen auf zehn
+      Anrufe sind ein normales Ergebnis.
+    </span></div>
+    <div class="zeile"><span class="was">Parallel</span><span class="inhalt">
+      <strong>Kreishandwerkerschaft und Innungen anschreiben.</strong> Brief:
+      <span class="lueck">anschreiben-text.md</span>. Nach fünf Werktagen anrufen und
+      nachfassen — das ist der eigentliche Schritt.
+    </span></div>
+    <div class="zeile"><span class="was">Dann</span><span class="inhalt">
+      <strong>Zwanzig Betriebe direkt anrufen.</strong> Zettel:
+      <span class="lueck">Lexoffice-13b-Verkaufsargument.pdf</span>.
+    </span></div>
+    <div class="zeile"><span class="was">Vorher testen</span><span class="inhalt">
+      Zusatzsoftware installieren, § 13 b-Testrechnung erzeugen, XML mit deinem eigenen
+      Leser prüfen, einmal offline durchspielen.
+    </span></div>
+  </div>
+</div>
+
+<h2 class="abschnitt">Die vier Fristen, die wirklich zählen</h2>
+
+<div class="schritt">
+  <div class="s-inhalt">
+    <p><span class="haken"></span><strong>Einstiegsgeld vor Aufnahme der Tätigkeit</strong> —
+      sonst ist der Anspruch weg. Keine Nachholung.</p>
+    <p><span class="haken"></span><strong>Berufsgenossenschaft binnen einer Woche</strong>
+      nach Aufnahme.</p>
+    <p><span class="haken"></span><strong>Fragebogen zur steuerlichen Erfassung binnen
+      eines Monats</strong>, elektronisch, unaufgefordert.</p>
+    <p style="margin-bottom:0"><span class="haken"></span><strong>Jede Änderung sofort ans
+      Jobcenter melden</strong> — Aufnahme, erste Einnahmen, Kontowechsel. Nicht die
+      Selbstständigkeit ist das Risiko, sondern sie zu verschweigen.</p>
+  </div>
+</div>
+
+<footer>
+  <span>Keine Rechts- oder Sozialrechtsberatung. Verbindliche Auskunft geben die genannten Stellen.</span>
+  <span>Startplan · Stand 09.09.2026</span>
+</footer>
