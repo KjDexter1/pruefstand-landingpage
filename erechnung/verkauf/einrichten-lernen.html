@@ -1,0 +1,240 @@
+<title>Einrichten lernen</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@600&display=swap">
+<style>
+  @page { size: A4; margin: 12mm 13mm; }
+  :root {
+    --ground:#FFFFFF; --surface:#F5F4EF; --ink:#161917; --ink-soft:#4E5854;
+    --ink-faint:#87908B; --rule:#D2D0C7; --accent:#0E5B50; --accent-soft:#E2EEEB;
+    --flag:#A93C1B; --flag-soft:#FAEBE4;
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:"IBM Plex Sans", Arial, sans-serif;
+    font-size:8.4pt; line-height:1.33; -webkit-font-smoothing:antialiased;
+  }
+  .seite { max-width:190mm; margin:0 auto; padding:2mm 0 2mm; }
+  .kopf {
+    display:flex; justify-content:space-between; align-items:baseline;
+    border-bottom:2px solid var(--accent); padding-bottom:5px; margin-bottom:12px;
+  }
+  h1 {
+    font-family:"IBM Plex Serif", Georgia, serif; font-size:17pt; font-weight:600;
+    margin:0; line-height:1.1;
+  }
+  .kopf-neben {
+    font-family:"IBM Plex Mono", monospace; font-size:7.4pt;
+    letter-spacing:.08em; text-transform:uppercase; color:var(--accent);
+  }
+  h2 {
+    font-family:"IBM Plex Mono", monospace; font-size:7.8pt; font-weight:500;
+    letter-spacing:.12em; text-transform:uppercase; color:var(--accent);
+    margin:9px 0 4px; padding-bottom:2px; border-bottom:1px solid var(--rule);
+  }
+  p { margin:0 0 5px; }
+  .spalten { display:grid; grid-template-columns:1fr 1fr; gap:0 16px; }
+
+  .beleg {
+    background:var(--accent-soft); border-left:3px solid var(--accent);
+    padding:8px 11px; border-radius:0 3px 3px 0; margin:0 0 8px;
+  }
+  .beleg .zitat { font-size:9.6pt; line-height:1.45; }
+  .beleg .quelle {
+    font-family:"IBM Plex Mono", monospace; font-size:7.4pt;
+    color:var(--ink-soft); margin-top:5px;
+  }
+  .rot {
+    background:var(--flag-soft); border-left:3px solid var(--flag);
+    padding:8px 11px; border-radius:0 3px 3px 0; margin:0 0 8px;
+    font-size:8.9pt; color:#6E2812;
+  }
+  .sagen {
+    background:var(--surface); border:1px solid var(--rule); border-radius:3px;
+    padding:8px 11px; margin:0 0 7px;
+  }
+  .sagen .du {
+    font-family:"IBM Plex Mono", monospace; font-size:7.2pt; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--accent); display:block; margin-bottom:3px;
+  }
+  .sagen p { font-size:9.6pt; margin:0; }
+  .sagen p + p { margin-top:5px; }
+
+  table { width:100%; border-collapse:collapse; font-size:8.4pt; margin-bottom:7px; }
+  th {
+    text-align:left; font-family:"IBM Plex Mono", monospace; font-size:7.2pt;
+    letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint);
+    font-weight:400; padding:0 7px 3px 0; border-bottom:1px solid var(--rule);
+    vertical-align:bottom;
+  }
+  td { padding:3px 7px 3px 0; border-bottom:1px solid var(--rule); vertical-align:top; }
+  td:last-child, th:last-child { padding-right:0; }
+  .einwand { font-weight:600; width:33%; }
+
+  ol.schritte { margin:0 0 7px; padding-left:15px; }
+  ol.schritte li { margin-bottom:4px; }
+  ul.kurz { margin:0 0 6px; padding-left:14px; }
+  ul.kurz li { margin-bottom:2.5px; }
+
+  .preis {
+    display:flex; gap:10px; align-items:baseline; background:var(--accent);
+    color:#fff; padding:8px 12px; border-radius:3px; margin:0 0 8px;
+  }
+  .preis .zahl { font-size:15pt; font-weight:700; }
+  .preis .was { font-size:8.6pt; opacity:.92; }
+
+  footer {
+    margin-top:12px; padding-top:6px; border-top:1px solid var(--rule);
+    font-family:"IBM Plex Mono", monospace; font-size:7pt; color:var(--ink-faint);
+    display:flex; justify-content:space-between;
+  }
+  .umbruch { page-break-before:always; }
+  .tag {
+    border-left:3px solid var(--accent); padding:0 0 0 9px; margin:0 0 8px;
+  }
+  .tag .wann {
+    font-family:"IBM Plex Mono", monospace; font-size:7.2pt; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--accent); display:block; margin-bottom:2px;
+  }
+  .tag .titel { font-weight:600; display:block; margin-bottom:2px; }
+  .ort { background:var(--surface); border:1px solid var(--rule); border-radius:3px;
+         padding:7px 9px; margin:0 0 6px; }
+  .ort .name { font-weight:600; display:block; margin-bottom:1px; }
+</style>
+
+<div class="seite">
+
+  <div class="kopf">
+    <h1>Einrichten — was das heißt und wie du es lernst</h1>
+    <div class="kopf-neben">Nur für dich · nicht für Kunden</div>
+  </div>
+
+  <div class="rot">
+    <strong>Der ehrliche Ausgangspunkt:</strong> Du hast das noch nie gemacht. Das ist in
+    Ordnung, solange du es vor dem ersten zahlenden Kunden einmal an dir selbst
+    durchgespielt hast. Fünf Tage, kostenlos, ohne jede Behörde. Dieses Blatt ist dein
+    Ausbildungsplan.
+  </div>
+
+  <div class="spalten">
+    <div>
+      <h2>Die Landkarte — fünf Orte in jedem Programm</h2>
+      <p>
+        Die Namen sind überall anders, der Aufbau ist überall gleich. Was du einrichtest,
+        liegt immer an diesen fünf Stellen. Wenn du die kennst, findest du dich in jedem
+        Programm zurecht, auch in einem, das du nie gesehen hast.
+      </p>
+
+      <div class="ort">
+        <span class="name">1 · Firmenstammdaten</span>
+        Vollständiger Firmenname, Anschrift, Steuernummer oder Umsatzsteuer-Identnummer,
+        IBAN. Fehlt hier etwas, geht keine einzige Rechnung durch.
+      </div>
+      <div class="ort">
+        <span class="name">2 · Kundenstamm</span>
+        Je Geschäftskunde: saubere Anschrift, möglichst Umsatzsteuer-Identnummer, die
+        E-Mail-Adresse für Rechnungen. Bei Behörden zusätzlich die Leitweg-ID. Das ist
+        der größte Zeitfresser vor Ort.
+      </div>
+      <div class="ort">
+        <span class="name">3 · Artikel- und Leistungsstamm</span>
+        Je Artikel die Mengeneinheit als Code statt als Freitext. Aus „Std“ wird HUR,
+        aus „psch“ wird C62, aus „m“ wird MTR.
+      </div>
+      <div class="ort">
+        <span class="name">4 · Steuerschlüssel</span>
+        Je Schlüssel die Kategorie der Norm. Normal ist S. Bauleistung nach § 13 b ist AE
+        mit Befreiungsgrund. Kleinunternehmer nach § 19 ist E. Hier sitzen die teuren
+        Fehler.
+      </div>
+      <div class="ort">
+        <span class="name">5 · Ausgabe- und Belegeinstellungen</span>
+        Format wählen: ZUGFeRD für normale Geschäftskunden, XRechnung für Behörden.
+        Rundung auf die Gesamtsumme statt je Position. Versandweg festlegen.
+      </div>
+
+      <h2>Muss ich wirklich hinfahren?</h2>
+      <p>
+        Bei den ersten Aufträgen: ja, und zwar freiwillig. Du siehst dabei, wie der Betrieb
+        wirklich arbeitet, und lernst an jedem Termin ein Programm dazu. Genau das kann
+        kein Anbieter aus dem Internet, und genau dafür zahlt der Kunde den Festpreis.
+      </p>
+      <p>Später geht vieles per Fernwartung. Fang trotzdem vor Ort an.</p>
+    </div>
+
+    <div>
+      <h2>Dein Übungsplan — fünf Tage, keine Kosten</h2>
+
+      <div class="tag">
+        <span class="wann">Tag 1</span>
+        <span class="titel">Die zwei Beispieldateien verstehen</span>
+        Lade <strong>13b-falsch.xml</strong> und <strong>13b-richtig.xml</strong> in deinen
+        eigenen Leser. Öffne beide zusätzlich im Texteditor und lies die Kommentare. Ziel:
+        Du kannst die drei Fehler ohne Spickzettel benennen.
+      </div>
+
+      <div class="tag">
+        <span class="wann">Tag 2</span>
+        <span class="titel">Den offiziellen Prüfer aufsetzen</span>
+        Der KoSIT-Validator ist die amtliche Prüfsoftware, offen und kostenlos auf GitHub
+        unter <strong>itplr-kosit/validator</strong>, dazu die Konfiguration unter
+        <strong>validator-configuration-xrechnung</strong>. Er läuft als Java-Programm auf
+        deinem Rechner. Jage beide Beispieldateien hindurch und lies den Fehlerbericht zur
+        falschen.
+      </div>
+
+      <div class="tag">
+        <span class="wann">Tag 3</span>
+        <span class="titel">Ein Programm von innen sehen</span>
+        Nimm einen kostenlosen Testzugang einer gängigen Rechnungssoftware. Lege einen
+        Musterbetrieb an, einen Kunden, zwei Artikel. Erzeuge eine normale Rechnung mit
+        19 Prozent als ZUGFeRD. Prüfe sie mit deinem Leser und mit dem Validator.
+        <strong>Schreib jeden Menüpfad mit</strong>, den du suchen musstest.
+      </div>
+
+      <div class="tag">
+        <span class="wann">Tag 4</span>
+        <span class="titel">Der § 13 b-Fall</span>
+        Dieselbe Software, jetzt eine Bauleistung ohne Umsatzsteuer. Suche den
+        Steuerschlüssel. Erzeuge die Rechnung, zieh die XML heraus und schau nach, ob
+        <strong>AE</strong> darin steht oder <strong>S mit 0 Prozent</strong>. Das ist der
+        Moment, in dem du den Beruf verstehst.
+      </div>
+
+      <div class="tag">
+        <span class="wann">Tag 5</span>
+        <span class="titel">Den Gegenbeweis selbst sehen</span>
+        Nimm einen Testzugang von Lexware Office und versuche dasselbe. Nach der eigenen
+        Hilfeseite des Herstellers kann es § 13 b nicht als E-Rechnung ausgeben. Sieh es
+        dir selbst an und mach einen Screenshot. Danach ist dein stärkstes Verkaufsargument
+        nicht mehr zitiert, sondern geprüft.
+      </div>
+
+      <h2>Danach: Blatt 1 füllen</h2>
+      <p>
+        Jeder notierte Menüpfad gehört in die Arbeitsmappe. Nach zwei Programmen suchst
+        du beim dritten keine halbe Stunde mehr.
+      </p>
+
+      <h2>Wenn du beim Kunden etwas nicht findest</h2>
+      <p>Niemals bluffen. Drei Sätze, die immer funktionieren:</p>
+      <ul class="kurz">
+        <li>„Das schaue ich kurz in der Herstellerdokumentation nach.“ — dauert fünf
+          Minuten und wirkt gründlich, nicht unwissend.</li>
+        <li>„Diesen Fall kläre ich bis morgen und melde mich.“ — besser eine Nacht als
+          eine falsche Einstellung.</li>
+        <li>„Das ist eine steuerliche Frage, die gehört zu Ihrem Steuerberater.“ — deine
+          Grenze, und sie schützt dich.</li>
+      </ul>
+      <div class="rot">
+        <strong>Die Abnahme ist dein Schutz.</strong> Erst wenn eine echte Testrechnung
+        sauber durch den Validator läuft und der Kunde das kurz schriftlich bestätigt,
+        ist der Auftrag fertig. Ohne Abnahme keine Rechnung.
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>Einrichten lernen · Stand September 2026</span>
+    <span>Interner Ausbildungsplan</span>
+  </footer>
+</div>
