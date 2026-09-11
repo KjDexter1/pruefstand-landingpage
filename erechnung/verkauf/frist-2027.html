@@ -1,0 +1,292 @@
+<title>Frist 2027</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@600&display=swap">
+<style>
+  @page { size: A4; margin: 12mm 13mm; }
+  :root {
+    --ground:#FFFFFF; --surface:#F5F4EF; --ink:#161917; --ink-soft:#4E5854;
+    --ink-faint:#87908B; --rule:#D2D0C7; --accent:#0E5B50; --accent-soft:#E2EEEB;
+    --flag:#A93C1B; --flag-soft:#FAEBE4;
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:"IBM Plex Sans", Arial, sans-serif;
+    font-size:8.7pt; line-height:1.34; -webkit-font-smoothing:antialiased;
+  }
+  .seite { max-width:190mm; margin:0 auto; padding:2mm 0 2mm; }
+  .kopf {
+    display:flex; justify-content:space-between; align-items:baseline;
+    border-bottom:2px solid var(--accent); padding-bottom:5px; margin-bottom:12px;
+  }
+  h1 {
+    font-family:"IBM Plex Serif", Georgia, serif; font-size:17pt; font-weight:600;
+    margin:0; line-height:1.1;
+  }
+  .kopf-neben {
+    font-family:"IBM Plex Mono", monospace; font-size:7.4pt;
+    letter-spacing:.08em; text-transform:uppercase; color:var(--accent);
+  }
+  h2 {
+    font-family:"IBM Plex Mono", monospace; font-size:7.8pt; font-weight:500;
+    letter-spacing:.12em; text-transform:uppercase; color:var(--accent);
+    margin:8px 0 4px; padding-bottom:2px; border-bottom:1px solid var(--rule);
+  }
+  p { margin:0 0 4px; }
+  .spalten { display:grid; grid-template-columns:1fr 1fr; gap:0 16px; }
+
+  .beleg {
+    background:var(--accent-soft); border-left:3px solid var(--accent);
+    padding:8px 11px; border-radius:0 3px 3px 0; margin:0 0 8px;
+  }
+  .beleg .zitat { font-size:9.6pt; line-height:1.45; }
+  .beleg .quelle {
+    font-family:"IBM Plex Mono", monospace; font-size:7.4pt;
+    color:var(--ink-soft); margin-top:5px;
+  }
+  .rot {
+    background:var(--flag-soft); border-left:3px solid var(--flag);
+    padding:6px 9px; border-radius:0 3px 3px 0; margin:0 0 6px;
+    font-size:8.5pt; color:#6E2812;
+  }
+  .sagen {
+    background:var(--surface); border:1px solid var(--rule); border-radius:3px;
+    padding:6px 9px; margin:0 0 5px;
+  }
+  .sagen .du {
+    font-family:"IBM Plex Mono", monospace; font-size:7.2pt; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--accent); display:block; margin-bottom:3px;
+  }
+  .sagen p { font-size:9.6pt; margin:0; }
+  .sagen p + p { margin-top:5px; }
+
+  table { width:100%; border-collapse:collapse; font-size:8.4pt; margin-bottom:7px; }
+  th {
+    text-align:left; font-family:"IBM Plex Mono", monospace; font-size:7.2pt;
+    letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint);
+    font-weight:400; padding:0 7px 3px 0; border-bottom:1px solid var(--rule);
+    vertical-align:bottom;
+  }
+  td { padding:2.5px 7px 2.5px 0; border-bottom:1px solid var(--rule); vertical-align:top; }
+  td:last-child, th:last-child { padding-right:0; }
+  .einwand { font-weight:600; width:33%; }
+
+  ol.schritte { margin:0 0 7px; padding-left:15px; }
+  ol.schritte li { margin-bottom:4px; }
+  ul.kurz { margin:0 0 6px; padding-left:14px; }
+  ul.kurz li { margin-bottom:2.5px; }
+
+  .preis {
+    display:flex; gap:10px; align-items:baseline; background:var(--accent);
+    color:#fff; padding:8px 12px; border-radius:3px; margin:0 0 8px;
+  }
+  .preis .zahl { font-size:15pt; font-weight:700; }
+  .preis .was { font-size:8.6pt; opacity:.92; }
+
+  footer {
+    margin-top:12px; padding-top:6px; border-top:1px solid var(--rule);
+    font-family:"IBM Plex Mono", monospace; font-size:7pt; color:var(--ink-faint);
+    display:flex; justify-content:space-between;
+  }
+  .umbruch { page-break-before:always; }
+  .uhr {
+    display:flex; gap:14px; align-items:baseline; background:var(--flag);
+    color:#fff; padding:9px 12px; border-radius:3px; margin:0 0 9px;
+  }
+  .uhr .zahl { font-size:18pt; font-weight:700; line-height:1; }
+  .uhr .was { font-size:8.6pt; opacity:.94; }
+  .brief { font-size:9.8pt; line-height:1.5; }
+  .brief p { margin:0 0 8px; }
+</style>
+
+<div class="seite">
+
+  <div class="kopf">
+    <h1>Die 2027-Gruppe</h1>
+    <div class="kopf-neben">Über 800.000 € Umsatz · Frist 1. Januar 2027</div>
+  </div>
+
+  <div class="uhr">
+    <span class="zahl">16</span>
+    <span class="was">Wochen bis zur Pflicht — und der Dezember fällt praktisch aus.
+      Wer im Januar fakturieren will, muss im November eingerichtet sein.</span>
+  </div>
+
+  <div class="spalten">
+    <div>
+      <h2>Wann dieser Zettel gilt</h2>
+      <p>
+        Der Betrieb hatte <strong>2026 mehr als 800.000 € Gesamtumsatz</strong>. Damit
+        endet für ihn die Übergangsfrist ein Jahr früher als für alle anderen: Ab dem
+        <strong>1. Januar 2027</strong> muss er seine Rechnungen an andere Unternehmen
+        als E-Rechnung <strong>ausstellen</strong>, nicht nur empfangen können.
+      </p>
+      <p>
+        Maßgeblich ist das Vorjahr. Für die Frist 2027 zählt also 2026 — das laufende.
+        Wer knapp darunter liegt, sollte nachrechnen.
+      </p>
+
+      <h2>Warum die gerade jetzt wach werden</h2>
+      <p>
+        Die großen Auftraggeber verschicken bereits E-Rechnungen. Der Betrieb merkt die
+        Umstellung also zuerst im <strong>Posteingang</strong>, nicht im Ausgang. Das ist
+        dein Türöffner: Er hat das Thema schon auf dem Tisch, ohne es gelöst zu haben.
+      </p>
+      <div class="rot">
+        <strong>Wichtig für die Einordnung:</strong> Dass große Kunden E-Rechnungen
+        schicken, ist <em>nicht</em> die neue Pflicht. Empfangen muss jeder Betrieb schon
+        seit dem 1. Januar 2025. Neu ist für diese Gruppe nur der <strong>Versand</strong>.
+        Verwechsle das im Gespräch nicht — sonst korrigiert dich sein Steuerberater.
+      </div>
+
+      <h2>Der Zeitplan, den du ihm vorrechnest</h2>
+      <table>
+        <thead><tr><th>Bis wann</th><th>Was passieren muss</th></tr></thead>
+        <tbody>
+          <tr><td>Oktober</td><td>Bestandsaufnahme: Programm, Rechnungsmenge, Stammdaten, Steuerschlüssel</td></tr>
+          <tr><td>November</td><td>Einrichtung, Testrechnung, Prüfung gegen den Validierungsdienst</td></tr>
+          <tr><td>Dezember</td><td>Jahresabschluss, Urlaub, Feiertage — hier passiert erfahrungsgemäß nichts</td></tr>
+          <tr><td>1. Januar</td><td>Erste Rechnung des Jahres muss das richtige Format haben</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div>
+      <h2>Was du am Telefon sagst</h2>
+      <div class="sagen">
+        <span class="du">Einstieg</span>
+        <p>„Sie bekommen von Ihren großen Auftraggebern inzwischen E-Rechnungen, richtig?
+          Wie viele Rechnungen schreiben Sie selbst im Monat, ungefähr?“</p>
+      </div>
+      <p>Die Rechnungsmenge zuerst. Sie entscheidet über Aufwand und Preis.</p>
+      <div class="sagen">
+        <span class="du">Nach seiner Antwort</span>
+        <p>„Dann gilt für Sie eine andere Frist als für die meisten. Über 800.000 € Umsatz
+          heißt: ab dem 1. Januar 2027 müssen Sie selbst elektronisch fakturieren. Das ist
+          nicht 2028, das ist in vier Monaten.“</p>
+      </div>
+      <div class="sagen">
+        <span class="du">Zum Abschluss des Gesprächs</span>
+        <p>„Ich schaue mir Ihr Programm an, richte den Empfang und den Versand ein, erzeuge
+          eine Testrechnung und prüfe sie gegen den offiziellen Validierungsdienst. Ein
+          Termin, Festpreis, danach läuft es.“</p>
+      </div>
+
+      <h2>Einwände</h2>
+      <table>
+        <thead><tr><th>Er sagt</th><th>Du antwortest</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="einwand">„Das macht mein Steuerberater.“</td>
+            <td>„Der führt Ihre Buchhaltung. Die Einstellungen in Ihrem Rechnungsprogramm
+              macht er nicht — fragen Sie ihn ruhig, er wird Ihnen dasselbe sagen.“</td>
+          </tr>
+          <tr>
+            <td class="einwand">„Das kann meine Software doch schon.“</td>
+            <td>„Sehr gut möglich. Können heißt aber nicht eingerichtet. Schicken Sie mir
+              eine Testrechnung, ich sage Ihnen in zehn Minuten, ob sie durchgeht.“</td>
+          </tr>
+          <tr>
+            <td class="einwand">„Wir schieben das aufs neue Jahr.“</td>
+            <td>„Im neuen Jahr ist die Pflicht schon da. Ab dem 1. Januar muss die erste
+              Rechnung stimmen, nicht die zehnte.“</td>
+          </tr>
+          <tr>
+            <td class="einwand">„Was kostet das?“</td>
+            <td>Erst die Rechnungsmenge und das Programm klären. Dann den Festpreis nennen
+              — nie umgekehrt.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Preis für diese Gruppe</h2>
+      <div class="preis">
+        <span class="zahl">1.200 – 1.800 €</span>
+        <span class="was">Einrichtung Plus · Betriebe über 800.000 € Umsatz</span>
+      </div>
+      <p>
+        Nicht 450 bis 650 €. Mehr Rechnungen, mehrere Nutzer, eine Schnittstelle zur
+        Buchhaltung, deutlich mehr Stammdaten. Der Aufwand ist höher, der Preis bildet
+        das ab.
+      </p>
+      <div class="rot">
+        <strong>Noch nicht abrechnen.</strong> Bis der Bescheid des Jobcenters da ist,
+        nimmst du keinen Auftrag an und stellst keine Rechnung. Das hier ist
+        Terminvorbereitung. Sag: „Ich melde mich in den nächsten Wochen mit einem Termin.“
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>Die 2027-Gruppe · Stand September 2026</span>
+    <span>Seite 1 von 2 · Leitfaden für dich</span>
+  </footer>
+</div>
+
+<div class="seite umbruch">
+
+  <div class="kopf">
+    <h1>Ab 1. Januar 2027 ist Schluss mit Papier</h1>
+    <div class="kopf-neben">Information für Betriebe über 800.000 € Umsatz</div>
+  </div>
+
+  <div class="brief">
+    <p>
+      Sehr geehrte Damen und Herren,
+    </p>
+    <p>
+      Sie bekommen von Ihren großen Auftraggebern seit einiger Zeit elektronische
+      Rechnungen. Das ist keine Marotte dieser Kunden, sondern Gesetz: Seit dem
+      <strong>1. Januar 2025</strong> muss jedes Unternehmen in Deutschland
+      E-Rechnungen empfangen und verarbeiten können.
+    </p>
+    <p>
+      Für Sie kommt jetzt der zweite Teil. Betriebe mit mehr als
+      <strong>800.000 Euro Umsatz im Vorjahr</strong> müssen ab dem
+      <strong>1. Januar 2027</strong> ihre Rechnungen an andere Unternehmen auch selbst
+      elektronisch ausstellen. Alle übrigen Betriebe haben bis 2028 Zeit — Sie nicht.
+    </p>
+    <p>
+      Eine PDF-Rechnung per E-Mail ist dann keine E-Rechnung mehr. Verlangt ist ein
+      strukturierter Datensatz nach der Norm EN 16931, also XRechnung oder ZUGFeRD.
+      Die meisten Rechnungsprogramme können das bereits. Eingerichtet ist es fast nirgends.
+    </p>
+
+    <h2>Was ich mache</h2>
+    <p>
+      Ich richte die E-Rechnung in Ihrem vorhandenen Programm ein. Sie wechseln nichts
+      und schließen kein Abonnement ab. Ein Termin im Betrieb, danach läuft es:
+    </p>
+    <ul class="kurz">
+      <li>Bestandsaufnahme: Programm, Rechnungsmenge, betroffene Fristen</li>
+      <li>Empfangsweg für eingehende E-Rechnungen samt Ablage einrichten</li>
+      <li>Versand im vorhandenen Programm aktivieren und einstellen</li>
+      <li>Stammdaten und Steuerschlüssel prüfen, insbesondere bei Bauleistungen
+        nach § 13 b und bei der Kleinunternehmerregelung</li>
+      <li>Testrechnung erzeugen und gegen den offiziellen Validierungsdienst prüfen</li>
+      <li>Eine Seite Anleitung für Ihr Büro</li>
+    </ul>
+    <p>
+      <strong>Festpreis, keine laufenden Kosten.</strong> Der Preis steht vor dem Termin
+      fest und hängt von Ihrem Programm und Ihrer Rechnungsmenge ab.
+    </p>
+
+    <h2>Warum es jetzt eilt und nicht im Dezember</h2>
+    <p>
+      Die erste Rechnung des Jahres muss stimmen, nicht die zehnte. Im Dezember sind
+      Jahresabschluss, Urlaub und Feiertage. Realistisch bleiben Oktober und November.
+    </p>
+    <p>
+      Keine Steuerberatung und keine Rechtsberatung — das bleibt bei Ihrer Kanzlei.
+      Ich mache die Technik.
+    </p>
+    <p>
+      Mit freundlichen Grüßen<br>
+      Faruk Polat
+    </p>
+  </div>
+
+  <footer>
+    <span>Faruk Polat · In den Rübgärten 17 · 61476 Kronberg im Taunus · 0152 28487769</span>
+    <span>Seite 2 von 2 · zum Weitergeben</span>
+  </footer>
+</div>

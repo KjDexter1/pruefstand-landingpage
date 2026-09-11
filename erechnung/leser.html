@@ -999,6 +999,12 @@
   };
 
   var software = document.getElementById("q-software");
+  // Verbleibende Wochen bis zur Versandpflicht der Grossbetriebe, aufgerundet.
+  function wochenBis2027() {
+    var rest = new Date(2027, 0, 1) - new Date();
+    return Math.max(0, Math.ceil(rest / (7 * 24 * 60 * 60 * 1000)));
+  }
+
   var umsatz   = document.getElementById("q-umsatz");
   var b13      = document.getElementById("q-13b");
   var urteilFeld = document.getElementById("urteil");
@@ -1031,7 +1037,10 @@
       frist = "Empfangen: seit 2025 · Versenden: ab 1. Januar 2027";
       titel = "Für Sie gilt die frühere Frist";
       fristPunkt = ("Über 800.000 € Vorjahresumsatz bedeutet: Ab dem 1. Januar 2027 müssen Sie " +
-                  "E-Rechnungen auch selbst verschicken. Empfangen müssen Sie seit 2025.");
+                  "E-Rechnungen auch selbst verschicken — das sind noch <strong>" + wochenBis2027() +
+                  " Wochen</strong>. Rechnen Sie den Dezember heraus: Jahresabschluss und " +
+                  "Feiertage. Die erste Rechnung des neuen Jahres muss stimmen, nicht die zehnte. " +
+                  "Empfangen müssen Sie ohnehin schon seit 2025.");
     } else {
       frist = "Empfangen: seit 2025 · Versenden: ab 1. Januar 2028";
       titel = "Für Sie gilt der 1. Januar 2028";
