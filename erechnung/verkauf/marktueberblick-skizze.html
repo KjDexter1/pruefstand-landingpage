@@ -1,0 +1,267 @@
+<title>Marktüberblick und Skizze</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@600&display=swap">
+<style>
+  @page { size: A4; margin: 12mm 13mm; }
+  :root {
+    --ground:#FFFFFF; --surface:#F5F4EF; --ink:#161917; --ink-soft:#4E5854;
+    --ink-faint:#87908B; --rule:#D2D0C7; --accent:#0E5B50; --accent-soft:#E2EEEB;
+    --flag:#A93C1B; --flag-soft:#FAEBE4;
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:"IBM Plex Sans", Arial, sans-serif;
+    font-size:8.3pt; line-height:1.32; -webkit-font-smoothing:antialiased;
+  }
+  .seite { max-width:190mm; margin:0 auto; padding:2mm 0 2mm; }
+  .kopf {
+    display:flex; justify-content:space-between; align-items:baseline;
+    border-bottom:2px solid var(--accent); padding-bottom:5px; margin-bottom:12px;
+  }
+  h1 {
+    font-family:"IBM Plex Serif", Georgia, serif; font-size:17pt; font-weight:600;
+    margin:0; line-height:1.1;
+  }
+  .kopf-neben {
+    font-family:"IBM Plex Mono", monospace; font-size:7.4pt;
+    letter-spacing:.08em; text-transform:uppercase; color:var(--accent);
+  }
+  h2 {
+    font-family:"IBM Plex Mono", monospace; font-size:7.6pt; font-weight:500;
+    letter-spacing:.12em; text-transform:uppercase; color:var(--accent);
+    margin:7px 0 3px; padding-bottom:2px; border-bottom:1px solid var(--rule);
+  }
+  p { margin:0 0 4px; }
+  .spalten { display:grid; grid-template-columns:1fr 1fr; gap:0 16px; }
+
+  .beleg {
+    background:var(--accent-soft); border-left:3px solid var(--accent);
+    padding:8px 11px; border-radius:0 3px 3px 0; margin:0 0 8px;
+  }
+  .beleg .zitat { font-size:9.6pt; line-height:1.45; }
+  .beleg .quelle {
+    font-family:"IBM Plex Mono", monospace; font-size:7.4pt;
+    color:var(--ink-soft); margin-top:5px;
+  }
+  .rot {
+    background:var(--flag-soft); border-left:3px solid var(--flag);
+    padding:8px 11px; border-radius:0 3px 3px 0; margin:0 0 8px;
+    font-size:8.9pt; color:#6E2812;
+  }
+  .sagen {
+    background:var(--surface); border:1px solid var(--rule); border-radius:3px;
+    padding:8px 11px; margin:0 0 7px;
+  }
+  .sagen .du {
+    font-family:"IBM Plex Mono", monospace; font-size:7.2pt; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--accent); display:block; margin-bottom:3px;
+  }
+  .sagen p { font-size:9.6pt; margin:0; }
+  .sagen p + p { margin-top:5px; }
+
+  table { width:100%; border-collapse:collapse; font-size:7.6pt; margin-bottom:6px; }
+  th {
+    text-align:left; font-family:"IBM Plex Mono", monospace; font-size:7.2pt;
+    letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint);
+    font-weight:400; padding:0 7px 3px 0; border-bottom:1px solid var(--rule);
+    vertical-align:bottom;
+  }
+  td { padding:2.5px 6px 2.5px 0; border-bottom:1px solid var(--rule); vertical-align:top; }
+  td:last-child, th:last-child { padding-right:0; }
+  .einwand { font-weight:600; width:33%; }
+
+  ol.schritte { margin:0 0 7px; padding-left:15px; }
+  ol.schritte li { margin-bottom:4px; }
+  ul.kurz { margin:0 0 6px; padding-left:14px; }
+  ul.kurz li { margin-bottom:2.5px; }
+
+  .preis {
+    display:flex; gap:10px; align-items:baseline; background:var(--accent);
+    color:#fff; padding:8px 12px; border-radius:3px; margin:0 0 8px;
+  }
+  .preis .zahl { font-size:15pt; font-weight:700; }
+  .preis .was { font-size:8.6pt; opacity:.92; }
+
+  footer {
+    margin-top:12px; padding-top:6px; border-top:1px solid var(--rule);
+    font-family:"IBM Plex Mono", monospace; font-size:7pt; color:var(--ink-faint);
+    display:flex; justify-content:space-between;
+  }
+  .umbruch { page-break-before:always; }
+  .flow {
+    display:flex; flex-direction:column; gap:0; margin:0 0 10px;
+  }
+  .flow .schritt {
+    display:flex; gap:9px; align-items:flex-start; padding:4px 0;
+    border-bottom:1px dashed var(--rule);
+  }
+  .flow .schritt:last-child { border-bottom:none; }
+  .flow .nr {
+    flex:0 0 auto; width:20px; height:20px; border-radius:50%;
+    background:var(--accent); color:#fff; font-family:"IBM Plex Mono", monospace;
+    font-size:9.5pt; font-weight:700; display:flex; align-items:center;
+    justify-content:center;
+  }
+  .flow .wo {
+    flex:0 0 auto; width:24mm; font-family:"IBM Plex Mono", monospace;
+    font-size:7pt; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--accent); padding-top:2px;
+  }
+  .flow .was2 { flex:1 1 auto; }
+  .flow .was2 b { display:block; }
+  .matrix th { font-size:6.6pt; }
+  .matrix td { font-size:7.2pt; vertical-align:top; }
+  .kern { color:var(--accent); font-weight:600; }
+  .luecke { color:var(--flag); font-style:italic; }
+</style>
+
+<div class="seite">
+  <div class="kopf">
+    <h1>Marktüberblick und Skizze des Ablaufs</h1>
+    <div class="kopf-neben">Nur für dich · Stand September 2026</div>
+  </div>
+
+  <h2>Welche Programme Handwerksbetriebe tatsächlich benutzen</h2>
+  <p>
+    Es gibt kein amtliches Ranking. Der Marktzugang läuft über zwei Wege: Cloud-Programme
+    für kleine Betriebe (bis etwa 15 Beschäftigte) und Branchensoftware für Handwerk mit
+    eingebauter Faktura. Große Systeme wie SAP oder DATEV Mittelstand bietest du bewusst
+    <strong>nicht</strong> an — die haben eigene IT-Dienstleister, siehe Blatt 4.
+  </p>
+  <table>
+    <thead><tr><th>Gruppe</th><th>Programme</th><th>Wer sie nutzt</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="kern">Cloud-Rechnungsprogramme</td>
+        <td>lexoffice, sevdesk, WISO Mein Büro, easybill, FastBill, Billomat</td>
+        <td>Kleinbetriebe, Solo-Handwerker, junge Betriebe — dein Hauptmarkt</td>
+      </tr>
+      <tr>
+        <td class="kern">Handwerker-Branchensoftware</td>
+        <td>pds, TopKontor Handwerk, TAIFUN Handwerk, M-SOFT, Streit V.1</td>
+        <td>Betriebe mit Auftragsverwaltung, Zeiterfassung und Lager zusätzlich zur
+          Rechnung — meist 10 bis 50 Beschäftigte</td>
+      </tr>
+      <tr>
+        <td>Ausschluss</td>
+        <td>SAP, Microsoft Dynamics, Sage 100/X3, DATEV Mittelstand, Individualsoftware</td>
+        <td>Zu groß für dein Zielsegment, siehe Businessplan Blatt 4</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>
+    Fünf Programme sind auf Blatt 1 deiner Arbeitsmappe bereits recherchiert:
+    lexoffice, sevdesk, WISO Mein Büro, easybill, FastBill. Damit deckst du schon einen
+    großen Teil deines Marktes ab, bevor du einen einzigen Kunden getroffen hast.
+  </p>
+
+  <h2>Die fünf Orte, konkret in drei Programmen</h2>
+  <p>
+    So sieht dasselbe Prinzip in echten Menüs aus. Grün eingetragen ist recherchiert und
+    belegt, kursiv-rot ist noch offen — das trägst du beim Testen selbst nach.
+  </p>
+  <table class="matrix">
+    <thead>
+      <tr><th>Ort</th><th>lexoffice</th><th>sevdesk</th><th>WISO Mein Büro</th><th>easybill</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><b>1 Firmenstamm</b></td>
+        <td class="kern">Einstellungen (Zahnrad) &gt; E-Rechnung &gt; „E-Rechnung erstellen“ aktivieren</td>
+        <td class="kern">Einstellungen &gt; Unternehmen: USt-IdNr., Bankverbindung, Handelsregisternr.</td>
+        <td class="kern">Einstellungen &gt; Meine Firma &gt; E-Rechnungen</td>
+        <td class="luecke">noch offen — selbst testen</td>
+      </tr>
+      <tr>
+        <td><b>2 Kundenstamm</b></td>
+        <td class="kern">Kontakt muss als „Firma“ angelegt sein, sonst keine E-Rechnung möglich</td>
+        <td class="kern">Leitweg-ID im Kontaktdatensatz des Empfängers</td>
+        <td class="kern">nur B2B — an Privatkunden keine E-Rechnung</td>
+        <td class="kern">Format wird je Kunde eingestellt, nicht zentral — bei vielen Bestandskunden Mehraufwand</td>
+      </tr>
+      <tr>
+        <td><b>3 Artikelstamm</b></td>
+        <td class="luecke">noch offen</td>
+        <td class="luecke">noch offen</td>
+        <td class="luecke">noch offen</td>
+        <td class="luecke">noch offen</td>
+      </tr>
+      <tr>
+        <td><b>4 Steuerschlüssel<br>§ 13 b</b></td>
+        <td class="kern">NEIN — nur als PDF. Rechnungsart „§13b – Bauleistung“ + Häkchen
+          „Steuerfreie Rechnungen erlauben“, aber nicht als XRechnung/ZUGFeRD exportierbar</td>
+        <td class="luecke">noch offen — unbedingt selbst prüfen</td>
+        <td class="luecke">noch offen — wichtigste offene Frage</td>
+        <td class="luecke">noch offen</td>
+      </tr>
+      <tr>
+        <td><b>5 Ausgabeformat</b></td>
+        <td class="kern">XRechnung + ZUGFeRD, ab Paket M</td>
+        <td class="kern">Standardformat unter Einstellungen &gt; Rechnungen: XRechnung
+          oder ZUGFeRD wählen</td>
+        <td class="kern">ZUGFeRD automatisch bei jeder Rechnung; XRechnung-XML separat
+          herunterladen</td>
+        <td class="kern">XRechnung 3.0.2 + ZUGFeRD, Hersteller empfiehlt ZUGFeRD als
+          Standardvorlage</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>
+    Die roten Lücken sind kein Fehler von dir — es ist ehrlicher Stand. Genau die
+    schließt du in deinem Übungsplan (Tag 3 und 4) und trägst die Antwort danach in
+    Blatt 1 nach.
+  </p>
+
+  <div class="rot">
+    <strong>lexoffice ist der wichtigste Fall.</strong> Dort ist § 13 b nicht als
+    XRechnung oder ZUGFeRD exportierbar — nur als PDF, und das nur bis 2027/2028. Bei
+    einem Baubetrieb mit lexoffice ist dein Auftrag kein Einrichtungstermin, sondern ein
+    Gespräch über einen Systemwechsel. Das eigene Verkaufsblatt dazu liegt schon vor.
+  </div>
+
+  <h2>Die Skizze — ein Termin von Anfang bis Ende</h2>
+  <div class="flow">
+    <div class="schritt">
+      <span class="nr">1</span><span class="wo">Vorher</span>
+      <span class="was2"><b>Blatt 1 nachschlagen.</b> Welches Programm hat der Kunde?
+        Menüpfad und bekannte Stolpersteine vorher lesen, nicht erst vor Ort.</span>
+    </div>
+    <div class="schritt">
+      <span class="nr">2</span><span class="wo">Bei ihm</span>
+      <span class="was2"><b>Ort 1 bis 3 einstellen.</b> Firmenstamm, Kundenstamm,
+        Artikelstamm — in seinem Programm, auf seinem Rechner. Du tippst, du installierst
+        nichts.</span>
+    </div>
+    <div class="schritt">
+      <span class="nr">3</span><span class="wo">Bei ihm</span>
+      <span class="was2"><b>Ort 4 und 5 einstellen.</b> Steuerschlüssel je Fall (§ 13 b,
+        § 19, normal), Ausgabeformat wählen, Rundung auf Gesamtsumme prüfen.</span>
+    </div>
+    <div class="schritt">
+      <span class="nr">4</span><span class="wo">Bei ihm</span>
+      <span class="was2"><b>Testrechnung erzeugen.</b> Erfundene Beträge, echter oder
+        Musterkunde. Export als XRechnung oder ZUGFeRD — eine Datei entsteht.</span>
+    </div>
+    <div class="schritt">
+      <span class="nr">5</span><span class="wo">Übergabe</span>
+      <span class="was2"><b>Datei auf den eigenen Stick.</b> Nichts bleibt auf seinem
+        Rechner an fremder Software zurück.</span>
+    </div>
+    <div class="schritt">
+      <span class="nr">6</span><span class="wo">Dein Laptop</span>
+      <span class="was2"><b>KoSIT-Validator prüfen.</b> Grün oder rot. Bei Rot: zurück zu
+        Schritt 3, Einstellung korrigieren, neue Testrechnung.</span>
+    </div>
+    <div class="schritt">
+      <span class="nr">7</span><span class="wo">Zum Schluss</span>
+      <span class="was2"><b>Abnahme und Anleitung.</b> Testdatei vom Stick löschen,
+        eine Seite Anleitung fürs Büro übergeben, Abnahme kurz schriftlich bestätigen
+        lassen. Erst danach die Rechnung stellen.</span>
+    </div>
+  </div>
+
+  <footer>
+    <span>Marktüberblick und Skizze · Stand September 2026</span>
+    <span>Interne Arbeitsunterlage</span>
+  </footer>
+</div>
