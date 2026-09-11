@@ -1,0 +1,33 @@
+name: E-Rechnung-Seite auf GitHub Pages veroeffentlichen
+
+# Verroeffentlicht ausschliesslich den Ordner erechnung/ — die archivierte
+# Pruefstand-Seite unter archiv/ bleibt davon unberuehrt und offline.
+
+on:
+  push:
+    branches: [claude/qwen-chatgpt-research-analysis-mqoy0n]
+    paths: ["erechnung/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: erechnung
+      - id: deployment
+        uses: actions/deploy-pages@v4
