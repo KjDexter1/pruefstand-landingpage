@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SO KOMMT ES AUS EINEM PROGRAMM, DAS NIE EINGERICHTET WURDE.
+     Drei Fehler stecken darin. Oeffne die Datei mit dem Leser und vergleiche
+     sie mit 13b-richtig.xml. -->
+<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2"
+         xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+         xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+  <cbc:CustomizationID>urn:cen.eu:en16931:2017</cbc:CustomizationID>
+  <cbc:ID>2026-0481</cbc:ID>
+  <cbc:IssueDate>2026-09-11</cbc:IssueDate>
+  <cbc:InvoiceTypeCode>380</cbc:InvoiceTypeCode>
+  <cbc:DocumentCurrencyCode>EUR</cbc:DocumentCurrencyCode>
+
+  <cac:AccountingSupplierParty><cac:Party>
+    <cac:PartyName><cbc:Name>Muster Rohbau GmbH</cbc:Name></cac:PartyName>
+    <cac:PostalAddress>
+      <cbc:StreetName>Industriestrasse 8</cbc:StreetName>
+      <cbc:CityName>Oberursel</cbc:CityName>
+      <cbc:PostalZone>61440</cbc:PostalZone>
+      <cac:Country><cbc:IdentificationCode>DE</cbc:IdentificationCode></cac:Country>
+    </cac:PostalAddress>
+  </cac:Party></cac:AccountingSupplierParty>
+
+  <cac:AccountingCustomerParty><cac:Party>
+    <cac:PartyName><cbc:Name>Grossbau AG</cbc:Name></cac:PartyName>
+    <cac:PostalAddress>
+      <cbc:StreetName>Hanauer Landstrasse 200</cbc:StreetName>
+      <cbc:CityName>Frankfurt am Main</cbc:CityName>
+      <cbc:PostalZone>60314</cbc:PostalZone>
+      <cac:Country><cbc:IdentificationCode>DE</cbc:IdentificationCode></cac:Country>
+    </cac:PostalAddress>
+  </cac:Party></cac:AccountingCustomerParty>
+
+  <!-- FEHLER 1: Kategorie S heisst "normal steuerpflichtig". Mit 0 Prozent
+       ergibt das keinen Sinn. Der Hinweis auf § 13 b fehlt vollstaendig. -->
+  <cac:TaxTotal>
+    <cbc:TaxAmount currencyID="EUR">0.00</cbc:TaxAmount>
+    <cac:TaxSubtotal>
+      <cbc:TaxableAmount currencyID="EUR">4260.83</cbc:TaxableAmount>
+      <cbc:TaxAmount currencyID="EUR">0.00</cbc:TaxAmount>
+      <cac:TaxCategory>
+        <cbc:ID>S</cbc:ID>
+        <cbc:Percent>0.00</cbc:Percent>
+        <cac:TaxScheme><cbc:ID>VAT</cbc:ID></cac:TaxScheme>
+      </cac:TaxCategory>
+    </cac:TaxSubtotal>
+  </cac:TaxTotal>
+
+  <!-- FEHLER 2: Die Summe der Positionen ergibt 4260.85, hier stehen 4260.83.
+       Zwei Cent Rundungsdifferenz, weil das Programm je Position rundet. -->
+  <cac:LegalMonetaryTotal>
+    <cbc:LineExtensionAmount currencyID="EUR">4260.83</cbc:LineExtensionAmount>
+    <cbc:TaxExclusiveAmount currencyID="EUR">4260.83</cbc:TaxExclusiveAmount>
+    <cbc:TaxInclusiveAmount currencyID="EUR">4260.83</cbc:TaxInclusiveAmount>
+    <cbc:PayableAmount currencyID="EUR">4260.83</cbc:PayableAmount>
+  </cac:LegalMonetaryTotal>
+
+  <!-- FEHLER 3: "psch" und "Std" sind frei getippt. Gueltig sind nur Codes. -->
+  <cac:InvoiceLine>
+    <cbc:ID>1</cbc:ID>
+    <cbc:InvoicedQuantity unitCode="psch">1</cbc:InvoicedQuantity>
+    <cbc:LineExtensionAmount currencyID="EUR">3200.00</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Maurerarbeiten Bauvorhaben Westend, pauschal</cbc:Name>
+      <cac:ClassifiedTaxCategory>
+        <cbc:ID>S</cbc:ID><cbc:Percent>0.00</cbc:Percent>
+        <cac:TaxScheme><cbc:ID>VAT</cbc:ID></cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price><cbc:PriceAmount currencyID="EUR">3200.00</cbc:PriceAmount></cac:Price>
+  </cac:InvoiceLine>
+
+  <cac:InvoiceLine>
+    <cbc:ID>2</cbc:ID>
+    <cbc:InvoicedQuantity unitCode="Std">18.5</cbc:InvoicedQuantity>
+    <cbc:LineExtensionAmount currencyID="EUR">1060.85</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Regiestunden Facharbeiter</cbc:Name>
+      <cac:ClassifiedTaxCategory>
+        <cbc:ID>S</cbc:ID><cbc:Percent>0.00</cbc:Percent>
+        <cac:TaxScheme><cbc:ID>VAT</cbc:ID></cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price><cbc:PriceAmount currencyID="EUR">57.34</cbc:PriceAmount></cac:Price>
+  </cac:InvoiceLine>
+</Invoice>
