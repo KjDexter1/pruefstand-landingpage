@@ -123,6 +123,23 @@
     font-size: 12.5px; color: var(--ink-soft);
     font-family: "IBM Plex Mono", ui-monospace, monospace;
   }
+  .pdf-knopf {
+    margin-left: auto;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 12.5px; font-weight: 500;
+    color: var(--accent); background: var(--accent-soft);
+    border: none; border-radius: 4px; padding: 5px 11px;
+    cursor: pointer;
+  }
+  .pdf-knopf:hover { filter: brightness(0.96); }
+  @media print {
+    body * { visibility: hidden; }
+    .dokument, .dokument * { visibility: visible; }
+    .dokument {
+      position: absolute; top: 0; left: 0; right: 0;
+      box-shadow: none; border: none;
+    }
+  }
   .marke {
     display: inline-block; padding: 2px 7px; border-radius: 3px;
     background: var(--surface-alt); color: var(--ink-soft);
@@ -810,6 +827,7 @@
       '<span class="marke">' + esc(r.format) + "</span>" +
       "<span>" + esc(dateiname) + "</span>" +
       (beispiel ? '<span class="marke">Beispieldatei</span>' : "") +
+      '<button type="button" class="pdf-knopf" id="pdf-knopf">Als PDF speichern / drucken</button>' +
       "</div>");
 
     var kopf =
@@ -874,6 +892,9 @@
 
     ergebnis.innerHTML = teile.join("");
     ergebnis.hidden = false;
+
+    var pdfKnopf = document.getElementById("pdf-knopf");
+    if (pdfKnopf) pdfKnopf.addEventListener("click", function () { window.print(); });
   }
 
   function zeigeFehler(nachricht) {
