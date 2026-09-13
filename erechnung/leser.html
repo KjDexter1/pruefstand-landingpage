@@ -87,6 +87,15 @@
   }
   .privat svg { flex: none; }
 
+  .teilen {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin: 0 0 22px; padding: 7px 13px;
+    background: #25D366; color: #fff; text-decoration: none;
+    border-radius: 5px; font-size: 13px; font-weight: 500;
+  }
+  .teilen:hover { filter: brightness(0.95); }
+  @media print { .teilen { display: none; } }
+
   /* ---------- Ablage ---------- */
   .ablage {
     border: 2px dashed var(--rule-strong);
@@ -389,6 +398,14 @@
     <span><strong>Ihre Datei verlässt Ihren Rechner nicht.</strong>
       Sie wird direkt im Browser gelesen — kein Hochladen, keine Speicherung, kein Server.</span>
   </div>
+
+  <a class="teilen" target="_blank" rel="noopener"
+     href="https://wa.me/?text=Hey%2C%20kennst%20du%20das%3F%20Bekommst%20du%20neuerdings%20komische%20Dateien%20von%20Lieferanten%20statt%20normaler%20Rechnungen%3F%20Das%20nennt%20sich%20E-Rechnung%20und%20wird%20gerade%20Pflicht.%0A%0AHier%20gibt%27s%20ein%20kostenloses%20Werkzeug%2C%20das%20sie%20in%20normalem%20Deutsch%20anzeigt%20und%20als%20PDF%20druckbar%20macht%2C%20ganz%20ohne%20Anmeldung%3A%0Ahttps%3A//kjdexter1.github.io/e-rechnung-kronberg/%0A%0ATipp%3A%20Die%20Original-Datei%20danach%20nicht%20l%C3%B6schen%2C%20die%20muss%20man%2010%20Jahre%20aufheben.">
+    <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+      <path d="M8 1.2a6.8 6.8 0 0 0-5.8 10.3L1.2 15l3.6-1A6.8 6.8 0 1 0 8 1.2Zm0 1.2a5.6 5.6 0 1 1 0 11.2 5.5 5.5 0 0 1-2.8-.8l-.2-.1-2.1.5.6-2-.1-.2A5.6 5.6 0 0 1 8 2.4Zm-2 2.8c-.1 0-.4 0-.5.3-.2.3-.7.7-.7 1.6s.7 1.9.8 2c.1.1 1.4 2.2 3.4 3 1.7.7 2 .5 2.3.5.4 0 1.3-.5 1.4-1s.2-.9.1-1c-.1-.1-.2-.2-.4-.3l-1.3-.6c-.2-.1-.3-.1-.5.1l-.6.8c-.1.1-.2.2-.4.1-.2-.1-.9-.3-1.7-1-.6-.6-1-1.3-1.2-1.5-.1-.2 0-.3.1-.4l.4-.5c.1-.1.1-.2.2-.4.1-.1 0-.3 0-.4L6.2 5.4c-.1-.3-.3-.3-.4-.3H6Z"/>
+    </svg>
+    Diesen Tipp per WhatsApp weitergeben
+  </a>
 
   <div class="ablage" id="ablage" tabindex="0" role="button"
        aria-label="Rechnungsdatei auswählen oder hierher ziehen">
