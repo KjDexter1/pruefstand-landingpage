@@ -169,6 +169,26 @@
     border-radius: 6px;
     box-shadow: var(--shadow);
     overflow: hidden;
+    position: relative;
+  }
+  .dokument.ist-muster::after {
+    content: "MUSTER";
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%) rotate(-28deg);
+    font-family: "IBM Plex Sans", sans-serif;
+    font-weight: 800;
+    font-size: clamp(52px, 12vw, 110px);
+    letter-spacing: .08em;
+    color: var(--accent);
+    opacity: .6;
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+    z-index: 5;
+  }
+  @media print {
+    .dokument.ist-muster::after { display: none; }
   }
 
   .dok-kopf {
@@ -964,7 +984,8 @@
         euro(r.zahlen !== null ? r.zahlen : r.brutto) + "</span></div>" +
       "</div>";
 
-    teile.push('<div class="dokument">' + kopf + parteien + meta + tabelle + summen + "</div>");
+    teile.push('<div class="dokument' + (beispiel ? " ist-muster" : "") + '">' +
+               kopf + parteien + meta + tabelle + summen + "</div>");
 
     var felder = [
       ["Format",         r.format],
