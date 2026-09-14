@@ -57,14 +57,39 @@
   }
   .wrap { max-width: 900px; margin: 0 auto; padding: 28px 20px 72px; min-width: 0; }
 
+  /* ---------- Hero-Kopfbereich ---------- */
+  .hero {
+    background:
+      radial-gradient(circle at 15% 0%, rgba(255,255,255,.10), transparent 55%),
+      linear-gradient(135deg, #0A4A41 0%, #0E5B50 48%, #1C8577 100%);
+    color: #F6F4EE;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    padding: 22px 20px 30px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before, .hero::after {
+    content: ""; position: absolute; border-radius: 50%;
+    background: rgba(255,255,255,.07); pointer-events: none;
+  }
+  .hero::before { width: 240px; height: 240px; top: -100px; right: -50px; }
+  .hero::after  { width: 160px; height: 160px; bottom: -80px; left: 8%; }
+  .hero-inner {
+    max-width: 900px; margin: 0 auto; position: relative; z-index: 1;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .hero .eyebrow { color: #B9E4D8; }
+  .hero h1 { color: #FFFFFF; }
+  .hero .sub { color: #DCEFE9; }
   .zurueck {
     font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px;
-    letter-spacing: .1em; text-transform: uppercase; color: var(--accent);
-    text-decoration: none; display: inline-block; margin-bottom: 14px;
+    letter-spacing: .1em; text-transform: uppercase; color: #B9E4D8;
+    text-decoration: none; display: inline-block; margin-bottom: 12px;
   }
-  .zurueck:hover { text-decoration: underline; }
+  .zurueck:hover { text-decoration: underline; color: #fff; }
 
-  header { display: flex; flex-direction: column; gap: 6px; margin-bottom: 6px; }
   .eyebrow {
     font-family: "IBM Plex Mono", ui-monospace, monospace;
     font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
@@ -72,7 +97,7 @@
   }
   h1 {
     font-family: "IBM Plex Serif", Georgia, serif;
-    font-weight: 600; font-size: clamp(26px, 4.5vw, 34px);
+    font-weight: 600; font-size: clamp(28px, 5vw, 38px);
     margin: 0; line-height: 1.15; text-wrap: balance;
   }
   .sub { color: var(--ink-soft); max-width: 62ch; margin: 8px 0 0; }
@@ -192,10 +217,9 @@
   fieldset:hover { border-color: var(--rule-strong); box-shadow: var(--shadow); }
 </style>
 
-<div class="wrap">
-  <a class="zurueck" href="leser.html">← zurück zum Rechnungsleser</a>
-
-  <header>
+<div class="hero">
+  <div class="hero-inner">
+    <a class="zurueck" href="leser.html">← zurück zum Rechnungsleser</a>
     <div class="eyebrow">Kostenlos · läuft komplett im Browser</div>
     <h1>Eigene XRechnung erstellen</h1>
     <p class="sub">
@@ -203,7 +227,10 @@
       (UBL, EN 16931) zum Herunterladen, die Sie selbst per E-Mail oder Kundenportal
       verschicken können.
     </p>
-  </header>
+  </div>
+</div>
+
+<div class="wrap">
 
   <div class="privat" style="background:var(--surface-alt);border-left-color:var(--rule-strong)">
     <span>🧪</span>
