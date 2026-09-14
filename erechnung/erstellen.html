@@ -175,6 +175,18 @@
   footer a { color: var(--ink-soft); }
 
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+  /* ---------- Sanftes Einblenden beim Scrollen ---------- */
+  .reveal {
+    opacity: 0; transform: translateY(16px);
+    transition: opacity .55s ease, transform .55s ease;
+  }
+  .reveal.sichtbar { opacity: 1; transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+  fieldset { transition: box-shadow .18s ease, border-color .18s ease; }
+  fieldset:hover { border-color: var(--rule-strong); box-shadow: var(--shadow); }
 </style>
 
 <div class="wrap">
@@ -223,7 +235,7 @@
   </div>
 
   <form id="rechnungsform" novalidate>
-    <fieldset>
+    <fieldset class="reveal">
       <legend>Ihre Firma (Rechnungssteller)</legend>
       <div class="zeilen2">
         <div class="feldgruppe">
@@ -257,7 +269,7 @@
       </div>
     </fieldset>
 
-    <fieldset>
+    <fieldset class="reveal">
       <legend>Kunde (Rechnungsempfänger)</legend>
       <div class="zeilen2">
         <div class="feldgruppe">
@@ -284,7 +296,7 @@
       </div>
     </fieldset>
 
-    <fieldset>
+    <fieldset class="reveal">
       <legend>Rechnungsdaten</legend>
       <div class="zeilen3">
         <div class="feldgruppe">
@@ -314,7 +326,7 @@
       </div>
     </fieldset>
 
-    <fieldset>
+    <fieldset class="reveal">
       <legend>Positionen</legend>
       <div class="tabelle-huelle">
         <table class="positionen-tabelle" id="pos-tabelle">
@@ -362,6 +374,21 @@
 <script>
 (function () {
   "use strict";
+
+  /* Sanftes Einblenden markierter Elemente beim Scrollen. */
+  if ("IntersectionObserver" in window) {
+    var beobachter = new IntersectionObserver(function (eintraege) {
+      eintraege.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.classList.add("sichtbar");
+          beobachter.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+    document.querySelectorAll(".reveal").forEach(function (el) { beobachter.observe(el); });
+  } else {
+    document.querySelectorAll(".reveal").forEach(function (el) { el.classList.add("sichtbar"); });
+  }
 
   var EINHEITEN = [
     ["C62", "Stück"], ["HUR", "Std."], ["DAY", "Tage"], ["MTR", "m"],

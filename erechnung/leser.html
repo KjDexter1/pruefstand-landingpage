@@ -316,6 +316,43 @@
     font-size: 13.5px; font-weight: 600; line-height: 1.35;
   }
   .frage .hilfe { font-size: 12px; color: var(--ink-faint); line-height: 1.4; }
+
+  /* ---------- Bento-Karten ---------- */
+  .bento {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+    gap: 16px; margin-top: 20px;
+  }
+  .bento-karte {
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 10px; padding: 20px 20px 18px;
+    display: flex; flex-direction: column; gap: 9px;
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+  .bento-karte:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+    border-color: var(--rule-strong);
+  }
+  .bento-icon {
+    width: 40px; height: 40px; border-radius: 9px;
+    background: var(--accent-soft);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 19px; margin-bottom: 2px;
+  }
+  .bento-karte label {
+    font-size: 14.5px; font-weight: 600; line-height: 1.35;
+  }
+  .bento-karte .hilfe { font-size: 13px; color: var(--ink-faint); line-height: 1.5; }
+
+  /* ---------- Sanftes Einblenden beim Scrollen ---------- */
+  .reveal {
+    opacity: 0; transform: translateY(16px);
+    transition: opacity .55s ease, transform .55s ease;
+  }
+  .reveal.sichtbar { opacity: 1; transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
   select, input[type="text"], input[type="tel"], input[type="email"] {
     font-family: inherit; font-size: 14.5px; color: var(--ink);
     background: var(--ground); border: 1px solid var(--rule-strong);
@@ -455,7 +492,7 @@
     Diesen Tipp per WhatsApp weitergeben
   </a>
 
-  <div class="ablage" id="ablage" tabindex="0" role="button"
+  <div class="ablage reveal" id="ablage" tabindex="0" role="button"
        aria-label="Rechnungsdatei auswählen oder hierher ziehen">
     <div class="ablage-haupt">Rechnung hierher ziehen</div>
     <div class="ablage-neben">oder klicken, um eine Datei zu wählen</div>
@@ -468,7 +505,7 @@
 
   <hr class="trenner">
 
-  <section class="check-kopf">
+  <section class="check-kopf reveal">
     <h2>Und umgekehrt: Können Sie selbst schon E-Rechnungen verschicken?</h2>
     <p>
       Drei Fragen, dreißig Sekunden. Sie sehen sofort, welche Frist für Sie gilt
@@ -477,7 +514,7 @@
   </section>
 
   <div class="fragen">
-    <div class="frage">
+    <div class="frage reveal">
       <label for="q-software">Womit schreiben Sie heute Ihre Rechnungen?</label>
       <select id="q-software">
         <option value="">bitte wählen</option>
@@ -495,7 +532,7 @@
       </select>
     </div>
 
-    <div class="frage">
+    <div class="frage reveal">
       <label for="q-umsatz">Wie hoch war Ihr Umsatz im Vorjahr?</label>
       <select id="q-umsatz">
         <option value="">bitte wählen</option>
@@ -506,7 +543,7 @@
       <span class="hilfe">Entscheidet nur darüber, ob 2027 oder 2028 für Sie gilt.</span>
     </div>
 
-    <div class="frage">
+    <div class="frage reveal">
       <label for="q-13b">Rechnen Sie Bauleistungen nach § 13b ab?</label>
       <select id="q-13b">
         <option value="">bitte wählen</option>
@@ -560,7 +597,7 @@
 
   <hr class="trenner">
 
-  <section class="check-kopf">
+  <section class="check-kopf reveal">
     <h2>Rechnung fertig — wie kommt sie jetzt zum Kunden?</h2>
     <p>
       Die XRechnung selbst zu erzeugen ist nur die halbe Miete. Drei Stellen,
@@ -568,8 +605,9 @@
     </p>
   </section>
 
-  <div class="fragen">
-    <div class="frage">
+  <div class="bento">
+    <div class="bento-karte reveal">
+      <div class="bento-icon">📮</div>
       <label>Leitweg-ID und Peppol — was ist das überhaupt?</label>
       <span class="hilfe">
         Eine XRechnung wird nicht einfach als Mail-Anhang verschickt. Behörden
@@ -586,7 +624,8 @@
       </span>
     </div>
 
-    <div class="frage">
+    <div class="bento-karte reveal">
+      <div class="bento-icon">📎</div>
       <label>Aufmaße und Stundenzettel gehören mit in die Datei</label>
       <span class="hilfe">
         Eine separate PDF-Mail mit dem Aufmaß oder dem unterschriebenen
@@ -599,7 +638,8 @@
       </span>
     </div>
 
-    <div class="frage">
+    <div class="bento-karte reveal">
+      <div class="bento-icon">🔄</div>
       <label>Der Standard ändert sich — Ihre Software muss mitziehen</label>
       <span class="hilfe">
         Die XRechnung wird regelmäßig fortgeschrieben, aktuell gilt Version
@@ -614,7 +654,7 @@
     </div>
   </div>
 
-  <footer>
+  <footer class="reveal">
     <div>
       Seit 2025 muss jeder inländische Betrieb E-Rechnungen <strong>empfangen</strong> können.
       Ab 2027 gilt für Umsätze über 800.000 € auch die Pflicht zum <strong>Versand</strong>,
@@ -632,6 +672,21 @@
 <script>
 (function () {
   "use strict";
+
+  /* Sanftes Einblenden markierter Elemente beim Scrollen. */
+  if ("IntersectionObserver" in window) {
+    var beobachter = new IntersectionObserver(function (eintraege) {
+      eintraege.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.classList.add("sichtbar");
+          beobachter.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+    document.querySelectorAll(".reveal").forEach(function (el) { beobachter.observe(el); });
+  } else {
+    document.querySelectorAll(".reveal").forEach(function (el) { el.classList.add("sichtbar"); });
+  }
 
   var ablage    = document.getElementById("ablage");
   var dateifeld = document.getElementById("datei");
