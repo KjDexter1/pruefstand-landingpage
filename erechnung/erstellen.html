@@ -105,6 +105,24 @@
   }
   .sub { color: var(--ink-soft); max-width: 62ch; margin: 8px 0 0; }
 
+  /* Hinweis fuer In-App-Browser (Facebook, Instagram). Dort schlaegt das
+     Herunterladen der fertigen Rechnung oft fehl -- ohne Fehlermeldung.
+     Deshalb steht der Hinweis ganz oben und nicht beim Knopf. */
+  .appbrowser {
+    display: none;
+    background: var(--flag-soft); color: var(--flag);
+    border: 1.5px solid var(--flag); border-radius: 10px;
+    padding: 14px 16px; margin: 0 0 16px; font-size: 14.5px; line-height: 1.55;
+  }
+  .appbrowser.zeigen { display: block; }
+  .appbrowser strong { display: block; margin-bottom: 4px; font-size: 15.5px; }
+  .appbrowser ol { margin: 8px 0 0; padding-left: 20px; }
+  .appbrowser li { margin: 3px 0; }
+  .appbrowser-knopf {
+    margin-top: 10px; padding: 11px 16px; border-radius: 8px; cursor: pointer;
+    background: var(--flag); color: #fff; border: none;
+    font: inherit; font-weight: 600; width: 100%;
+  }
   .warnkasten {
     display: flex; gap: 10px; align-items: flex-start;
     margin: 20px 0 26px; padding: 13px 16px;
@@ -383,6 +401,20 @@
 </div>
 
 <div class="wrap">
+
+  <div class="appbrowser" id="appbrowser-hinweis">
+    <strong>Sie sind im Browser der Facebook-App.</strong>
+    Hier kann die fertige Rechnung meist <em>nicht</em> gespeichert werden —
+    beim Antippen passiert dann einfach nichts. Öffnen Sie die Seite in Ihrem
+    richtigen Browser:
+    <ol>
+      <li>Oben rechts auf die drei Punkte tippen</li>
+      <li>„In Chrome öffnen" bzw. „Im Browser öffnen" wählen</li>
+    </ol>
+    <button type="button" class="appbrowser-knopf" id="appbrowser-kopieren">
+      Link kopieren
+    </button>
+  </div>
 
   <div class="privat" style="background:var(--surface-alt);border-left-color:var(--rule-strong)">
     <span>🧪</span>
@@ -1337,6 +1369,39 @@
       rechnungslisteZeichnen();
     }
   });
+
+  /* ----------------------------------------------------------------
+     In-App-Browser erkennen.
+
+     Facebook und Instagram oeffnen Links in einem eingebauten Browser.
+     Der darf aus Sicherheitsgruenden meist keine Dateien speichern --
+     der Nutzer tippt auf "Rechnung erzeugen" und es passiert scheinbar
+     nichts. Dann haelt er das Werkzeug fuer kaputt. Da die Seite gerade
+     ueber Facebook-Gruppen verteilt wird, trifft das viele Besucher.
+  ----------------------------------------------------------------*/
+  (function () {
+    var ua = navigator.userAgent || "";
+    if (!/FBAN|FBAV|FB_IAB|Instagram/i.test(ua)) return;
+    var kasten = document.getElementById("appbrowser-hinweis");
+    kasten.classList.add("zeigen");
+    document.getElementById("appbrowser-kopieren").addEventListener("click", function () {
+      var knopf = this;
+      function gelungen() { knopf.textContent = "Link kopiert — jetzt in Chrome einfügen"; }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(location.href).then(gelungen, ersatz);
+      } else { ersatz(); }
+      function ersatz() {
+        /* Ohne Zwischenablage bleibt nur: die Adresse lesbar hinschreiben. */
+        var feld = document.createElement("input");
+        feld.value = location.href;
+        feld.readOnly = true;
+        feld.style.cssText = "width:100%;margin-top:8px;padding:10px;font-size:14px";
+        knopf.parentNode.appendChild(feld);
+        feld.select();
+        knopf.textContent = "Adresse markieren und kopieren:";
+      }
+    });
+  })();
 
   /* ----------------------------------------------------------------
      ZIP-Paket mit allen Rechnungs-XML-Dateien.

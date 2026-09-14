@@ -114,6 +114,22 @@
   .sub { color: var(--ink-soft); max-width: 62ch; margin: 0; }
 
   /* ---------- Datenschutz-Zeile ---------- */
+  /* Hinweis fuer In-App-Browser -- siehe erstellen.html. Hier ist der
+     Schaden kleiner (Datei oeffnen geht meist), aber das Drucken und der
+     Weg zum Generator leiden, deshalb steht er auch hier. */
+  .appbrowser {
+    display: none;
+    background: var(--flag-soft); color: var(--flag);
+    border: 1.5px solid var(--flag); border-radius: 10px;
+    padding: 14px 16px; margin: 0 0 16px; font-size: 14.5px; line-height: 1.55;
+  }
+  .appbrowser.zeigen { display: block; }
+  .appbrowser strong { display: block; margin-bottom: 4px; font-size: 15.5px; }
+  .appbrowser-knopf {
+    margin-top: 10px; padding: 11px 16px; border-radius: 8px; cursor: pointer;
+    background: var(--flag); color: #fff; border: none;
+    font: inherit; font-weight: 600; width: 100%;
+  }
   .privat {
     display: flex; align-items: center; gap: 9px;
     margin: 16px 0 24px; padding: 9px 13px;
@@ -516,6 +532,16 @@
 
 <div class="wrap">
 
+  <div class="appbrowser" id="appbrowser-hinweis">
+    <strong>Sie sind im Browser der Facebook-App.</strong>
+    Der kann keine Dateien speichern und nicht drucken. Öffnen Sie die Seite
+    in Ihrem richtigen Browser: oben rechts auf die drei Punkte tippen und
+    „In Chrome öffnen" bzw. „Im Browser öffnen" wählen.
+    <button type="button" class="appbrowser-knopf" id="appbrowser-kopieren">
+      Link kopieren
+    </button>
+  </div>
+
   <div class="privat" style="background:var(--surface-alt);border-left-color:var(--rule-strong)">
     <span>🧪</span>
     <span><strong>Testphase — aktuell kostenlos.</strong>
@@ -745,6 +771,29 @@
 </div>
 
 <script>
+/* In-App-Browser der Facebook-/Instagram-App erkennen -- dort schlagen
+   Herunterladen und Drucken fehl, ohne dass der Nutzer eine Meldung sieht. */
+(function () {
+  if (!/FBAN|FBAV|FB_IAB|Instagram/i.test(navigator.userAgent || "")) return;
+  document.getElementById("appbrowser-hinweis").classList.add("zeigen");
+  document.getElementById("appbrowser-kopieren").addEventListener("click", function () {
+    var knopf = this;
+    function ersatz() {
+      var feld = document.createElement("input");
+      feld.value = location.href;
+      feld.readOnly = true;
+      feld.style.cssText = "width:100%;margin-top:8px;padding:10px;font-size:14px";
+      knopf.parentNode.appendChild(feld);
+      feld.select();
+      knopf.textContent = "Adresse markieren und kopieren:";
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(location.href).then(function () {
+        knopf.textContent = "Link kopiert — jetzt in Chrome einfügen";
+      }, ersatz);
+    } else { ersatz(); }
+  });
+})();
 (function () {
   "use strict";
 
