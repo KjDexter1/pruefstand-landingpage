@@ -36,11 +36,15 @@
   }
   p { margin:0 0 12px; }
   .zurueck {
-    font-family:"IBM Plex Mono", ui-monospace, monospace; font-size:11px;
-    letter-spacing:.1em; text-transform:uppercase; color:var(--accent);
-    text-decoration:none; display:inline-block; margin-bottom:14px;
+    font-family: "IBM Plex Sans", sans-serif; font-size: 13.5px; font-weight: 600;
+    color: var(--accent); text-decoration: none; display: inline-flex;
+    align-items: center; gap: 6px; margin-bottom: 16px; padding: 8px 15px;
+    border-radius: 999px; background: var(--accent-soft);
+    border: 1px solid transparent;
+    transition: background .15s ease, transform .15s ease;
   }
-  .zurueck:hover { text-decoration:underline; }
+  .zurueck:hover { background: var(--rule); }
+  .zurueck:active { transform: scale(.97); }
   .block {
     background:var(--surface); border:1px solid var(--rule); border-radius:6px;
     padding:14px 18px; margin:0 0 12px;
