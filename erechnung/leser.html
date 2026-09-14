@@ -135,20 +135,27 @@
 
   /* ---------- Ablage ---------- */
   .ablage {
-    border: 2px dashed var(--rule-strong);
-    border-radius: 8px;
-    background: var(--surface);
-    padding: 30px 22px;
+    border: 2.5px dashed var(--accent);
+    border-radius: 12px;
+    background: var(--accent-soft);
+    padding: 36px 22px;
     text-align: center;
     cursor: pointer;
-    transition: border-color .15s, background .15s;
-    display: flex; flex-direction: column; align-items: center; gap: 5px;
+    box-shadow: var(--shadow);
+    transition: border-color .15s, background .15s, transform .15s;
+    display: flex; flex-direction: column; align-items: center; gap: 7px;
   }
-  .ablage:hover, .ablage:focus-visible { border-color: var(--accent); background: var(--surface-alt); }
-  .ablage.aktiv { border-color: var(--accent); background: var(--accent-soft); border-style: solid; }
+  .ablage-icon {
+    width: 46px; height: 46px; border-radius: 50%;
+    background: var(--surface);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 4px; color: var(--accent);
+  }
+  .ablage:hover, .ablage:focus-visible { border-color: var(--accent); background: var(--surface-alt); transform: translateY(-2px); }
+  .ablage.aktiv { border-color: var(--accent); background: var(--accent-soft); border-style: solid; transform: scale(1.01); }
   .ablage:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-  .ablage-haupt { font-weight: 600; font-size: 16px; }
-  .ablage-neben { color: var(--ink-soft); font-size: 13px; }
+  .ablage-haupt { font-weight: 700; font-size: 18px; color: var(--ink); }
+  .ablage-neben { color: var(--ink-soft); font-size: 14px; font-weight: 500; }
   .ablage-formate {
     font-family: "IBM Plex Mono", ui-monospace, monospace;
     font-size: 11.5px; color: var(--ink-faint); margin-top: 5px;
@@ -546,6 +553,14 @@
 
   <div class="ablage reveal" id="ablage" tabindex="0" role="button"
        aria-label="Rechnungsdatei auswählen oder hierher ziehen">
+    <div class="ablage-icon" aria-hidden="true">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <path d="M12 15V4M12 4 7.5 8.5M12 4l4.5 4.5" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
     <div class="ablage-haupt">Rechnung hierher ziehen</div>
     <div class="ablage-neben">oder klicken, um eine Datei zu wählen</div>
     <div class="ablage-formate">XRechnung (.xml) · ZUGFeRD / Factur-X (.pdf)</div>
