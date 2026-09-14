@@ -533,11 +533,11 @@
 <div class="wrap">
 
   <div class="appbrowser" id="appbrowser-hinweis">
-    <strong>Sie sind im Browser der Facebook-App.</strong>
-    Der kann keine Dateien speichern und nicht drucken — beim Antippen
-    passiert einfach nichts. Das liegt an der Facebook-App, nicht an dieser
-    Seite. Öffnen Sie sie in Ihrem richtigen Browser: oben rechts auf die
-    drei Punkte tippen und „In Chrome öffnen" bzw. „Im Browser öffnen" wählen.
+    <strong>Drucken geht im Facebook-Browser nicht.</strong>
+    Sie haben die Seite aus der Facebook-App heraus geöffnet. Deren
+    eingebauter Browser kann nicht drucken — das liegt an der App, nicht an
+    dieser Seite. Zum Drucken oben rechts auf die drei Punkte tippen und
+    „In Chrome öffnen" bzw. „Im Browser öffnen" wählen.
     <button type="button" class="appbrowser-knopf" id="appbrowser-kopieren">
       Link kopieren
     </button>
@@ -780,7 +780,8 @@ function imAppBrowser() {
 
 (function () {
   if (!imAppBrowser()) return;
-  document.getElementById("appbrowser-hinweis").classList.add("zeigen");
+  /* Bewusst NICHT beim Laden einblenden -- siehe erstellen.html: im
+     App-Browser scheitert nur das Drucken, nicht das Oeffnen von Dateien. */
   document.getElementById("appbrowser-kopieren").addEventListener("click", function () {
     var knopf = this;
     function ersatz() {

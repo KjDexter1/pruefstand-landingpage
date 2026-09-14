@@ -403,11 +403,11 @@
 <div class="wrap">
 
   <div class="appbrowser" id="appbrowser-hinweis">
-    <strong>Sie sind im Browser der Facebook-App.</strong>
-    Hier lässt sich die fertige Rechnung <em>nicht</em> speichern und
-    <em>nicht</em> drucken — beim Antippen passiert einfach nichts.
-    Das liegt an der Facebook-App, nicht an dieser Seite.
-    Öffnen Sie sie in Ihrem richtigen Browser:
+    <strong>Drucken geht im Facebook-Browser nicht.</strong>
+    Sie haben die Seite aus der Facebook-App heraus geöffnet. Deren
+    eingebauter Browser kann nicht drucken — das liegt an der App, nicht an
+    dieser Seite. Die Rechnungsdatei herunterladen können Sie hier aber.
+    Zum Drucken öffnen Sie die Seite in Ihrem richtigen Browser:
     <ol>
       <li>Oben rechts auf die drei Punkte tippen</li>
       <li>„In Chrome öffnen" bzw. „Im Browser öffnen" wählen</li>
@@ -1396,8 +1396,10 @@
 
   (function () {
     if (!imAppBrowser()) return;
-    var kasten = document.getElementById("appbrowser-hinweis");
-    kasten.classList.add("zeigen");
+    /* Bewusst NICHT beim Laden einblenden: Herunterladen funktioniert im
+       App-Browser, nur Drucken nicht. Eine Warnung ueber der ganzen Seite
+       wuerde von etwas abschrecken, das taeglich klappt. Der Hinweis
+       erscheint erst, wenn jemand wirklich drucken will. */
     document.getElementById("appbrowser-kopieren").addEventListener("click", function () {
       var knopf = this;
       function gelungen() { knopf.textContent = "Link kopiert — jetzt in Chrome einfügen"; }
