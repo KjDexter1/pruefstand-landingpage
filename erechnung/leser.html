@@ -190,12 +190,14 @@
     .pdf-knopf { margin-left: 0; flex-basis: 100%; text-align: center; padding: 8px 11px; }
   }
   @media print {
-    body * { visibility: hidden; }
-    .dokument, .dokument * { visibility: visible; }
-    .dokument {
-      position: absolute; top: 0; left: 0; right: 0;
-      box-shadow: none; border: none;
+    .hero, .privat, .teilen, .ablage, #fehlerfeld, .beleg-hinweis,
+    hr.trenner, .check-kopf, .fragen, #urteil, .kontakt, .bento,
+    details.technik, footer {
+      display: none !important;
     }
+    .wrap { padding: 0 !important; max-width: none !important; margin: 0 !important; }
+    #ergebnis { margin: 0 !important; }
+    .dokument { box-shadow: none; border: none; }
   }
   .marke {
     display: inline-block; padding: 2px 7px; border-radius: 3px;
