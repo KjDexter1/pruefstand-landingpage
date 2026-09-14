@@ -166,6 +166,13 @@
     font-size: 12px; cursor: pointer;
   }
   .positionen-tabelle .loeschen:hover { border-color: var(--flag); color: var(--flag); }
+  #k-loeschen {
+    flex: none; background: transparent; border: 1px solid var(--rule-strong);
+    color: var(--ink-soft); border-radius: 4px; padding: 8px 12px;
+    font-size: 13px; cursor: pointer;
+  }
+  #k-loeschen:hover { border-color: var(--flag); color: var(--flag); }
+  #k-gespeichert { flex: 1; min-width: 0; }
   .tabelle-huelle { overflow-x: auto; }
 
   .knopf-neu {
@@ -413,6 +420,15 @@
 
     <fieldset class="reveal">
       <legend>Kunde (Rechnungsempfänger)</legend>
+      <div class="feldgruppe" id="kundenwahl-block" hidden>
+        <label for="k-gespeichert">Gespeicherter Kunde</label>
+        <div style="display:flex; gap:8px; align-items:center">
+          <select id="k-gespeichert"><option value="">— neuer Kunde —</option></select>
+          <button type="button" class="loeschen" id="k-loeschen" hidden
+                  aria-label="Diesen gespeicherten Kunden entfernen">✕</button>
+        </div>
+        <span class="hilfe">Kunden werden beim Erzeugen automatisch gemerkt — nur in diesem Browser.</span>
+      </div>
       <div class="zeilen2">
         <div class="feldgruppe">
           <label for="k-name">Name / Firma *</label>
@@ -646,6 +662,101 @@
       SELLER_FELDER.forEach(function (id) { daten[id] = document.getElementById(id).value; });
       localStorage.setItem(SPEICHER_SCHLUESSEL, JSON.stringify(daten));
     } catch (e) { /* kein Problem, dann eben nicht gemerkt */ }
+  }
+
+  /* ---------------------------------------------------------------
+     Kunden lokal merken. Alles bleibt im Browser des Nutzers --
+     kein Server, kein Konto. Wer den Browser wechselt, faengt neu an;
+     das ist der Preis dafuer, dass hier nichts hochgeladen wird.
+  ----------------------------------------------------------------*/
+  var KUNDEN_SCHLUESSEL = "erechnung-kunden-v1";
+  var KUNDEN_FELDER = ["k-name", "k-strasse", "k-plz", "k-ort", "k-leitweg"];
+  var kundenWahl = document.getElementById("k-gespeichert");
+  var kundenLoeschen = document.getElementById("k-loeschen");
+
+  function kundenLesen() {
+    try { return JSON.parse(localStorage.getItem(KUNDEN_SCHLUESSEL) || "[]"); }
+    catch (e) { return []; }
+  }
+
+  function kundenSchreiben(liste) {
+    try { localStorage.setItem(KUNDEN_SCHLUESSEL, JSON.stringify(liste)); }
+    catch (e) { /* gesperrter Speicher -- dann eben nicht gemerkt */ }
+  }
+
+  function kundenlisteZeichnen() {
+    var liste = kundenLesen();
+    document.getElementById("kundenwahl-block").hidden = liste.length === 0;
+    kundenWahl.innerHTML = '<option value="">— neuer Kunde —</option>' +
+      liste.map(function (k, i) {
+        return '<option value="' + i + '">' + esc(k["k-name"]) + "</option>";
+      }).join("");
+    kundenLoeschen.hidden = true;
+  }
+
+  kundenWahl.addEventListener("change", function () {
+    var i = kundenWahl.value;
+    if (i === "") {
+      KUNDEN_FELDER.forEach(function (id) { document.getElementById(id).value = ""; });
+      kundenLoeschen.hidden = true;
+      return;
+    }
+    var kunde = kundenLesen()[parseInt(i, 10)];
+    if (kunde) {
+      KUNDEN_FELDER.forEach(function (id) { document.getElementById(id).value = kunde[id] || ""; });
+      kundenLoeschen.hidden = false;
+    }
+  });
+
+  kundenLoeschen.addEventListener("click", function () {
+    var i = parseInt(kundenWahl.value, 10);
+    if (isNaN(i)) return;
+    var liste = kundenLesen();
+    liste.splice(i, 1);
+    kundenSchreiben(liste);
+    kundenlisteZeichnen();
+    KUNDEN_FELDER.forEach(function (id) { document.getElementById(id).value = ""; });
+  });
+
+  function kundeMerken() {
+    var name = wert("k-name");
+    if (!name) return;
+    var liste = kundenLesen();
+    var kunde = {};
+    KUNDEN_FELDER.forEach(function (id) { kunde[id] = document.getElementById(id).value; });
+    var vorhanden = liste.findIndex(function (k) {
+      return (k["k-name"] || "").toLowerCase() === name.toLowerCase();
+    });
+    if (vorhanden >= 0) liste[vorhanden] = kunde; else liste.push(kunde);
+    kundenSchreiben(liste);
+    kundenlisteZeichnen();
+  }
+
+  /* ---- Fortlaufende Rechnungsnummer vorschlagen ---- */
+  var NUMMER_SCHLUESSEL = "erechnung-letzte-nummer-v1";
+
+  function naechsteNummer(letzte) {
+    var m = String(letzte).match(/^(.*?)(\d+)(\D*)$/);
+    if (!m) return "";
+    var ziffern = m[2];
+    var erhoeht = String(parseInt(ziffern, 10) + 1);
+    while (erhoeht.length < ziffern.length) erhoeht = "0" + erhoeht;
+    return m[1] + erhoeht + m[3];
+  }
+
+  function nummerVorschlagen() {
+    try {
+      var letzte = localStorage.getItem(NUMMER_SCHLUESSEL);
+      if (letzte) {
+        var vorschlag = naechsteNummer(letzte);
+        if (vorschlag) document.getElementById("r-nummer").value = vorschlag;
+      }
+    } catch (e) { /* kein Vorschlag, kein Problem */ }
+  }
+
+  function nummerMerken() {
+    try { localStorage.setItem(NUMMER_SCHLUESSEL, wert("r-nummer")); }
+    catch (e) { /* egal */ }
   }
 
   /* ---- XML erzeugen (UBL 2.1 Invoice, XRechnung) ---- */
@@ -900,6 +1011,8 @@
     }
 
     verkaeuferSpeichern();
+    kundeMerken();
+    nummerMerken();
     var xml = xmlErzeugen();
     var blob = new Blob([xml], { type: "application/xml" });
     var url = URL.createObjectURL(blob);
@@ -919,8 +1032,10 @@
     document.getElementById("vorschau").scrollIntoView({ behavior: "smooth", block: "start" });
   });
 
-  /* Datum-Vorschlag: heute */
+  /* Datum-Vorschlag: heute, Rechnungsnummer: eine weiter als beim letzten Mal */
   document.getElementById("r-datum").value = heute();
+  nummerVorschlagen();
+  kundenlisteZeichnen();
 
   /* Mit einer leeren Position starten */
   zeileHinzufuegen();
