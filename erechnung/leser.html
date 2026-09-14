@@ -534,9 +534,10 @@
 
   <div class="appbrowser" id="appbrowser-hinweis">
     <strong>Sie sind im Browser der Facebook-App.</strong>
-    Der kann keine Dateien speichern und nicht drucken. Öffnen Sie die Seite
-    in Ihrem richtigen Browser: oben rechts auf die drei Punkte tippen und
-    „In Chrome öffnen" bzw. „Im Browser öffnen" wählen.
+    Der kann keine Dateien speichern und nicht drucken — beim Antippen
+    passiert einfach nichts. Das liegt an der Facebook-App, nicht an dieser
+    Seite. Öffnen Sie sie in Ihrem richtigen Browser: oben rechts auf die
+    drei Punkte tippen und „In Chrome öffnen" bzw. „Im Browser öffnen" wählen.
     <button type="button" class="appbrowser-knopf" id="appbrowser-kopieren">
       Link kopieren
     </button>
@@ -773,8 +774,12 @@
 <script>
 /* In-App-Browser der Facebook-/Instagram-App erkennen -- dort schlagen
    Herunterladen und Drucken fehl, ohne dass der Nutzer eine Meldung sieht. */
+function imAppBrowser() {
+  return /FBAN|FBAV|FB_IAB|Instagram/i.test(navigator.userAgent || "");
+}
+
 (function () {
-  if (!/FBAN|FBAV|FB_IAB|Instagram/i.test(navigator.userAgent || "")) return;
+  if (!imAppBrowser()) return;
   document.getElementById("appbrowser-hinweis").classList.add("zeigen");
   document.getElementById("appbrowser-kopieren").addEventListener("click", function () {
     var knopf = this;
@@ -1195,7 +1200,17 @@
     ergebnis.hidden = false;
 
     var pdfKnopf = document.getElementById("pdf-knopf");
-    if (pdfKnopf) pdfKnopf.addEventListener("click", function () { window.print(); });
+    if (pdfKnopf) pdfKnopf.addEventListener("click", function () {
+      /* Im In-App-Browser passiert bei window.print() nichts -- erklaeren
+         statt schweigen. */
+      if (imAppBrowser()) {
+        var hinweis = document.getElementById("appbrowser-hinweis");
+        hinweis.classList.add("zeigen");
+        hinweis.scrollIntoView({ behavior: "smooth", block: "center" });
+        return;
+      }
+      window.print();
+    });
   }
 
   function zeigeFehler(nachricht) {

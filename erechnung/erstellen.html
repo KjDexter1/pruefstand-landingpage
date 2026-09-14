@@ -404,9 +404,10 @@
 
   <div class="appbrowser" id="appbrowser-hinweis">
     <strong>Sie sind im Browser der Facebook-App.</strong>
-    Hier kann die fertige Rechnung meist <em>nicht</em> gespeichert werden —
-    beim Antippen passiert dann einfach nichts. Öffnen Sie die Seite in Ihrem
-    richtigen Browser:
+    Hier lässt sich die fertige Rechnung <em>nicht</em> speichern und
+    <em>nicht</em> drucken — beim Antippen passiert einfach nichts.
+    Das liegt an der Facebook-App, nicht an dieser Seite.
+    Öffnen Sie sie in Ihrem richtigen Browser:
     <ol>
       <li>Oben rechts auf die drei Punkte tippen</li>
       <li>„In Chrome öffnen" bzw. „Im Browser öffnen" wählen</li>
@@ -1252,7 +1253,17 @@
     document.getElementById("vorschau").hidden = false;
   }
 
-  document.getElementById("druck-knopf").addEventListener("click", function () { window.print(); });
+  document.getElementById("druck-knopf").addEventListener("click", function () {
+    /* Im In-App-Browser tut window.print() nichts und meldet nichts. Lieber
+       sagen, woran es liegt, als den Nutzer ins Leere tippen lassen. */
+    if (imAppBrowser()) {
+      var hinweis = document.getElementById("appbrowser-hinweis");
+      hinweis.classList.add("zeigen");
+      hinweis.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+    window.print();
+  });
 
   /* ---------------------------------------------------------------
      Rechnungsliste. Bewusst NICHT "Archiv" genannt: Browserspeicher
@@ -1379,9 +1390,12 @@
      nichts. Dann haelt er das Werkzeug fuer kaputt. Da die Seite gerade
      ueber Facebook-Gruppen verteilt wird, trifft das viele Besucher.
   ----------------------------------------------------------------*/
+  function imAppBrowser() {
+    return /FBAN|FBAV|FB_IAB|Instagram/i.test(navigator.userAgent || "");
+  }
+
   (function () {
-    var ua = navigator.userAgent || "";
-    if (!/FBAN|FBAV|FB_IAB|Instagram/i.test(ua)) return;
+    if (!imAppBrowser()) return;
     var kasten = document.getElementById("appbrowser-hinweis");
     kasten.classList.add("zeigen");
     document.getElementById("appbrowser-kopieren").addEventListener("click", function () {
