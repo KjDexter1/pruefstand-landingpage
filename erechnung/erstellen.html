@@ -510,7 +510,12 @@
           <tbody id="pos-koerper"></tbody>
         </table>
       </div>
+      <datalist id="artikel-liste"></datalist>
       <button type="button" class="knopf-neu" id="pos-hinzufuegen">+ Position hinzufügen</button>
+      <span class="hilfe" id="artikel-hinweis" hidden style="display:block;margin-top:8px">
+        Tipp: In der Bezeichnung tippen — schon benutzte Positionen werden
+        vorgeschlagen und füllen Einheit und Preis automatisch aus.
+      </span>
 
       <div class="summenkasten">
         <div><span>Netto</span><span id="sum-netto">0,00 €</span></div>
@@ -592,7 +597,7 @@
       return '<option value="' + e[0] + '">' + esc(e[1]) + "</option>";
     }).join("");
     tr.innerHTML =
-      '<td><input type="text" class="p-name" aria-label="Bezeichnung"></td>' +
+      '<td><input type="text" class="p-name" list="artikel-liste" aria-label="Bezeichnung"></td>' +
       '<td><input type="number" class="p-menge" value="1" min="0" step="0.01" aria-label="Menge"></td>' +
       '<td><select class="p-einheit" aria-label="Einheit">' + einheitenOptionen + "</select></td>" +
       '<td><input type="number" class="p-preis" value="0" min="0" step="0.01" aria-label="Einzelpreis"></td>' +
@@ -606,6 +611,19 @@
     });
     tr.querySelectorAll(".p-menge, .p-preis").forEach(function (feld) {
       feld.addEventListener("input", summenNeuBerechnen);
+    });
+
+    /* Bekannte Bezeichnung gewaehlt -> Einheit und Preis mitbringen.
+       Ein schon eingetragener Preis wird nicht ueberschrieben. */
+    tr.querySelector(".p-name").addEventListener("change", function () {
+      var treffer = artikelFinden(this.value);
+      if (!treffer) return;
+      var preisfeld = tr.querySelector(".p-preis");
+      if (!parseFloat(preisfeld.value)) {
+        preisfeld.value = treffer.preis;
+        tr.querySelector(".p-einheit").value = treffer.einheit;
+        summenNeuBerechnen();
+      }
     });
   }
 
@@ -738,6 +756,55 @@
     if (vorhanden >= 0) liste[vorhanden] = kunde; else liste.push(kunde);
     kundenSchreiben(liste);
     kundenlisteZeichnen();
+  }
+
+  /* ---------------------------------------------------------------
+     Artikel merken: wer immer wieder "Anfahrt" oder "Arbeitszeit"
+     abrechnet, soll das einmal tippen. Vorschlaege kommen ueber eine
+     datalist, damit es auf dem Handy die native Auswahl nutzt.
+  ----------------------------------------------------------------*/
+  var ARTIKEL_SCHLUESSEL = "erechnung-artikel-v1";
+  var ARTIKEL_MAX = 100;
+
+  function artikelLesen() {
+    try { return JSON.parse(localStorage.getItem(ARTIKEL_SCHLUESSEL) || "[]"); }
+    catch (e) { return []; }
+  }
+
+  function artikelSchreiben(liste) {
+    try { localStorage.setItem(ARTIKEL_SCHLUESSEL, JSON.stringify(liste)); }
+    catch (e) { /* gesperrter Speicher -- dann eben ohne Vorschlaege */ }
+  }
+
+  function artikelFinden(name) {
+    var gesucht = String(name).trim().toLowerCase();
+    if (!gesucht) return null;
+    return artikelLesen().filter(function (a) {
+      return (a.name || "").toLowerCase() === gesucht;
+    })[0] || null;
+  }
+
+  function artikellisteZeichnen() {
+    var liste = artikelLesen();
+    document.getElementById("artikel-liste").innerHTML =
+      liste.map(function (a) { return '<option value="' + esc(a.name) + '">'; }).join("");
+    document.getElementById("artikel-hinweis").hidden = liste.length === 0;
+  }
+
+  function artikelMerken() {
+    var liste = artikelLesen();
+    posKoerper.querySelectorAll("tr").forEach(function (tr) {
+      var name = tr.querySelector(".p-name").value.trim();
+      var preis = parseFloat(tr.querySelector(".p-preis").value) || 0;
+      if (!name || preis <= 0) return;
+      var artikel = { name: name, einheit: tr.querySelector(".p-einheit").value, preis: preis };
+      var i = liste.findIndex(function (a) {
+        return (a.name || "").toLowerCase() === name.toLowerCase();
+      });
+      if (i >= 0) liste[i] = artikel; else liste.unshift(artikel);
+    });
+    artikelSchreiben(liste.slice(0, ARTIKEL_MAX));
+    artikellisteZeichnen();
   }
 
   /* ---- Fortlaufende Rechnungsnummer vorschlagen ---- */
@@ -1092,6 +1159,7 @@
 
     verkaeuferSpeichern();
     kundeMerken();
+    artikelMerken();
     nummerMerken();
     var xml = xmlErzeugen();
     var blob = new Blob([xml], { type: "application/xml" });
@@ -1134,6 +1202,7 @@
   document.getElementById("r-datum").value = heute();
   nummerVorschlagen();
   kundenlisteZeichnen();
+  artikellisteZeichnen();
 
   /* Mit einer leeren Position starten */
   zeileHinzufuegen();
