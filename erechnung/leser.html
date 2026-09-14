@@ -346,12 +346,20 @@
 
   /* ---------- Sanftes Einblenden beim Scrollen ---------- */
   .reveal {
-    opacity: 0; transform: translateY(16px);
-    transition: opacity .55s ease, transform .55s ease;
+    opacity: 0; transform: translateY(32px) scale(.97);
+    transition: opacity .65s cubic-bezier(.2,.7,.3,1), transform .65s cubic-bezier(.2,.7,.3,1);
   }
-  .reveal.sichtbar { opacity: 1; transform: translateY(0); }
+  .reveal.sichtbar { opacity: 1; transform: translateY(0) scale(1); }
   @media (prefers-reduced-motion: reduce) {
     .reveal { opacity: 1; transform: none; transition: none; }
+  }
+  /* Touch-Geräte haben kein Hover -- Tipp-Feedback stattdessen ueber :active */
+  @media (hover: none) {
+    .bento-karte:active {
+      transform: scale(.98);
+      box-shadow: var(--shadow);
+      border-color: var(--rule-strong);
+    }
   }
   select, input[type="text"], input[type="tel"], input[type="email"] {
     font-family: inherit; font-size: 14.5px; color: var(--ink);
