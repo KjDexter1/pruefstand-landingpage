@@ -150,6 +150,14 @@
   }
   input:required:invalid { border-color: var(--rule-strong); }
 
+  /* Fehlende oder falsche Felder werden markiert, damit man sie im
+     langen Formular nicht suchen muss. */
+  .feld-fehlt, .feld-fehlt:focus-visible {
+    border-color: var(--flag);
+    background: var(--flag-soft);
+    outline-color: var(--flag);
+  }
+
   .positionen-tabelle { width: 100%; border-collapse: collapse; font-size: 13.5px; }
   .positionen-tabelle th {
     text-align: left; padding: 6px 6px; font-size: 10.5px;
@@ -926,35 +934,47 @@
     return /^[A-Z]{2}[A-Z0-9]{2,12}$/.test(id);
   }
 
+  /* Gibt Beanstandungen samt betroffenem Eingabefeld zurueck, damit die
+     Seite hinspringen und es markieren kann. */
   function pruefen() {
     var fehlend = [];
+    function melden(feld, text) { fehlend.push({ feld: feld, text: text }); }
+
     Object.keys(FELDNAMEN).forEach(function (id) {
-      if (!wert(id)) fehlend.push(FELDNAMEN[id]);
+      if (!wert(id)) melden(document.getElementById(id), FELDNAMEN[id]);
     });
     if (!wert("s-ustid") && !wert("s-steuernr")) {
-      fehlend.push("USt-IdNr. oder Steuernummer");
+      melden(document.getElementById("s-ustid"), "USt-IdNr. oder Steuernummer");
     }
     if (wert("s-ustid") && !ustIdGueltig(wert("s-ustid"))) {
-      fehlend.push("USt-IdNr. stimmt nicht (deutsche lauten DE + 9 Ziffern)");
+      melden(document.getElementById("s-ustid"),
+             "USt-IdNr. stimmt nicht (deutsche lauten DE + 9 Ziffern)");
     }
     if (wert("s-iban") && !ibanGueltig(wert("s-iban"))) {
-      fehlend.push("IBAN stimmt nicht (bitte Zeichen für Zeichen prüfen)");
+      melden(document.getElementById("s-iban"),
+             "IBAN stimmt nicht (bitte Zeichen für Zeichen prüfen)");
     }
 
     var zeilen = posKoerper.querySelectorAll("tr");
     if (zeilen.length === 0) {
-      fehlend.push("mindestens eine Position");
+      melden(document.getElementById("pos-hinzufuegen"), "mindestens eine Position");
     } else {
-      var ohneNamen = false;
       zeilen.forEach(function (tr) {
-        if (!tr.querySelector(".p-name").value.trim()) ohneNamen = true;
+        var namensfeld = tr.querySelector(".p-name");
+        if (!namensfeld.value.trim()) melden(namensfeld, "Bezeichnung bei jeder Position");
       });
-      if (ohneNamen) fehlend.push("Bezeichnung bei jeder Position");
     }
     if (summenNeuBerechnen().brutto <= 0) {
-      fehlend.push("einen Betrag über 0,00 €");
+      var ersterPreis = posKoerper.querySelector(".p-preis");
+      melden(ersterPreis, "einen Betrag über 0,00 €");
     }
     return fehlend;
+  }
+
+  function markierungenLoeschen() {
+    document.querySelectorAll(".feld-fehlt").forEach(function (el) {
+      el.classList.remove("feld-fehlt");
+    });
   }
 
   /* ---------------------------------------------------------------
@@ -1050,10 +1070,23 @@
   document.getElementById("rechnungsform").addEventListener("submit", function (e) {
     e.preventDefault();
     var statusFeld = document.getElementById("form-status");
+    markierungenLoeschen();
     var fehlend = pruefen();
     if (fehlend.length) {
+      /* Doppelte Texte zusammenfassen (z. B. mehrere Positionen ohne Namen) */
+      var texte = [];
+      fehlend.forEach(function (f) {
+        if (texte.indexOf(f.text) === -1) texte.push(f.text);
+        if (f.feld) f.feld.classList.add("feld-fehlt");
+      });
       statusFeld.className = "status fehler";
-      statusFeld.textContent = "Bitte noch ausfüllen: " + fehlend.join(", ");
+      statusFeld.textContent = "Bitte noch ausfüllen: " + texte.join(", ");
+
+      var erstes = fehlend[0].feld;
+      if (erstes) {
+        erstes.scrollIntoView({ behavior: "smooth", block: "center" });
+        setTimeout(function () { erstes.focus({ preventScroll: true }); }, 350);
+      }
       return;
     }
 
@@ -1087,8 +1120,9 @@
     });
   });
 
-  /* Fehlermeldung verschwindet, sobald der Nutzer etwas korrigiert. */
-  document.getElementById("rechnungsform").addEventListener("input", function () {
+  /* Fehlermeldung und Markierung verschwinden, sobald korrigiert wird. */
+  document.getElementById("rechnungsform").addEventListener("input", function (e) {
+    if (e.target.classList) e.target.classList.remove("feld-fehlt");
     var statusFeld = document.getElementById("form-status");
     if (statusFeld.classList.contains("fehler")) {
       statusFeld.textContent = "";
