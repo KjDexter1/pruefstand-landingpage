@@ -572,12 +572,18 @@
         Diese Liste liegt nur in diesem Browser und kann jederzeit verloren gehen —
         beim Löschen der Browserdaten, beim Gerätewechsel oder wenn das Handy
         Speicher freiräumt. Rechnungen müssen zehn Jahre aufbewahrt werden:
-        Bewahren Sie die heruntergeladenen Dateien zusätzlich sicher auf und
-        erstellen Sie regelmäßig eine Sicherung.
+        Laden Sie deshalb regelmäßig <strong>alle Rechnungen als ZIP</strong>
+        herunter und bewahren Sie die Dateien außerhalb dieses Browsers auf —
+        auf dem Rechner, einer Festplatte oder bei Ihrem Steuerberater.
+        Die <em>Sicherung</em> daneben stellt nur dieses Werkzeug wieder her;
+        für das Finanzamt zählen die XML-Dateien aus dem ZIP.
       </span>
     </div>
     <div id="liste-inhalt"></div>
     <div class="sicherung">
+      <button type="button" class="druck-knopf" id="alle-xml-knopf" style="margin:0">
+        Alle Rechnungen herunterladen (ZIP)
+      </button>
       <button type="button" class="druck-knopf" id="sicherung-knopf" style="margin:0">
         Sicherung herunterladen
       </button>
@@ -1329,6 +1335,139 @@
       liste.splice(parseInt(knopf.dataset.i, 10), 1);
       rechnungenSchreiben(liste);
       rechnungslisteZeichnen();
+    }
+  });
+
+  /* ----------------------------------------------------------------
+     ZIP-Paket mit allen Rechnungs-XML-Dateien.
+
+     Bewusst selbst geschrieben statt eine Bibliothek von einem fremden
+     Server nachzuladen: die Seite soll weiterhin ohne Internetverbindung
+     funktionieren und keine Verbindung zu Dritten aufbauen. Wir packen
+     ohne Komprimierung ("stored"), das ist das Format, das jedes
+     Betriebssystem ohne Zusatzprogramm oeffnet -- bei ein paar hundert
+     XML-Dateien faellt die Dateigroesse nicht ins Gewicht.
+  ----------------------------------------------------------------*/
+  var CRC_TABELLE = (function () {
+    var t = new Uint32Array(256);
+    for (var n = 0; n < 256; n++) {
+      var c = n;
+      for (var k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+      t[n] = c >>> 0;
+    }
+    return t;
+  })();
+
+  function crc32(bytes) {
+    var c = 0xFFFFFFFF;
+    for (var i = 0; i < bytes.length; i++) c = CRC_TABELLE[(c ^ bytes[i]) & 0xFF] ^ (c >>> 8);
+    return (c ^ 0xFFFFFFFF) >>> 0;
+  }
+
+  function zipBauen(dateien) {
+    var kodierer = new TextEncoder();
+    var teile = [];        /* Roh-Bytes in Reihenfolge */
+    var zentral = [];      /* Eintraege fuer das Inhaltsverzeichnis */
+    var offset = 0;
+
+    function zahl(wert, bytes) {
+      var a = new Uint8Array(bytes);
+      for (var i = 0; i < bytes; i++) a[i] = (wert >>> (i * 8)) & 0xFF;
+      return a;
+    }
+    function verbinden(stuecke) {
+      var laenge = stuecke.reduce(function (s, x) { return s + x.length; }, 0);
+      var aus = new Uint8Array(laenge), pos = 0;
+      stuecke.forEach(function (x) { aus.set(x, pos); pos += x.length; });
+      return aus;
+    }
+
+    var jetzt = new Date();
+    var dosZeit = (jetzt.getHours() << 11) | (jetzt.getMinutes() << 5) | (jetzt.getSeconds() >> 1);
+    var dosDatum = ((jetzt.getFullYear() - 1980) << 9) | ((jetzt.getMonth() + 1) << 5) | jetzt.getDate();
+
+    dateien.forEach(function (d) {
+      var name = kodierer.encode(d.name);
+      var inhalt = kodierer.encode(d.inhalt);
+      var pruef = crc32(inhalt);
+
+      var kopf = verbinden([
+        zahl(0x04034b50, 4),   /* Signatur lokaler Kopf */
+        zahl(20, 2),           /* benoetigte Version 2.0 */
+        zahl(0x0800, 2),       /* Bit 11: Dateinamen sind UTF-8 */
+        zahl(0, 2),            /* Methode 0 = ohne Komprimierung */
+        zahl(dosZeit, 2), zahl(dosDatum, 2),
+        zahl(pruef, 4), zahl(inhalt.length, 4), zahl(inhalt.length, 4),
+        zahl(name.length, 2), zahl(0, 2),
+        name
+      ]);
+      teile.push(kopf, inhalt);
+
+      zentral.push(verbinden([
+        zahl(0x02014b50, 4),   /* Signatur Inhaltsverzeichnis */
+        zahl(20, 2), zahl(20, 2), zahl(0x0800, 2), zahl(0, 2),
+        zahl(dosZeit, 2), zahl(dosDatum, 2),
+        zahl(pruef, 4), zahl(inhalt.length, 4), zahl(inhalt.length, 4),
+        zahl(name.length, 2), zahl(0, 2), zahl(0, 2),
+        zahl(0, 2), zahl(0, 2), zahl(0, 4),
+        zahl(offset, 4),
+        name
+      ]));
+      offset += kopf.length + inhalt.length;
+    });
+
+    var verzeichnis = verbinden(zentral);
+    var ende = verbinden([
+      zahl(0x06054b50, 4),
+      zahl(0, 2), zahl(0, 2),
+      zahl(dateien.length, 2), zahl(dateien.length, 2),
+      zahl(verzeichnis.length, 4), zahl(offset, 4),
+      zahl(0, 2)
+    ]);
+
+    return new Blob(teile.concat([verzeichnis, ende]), { type: "application/zip" });
+  }
+
+  function blobAnbieten(blob, dateiname) {
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = dateiname;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+  }
+
+  document.getElementById("alle-xml-knopf").addEventListener("click", function () {
+    var statusFeld = document.getElementById("sicherung-status");
+    var liste = rechnungenLesen();
+    if (!liste.length) {
+      statusFeld.className = "status fehler";
+      statusFeld.textContent = "Es sind noch keine Rechnungen gespeichert.";
+      return;
+    }
+    try {
+      var vergeben = {};
+      var dateien = liste.map(function (eintrag) {
+        var name = dateinameFuer(eintrag.daten.felder["r-nummer"]);
+        /* Zwei Rechnungen mit gleicher Nummer duerfen sich im ZIP nicht
+           gegenseitig ueberschreiben. */
+        if (vergeben[name]) {
+          var n = ++vergeben[name];
+          name = name.replace(/\.xml$/, "") + "-" + n + ".xml";
+        } else {
+          vergeben[name] = 1;
+        }
+        return { name: name, inhalt: eintrag.xml };
+      });
+      blobAnbieten(zipBauen(dateien), "e-rechnungen-" + heute() + ".zip");
+      statusFeld.className = "status ok";
+      statusFeld.textContent = liste.length + " Rechnungen als ZIP-Datei heruntergeladen.";
+    } catch (err) {
+      statusFeld.className = "status fehler";
+      statusFeld.textContent = "Das ZIP-Paket konnte nicht erstellt werden. " +
+        "Laden Sie die Rechnungen einzeln über die Schaltfläche „XML“ herunter.";
     }
   });
 
