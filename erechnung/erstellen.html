@@ -211,6 +211,37 @@
   .status.fehler { color: var(--flag); }
   .status.ok { color: var(--accent); font-weight: 500; }
 
+  /* ---------- Rechnungsliste ---------- */
+  .liste-bereich { margin-top: 30px; }
+  .listenzeile {
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 8px; padding: 12px 14px; margin-bottom: 8px;
+  }
+  .listen-haupt { font-size: 14.5px; min-width: 0; flex: 1 1 200px; }
+  .listen-neben {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12.5px; color: var(--ink-soft); white-space: nowrap;
+  }
+  .listen-knoepfe { display: flex; gap: 6px; flex-wrap: wrap; margin-left: auto; }
+  .listen-knoepfe button {
+    font-family: inherit; font-size: 12.5px; font-weight: 500;
+    color: var(--accent); background: var(--accent-soft);
+    border: none; border-radius: 4px; padding: 6px 11px; cursor: pointer;
+  }
+  .listen-knoepfe button:hover { filter: brightness(.96); }
+  .listen-knoepfe button[data-tat="loeschen"] {
+    background: transparent; border: 1px solid var(--rule-strong); color: var(--ink-soft);
+  }
+  .listen-knoepfe button[data-tat="loeschen"]:hover { border-color: var(--flag); color: var(--flag); }
+  .sicherung {
+    display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 14px;
+  }
+  @media (max-width: 480px) {
+    .listen-knoepfe { margin-left: 0; width: 100%; }
+    .listen-knoepfe button { flex: 1; }
+  }
+
   /* ---------- Rechnungsvorschau ---------- */
   .vorschau { margin-top: 30px; }
   .vorschau-kopf {
@@ -308,7 +339,7 @@
   .dok-fuss div + div { margin-top: 4px; }
 
   @media print {
-    .hero, .privat, .warnkasten, form, .vorschau-kopf, footer { display: none !important; }
+    .hero, .privat, .warnkasten, form, .vorschau-kopf, .liste-bereich, footer { display: none !important; }
     .wrap { padding: 0 !important; max-width: none !important; margin: 0 !important; }
     .vorschau { margin: 0 !important; }
     .dokument { box-shadow: none; border: none; }
@@ -529,6 +560,34 @@
       <span class="status" id="form-status"></span>
     </div>
   </form>
+
+  <section class="liste-bereich" id="rechnungsliste" hidden>
+    <div class="vorschau-kopf">
+      <h2>Meine Rechnungen</h2>
+    </div>
+    <div class="warnkasten" style="margin:0 0 14px">
+      <span>⚠</span>
+      <span>
+        <strong>Das ersetzt nicht die gesetzliche Aufbewahrung.</strong>
+        Diese Liste liegt nur in diesem Browser und kann jederzeit verloren gehen —
+        beim Löschen der Browserdaten, beim Gerätewechsel oder wenn das Handy
+        Speicher freiräumt. Rechnungen müssen zehn Jahre aufbewahrt werden:
+        Bewahren Sie die heruntergeladenen Dateien zusätzlich sicher auf und
+        erstellen Sie regelmäßig eine Sicherung.
+      </span>
+    </div>
+    <div id="liste-inhalt"></div>
+    <div class="sicherung">
+      <button type="button" class="druck-knopf" id="sicherung-knopf" style="margin:0">
+        Sicherung herunterladen
+      </button>
+      <label class="druck-knopf" style="margin:0;cursor:pointer">
+        Sicherung einlesen
+        <input type="file" id="sicherung-datei" accept="application/json,.json" hidden>
+      </label>
+      <span class="status" id="sicherung-status"></span>
+    </div>
+  </section>
 
   <div class="vorschau" id="vorschau" hidden>
     <div class="vorschau-kopf">
@@ -1061,35 +1120,58 @@
            '</div><div class="meta-wert">' + esc(inhalt) + "</div></div>";
   }
 
-  function vorschauZeichnen() {
-    var art = steuerart();
-    var summen = summenNeuBerechnen();
+  /* Alle Formularwerte als einfaches Objekt -- Grundlage fuer Vorschau,
+     Speicherung und spaeteres Wiederherstellen. */
+  var ALLE_FELDER = ["s-name", "s-strasse", "s-plz", "s-ort", "s-ustid", "s-steuernr",
+                     "s-email", "s-iban", "k-name", "k-strasse", "k-plz", "k-ort",
+                     "k-leitweg", "r-nummer", "r-datum", "r-faellig", "r-bestellnr"];
+
+  function formularDaten() {
+    var daten = { felder: {}, positionen: [], steuerWahl: document.getElementById("r-steuer").value };
+    ALLE_FELDER.forEach(function (id) { daten.felder[id] = wert(id); });
+    posKoerper.querySelectorAll("tr").forEach(function (tr) {
+      daten.positionen.push({
+        name: tr.querySelector(".p-name").value.trim(),
+        menge: parseFloat(tr.querySelector(".p-menge").value) || 0,
+        einheit: tr.querySelector(".p-einheit").value,
+        preis: parseFloat(tr.querySelector(".p-preis").value) || 0
+      });
+    });
+    return daten;
+  }
+
+  function summenAus(daten) {
+    var art = STEUERARTEN[daten.steuerWahl] || STEUERARTEN["19"];
+    var netto = daten.positionen.reduce(function (s, p) { return s + p.menge * p.preis; }, 0);
+    var steuer = netto * (art.satz / 100);
+    return { netto: netto, steuer: steuer, brutto: netto + steuer, art: art };
+  }
+
+  function vorschauZeichnen(daten) {
+    daten = daten || formularDaten();
+    var f = function (id) { return daten.felder[id] || ""; };
+    var summen = summenAus(daten);
+    var art = summen.art;
     var einheitName = {};
     EINHEITEN.forEach(function (e) { einheitName[e[0]] = e[1]; });
 
-    var zeilen = "";
-    posKoerper.querySelectorAll("tr").forEach(function (tr, i) {
-      var name = tr.querySelector(".p-name").value.trim() || "Position " + (i + 1);
-      var menge = parseFloat(tr.querySelector(".p-menge").value) || 0;
-      var einheit = einheitName[tr.querySelector(".p-einheit").value] || "";
-      var preis = parseFloat(tr.querySelector(".p-preis").value) || 0;
-      zeilen +=
-        "<tr><td>" + esc(name) + "</td>" +
-        '<td class="num">' + menge.toLocaleString("de-DE") + " " + esc(einheit) + "</td>" +
-        '<td class="num">' + euro(preis) + "</td>" +
-        '<td class="num">' + euro(menge * preis) + "</td></tr>";
-    });
+    var zeilen = daten.positionen.map(function (p, i) {
+      return "<tr><td>" + esc(p.name || "Position " + (i + 1)) + "</td>" +
+        '<td class="num">' + p.menge.toLocaleString("de-DE") + " " + esc(einheitName[p.einheit] || "") + "</td>" +
+        '<td class="num">' + euro(p.preis) + "</td>" +
+        '<td class="num">' + euro(p.menge * p.preis) + "</td></tr>";
+    }).join("");
 
     var verkaeuferZeilen =
-      '<div class="partei-zeile">' + esc(wert("s-strasse")) + "</div>" +
-      '<div class="partei-zeile">' + esc(wert("s-plz") + " " + wert("s-ort")) + "</div>" +
-      (wert("s-ustid") ? '<div class="partei-zeile">USt-IdNr. ' + esc(wert("s-ustid")) + "</div>" : "") +
-      (wert("s-steuernr") ? '<div class="partei-zeile">Steuernummer ' + esc(wert("s-steuernr")) + "</div>" : "");
+      '<div class="partei-zeile">' + esc(f("s-strasse")) + "</div>" +
+      '<div class="partei-zeile">' + esc(f("s-plz") + " " + f("s-ort")) + "</div>" +
+      (f("s-ustid") ? '<div class="partei-zeile">USt-IdNr. ' + esc(f("s-ustid")) + "</div>" : "") +
+      (f("s-steuernr") ? '<div class="partei-zeile">Steuernummer ' + esc(f("s-steuernr")) + "</div>" : "");
 
     var kaeuferZeilen =
-      (wert("k-strasse") ? '<div class="partei-zeile">' + esc(wert("k-strasse")) + "</div>" : "") +
-      ((wert("k-plz") || wert("k-ort"))
-        ? '<div class="partei-zeile">' + esc(wert("k-plz") + " " + wert("k-ort")) + "</div>" : "");
+      (f("k-strasse") ? '<div class="partei-zeile">' + esc(f("k-strasse")) + "</div>" : "") +
+      ((f("k-plz") || f("k-ort"))
+        ? '<div class="partei-zeile">' + esc(f("k-plz") + " " + f("k-ort")) + "</div>" : "");
 
     var steuerZeile = art.satz > 0
       ? '<div class="summen-zeile"><span>Umsatzsteuer ' + art.satz + ' %</span><span class="num">' + euro(summen.steuer) + "</span></div>"
@@ -1098,20 +1180,20 @@
     document.getElementById("vorschau-inhalt").innerHTML =
       '<div class="dokument">' +
         '<div class="dok-kopf"><div>' +
-          '<div class="dok-titel">' + esc(wert("s-name")) + "</div>" +
-          '<div class="dok-nummer">Rechnung ' + esc(wert("r-nummer")) + "</div>" +
-        '</div><div class="dok-nummer">' + esc(datumDeutsch(wert("r-datum"))) + "</div></div>" +
+          '<div class="dok-titel">' + esc(f("s-name")) + "</div>" +
+          '<div class="dok-nummer">Rechnung ' + esc(f("r-nummer")) + "</div>" +
+        '</div><div class="dok-nummer">' + esc(datumDeutsch(f("r-datum"))) + "</div></div>" +
         '<div class="parteien">' +
           '<div class="partei"><div class="partei-rolle">Rechnungssteller</div>' +
-            '<div class="partei-name">' + esc(wert("s-name")) + "</div>" + verkaeuferZeilen + "</div>" +
+            '<div class="partei-name">' + esc(f("s-name")) + "</div>" + verkaeuferZeilen + "</div>" +
           '<div class="partei"><div class="partei-rolle">Rechnungsempfänger</div>' +
-            '<div class="partei-name">' + esc(wert("k-name")) + "</div>" + kaeuferZeilen + "</div>" +
+            '<div class="partei-name">' + esc(f("k-name")) + "</div>" + kaeuferZeilen + "</div>" +
         "</div>" +
         '<div class="meta">' +
-          metaFeld("Rechnungsdatum", datumDeutsch(wert("r-datum"))) +
-          metaFeld("Fällig am", datumDeutsch(wert("r-faellig"))) +
-          metaFeld("Bestellnummer", wert("r-bestellnr")) +
-          metaFeld("Leitweg-ID", wert("k-leitweg")) +
+          metaFeld("Rechnungsdatum", datumDeutsch(f("r-datum"))) +
+          metaFeld("Fällig am", datumDeutsch(f("r-faellig"))) +
+          metaFeld("Bestellnummer", f("r-bestellnr")) +
+          metaFeld("Leitweg-ID", f("k-leitweg")) +
         "</div>" +
         '<table class="dok-tabelle"><thead><tr>' +
           '<th>Position</th><th class="num">Menge</th>' +
@@ -1124,8 +1206,8 @@
         "</div>" +
         '<div class="dok-fuss">' +
           (art.grundText ? "<div>" + esc(art.grundText) + ".</div>" : "") +
-          "<div>Zahlbar per Überweisung auf IBAN " + esc(wert("s-iban")) + "</div>" +
-          "<div>" + esc(wert("s-email")) + "</div>" +
+          "<div>Zahlbar per Überweisung auf IBAN " + esc(f("s-iban")) + "</div>" +
+          "<div>" + esc(f("s-email")) + "</div>" +
         "</div>" +
       "</div>";
 
@@ -1133,6 +1215,163 @@
   }
 
   document.getElementById("druck-knopf").addEventListener("click", function () { window.print(); });
+
+  /* ---------------------------------------------------------------
+     Rechnungsliste. Bewusst NICHT "Archiv" genannt: Browserspeicher
+     kann jederzeit geloescht werden und ersetzt keine gesetzeskonforme
+     Aufbewahrung. Deshalb gehoert die Sicherungsfunktion zwingend dazu.
+  ----------------------------------------------------------------*/
+  var RECHNUNGEN_SCHLUESSEL = "erechnung-rechnungen-v1";
+  var RECHNUNGEN_MAX = 200;
+
+  function rechnungenLesen() {
+    try { return JSON.parse(localStorage.getItem(RECHNUNGEN_SCHLUESSEL) || "[]"); }
+    catch (e) { return []; }
+  }
+
+  function rechnungenSchreiben(liste) {
+    try {
+      localStorage.setItem(RECHNUNGEN_SCHLUESSEL, JSON.stringify(liste));
+      return true;
+    } catch (e) {
+      /* Speicher voll oder gesperrt -- der Nutzer muss das erfahren,
+         sonst glaubt er, seine Rechnung sei gesichert. */
+      return false;
+    }
+  }
+
+  function rechnungMerken(daten, xml) {
+    var liste = rechnungenLesen();
+    liste.unshift({ daten: daten, xml: xml, zeit: new Date().toISOString() });
+    var geklappt = rechnungenSchreiben(liste.slice(0, RECHNUNGEN_MAX));
+    rechnungslisteZeichnen();
+    return geklappt;
+  }
+
+  function dateinameFuer(nummer) {
+    return "rechnung-" + (nummer || "entwurf").replace(/[^\w\-]+/g, "_") + ".xml";
+  }
+
+  function dateiAnbieten(inhalt, dateiname, typ) {
+    var blob = new Blob([inhalt], { type: typ });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = dateiname;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  function rechnungslisteZeichnen() {
+    var liste = rechnungenLesen();
+    var bereich = document.getElementById("rechnungsliste");
+    bereich.hidden = liste.length === 0;
+    if (!liste.length) return;
+
+    document.getElementById("liste-inhalt").innerHTML = liste.map(function (r, i) {
+      var summen = summenAus(r.daten);
+      var f = r.daten.felder;
+      return '<div class="listenzeile">' +
+        '<div class="listen-haupt">' +
+          "<strong>" + esc(f["r-nummer"] || "ohne Nummer") + "</strong> · " +
+          esc(f["k-name"] || "ohne Kunde") +
+        "</div>" +
+        '<div class="listen-neben">' + esc(datumDeutsch(f["r-datum"])) + " · " + euro(summen.brutto) + "</div>" +
+        '<div class="listen-knoepfe">' +
+          '<button type="button" data-tat="ansehen" data-i="' + i + '">Ansehen</button>' +
+          '<button type="button" data-tat="xml" data-i="' + i + '">XML</button>' +
+          '<button type="button" data-tat="vorlage" data-i="' + i + '">Als Vorlage</button>' +
+          '<button type="button" data-tat="loeschen" data-i="' + i + '" aria-label="Aus der Liste entfernen">✕</button>' +
+        "</div>" +
+      "</div>";
+    }).join("");
+  }
+
+  function inFormularLaden(daten) {
+    Object.keys(daten.felder).forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.value = daten.felder[id];
+    });
+    document.getElementById("r-steuer").value = daten.steuerWahl;
+    posKoerper.innerHTML = "";
+    daten.positionen.forEach(function (p) {
+      zeileHinzufuegen();
+      var tr = posKoerper.lastElementChild;
+      tr.querySelector(".p-name").value = p.name;
+      tr.querySelector(".p-menge").value = p.menge;
+      tr.querySelector(".p-einheit").value = p.einheit;
+      tr.querySelector(".p-preis").value = p.preis;
+    });
+    if (!daten.positionen.length) zeileHinzufuegen();
+    summenNeuBerechnen();
+  }
+
+  document.getElementById("liste-inhalt").addEventListener("click", function (e) {
+    var knopf = e.target.closest("button[data-tat]");
+    if (!knopf) return;
+    var liste = rechnungenLesen();
+    var eintrag = liste[parseInt(knopf.dataset.i, 10)];
+    if (!eintrag) return;
+
+    if (knopf.dataset.tat === "ansehen") {
+      vorschauZeichnen(eintrag.daten);
+      document.getElementById("vorschau").scrollIntoView({ behavior: "smooth", block: "start" });
+    } else if (knopf.dataset.tat === "xml") {
+      dateiAnbieten(eintrag.xml, dateinameFuer(eintrag.daten.felder["r-nummer"]), "application/xml");
+    } else if (knopf.dataset.tat === "vorlage") {
+      inFormularLaden(eintrag.daten);
+      document.getElementById("r-nummer").value = naechsteNummer(eintrag.daten.felder["r-nummer"]) || "";
+      document.getElementById("r-datum").value = heute();
+      document.getElementById("rechnungsform").scrollIntoView({ behavior: "smooth", block: "start" });
+    } else if (knopf.dataset.tat === "loeschen") {
+      liste.splice(parseInt(knopf.dataset.i, 10), 1);
+      rechnungenSchreiben(liste);
+      rechnungslisteZeichnen();
+    }
+  });
+
+  /* ---- Sicherung: alles in eine Datei, und wieder zurueck ---- */
+  document.getElementById("sicherung-knopf").addEventListener("click", function () {
+    var sicherung = {
+      art: "e-rechnung-sicherung",
+      version: 1,
+      erstellt: new Date().toISOString(),
+      verkaeufer: JSON.parse(localStorage.getItem(SPEICHER_SCHLUESSEL) || "{}"),
+      kunden: kundenLesen(),
+      artikel: artikelLesen(),
+      rechnungen: rechnungenLesen()
+    };
+    dateiAnbieten(JSON.stringify(sicherung, null, 2),
+      "e-rechnung-sicherung-" + heute() + ".json", "application/json");
+  });
+
+  document.getElementById("sicherung-datei").addEventListener("change", function () {
+    var datei = this.files[0];
+    if (!datei) return;
+    var leser = new FileReader();
+    var statusFeld = document.getElementById("sicherung-status");
+    leser.onload = function () {
+      try {
+        var s = JSON.parse(leser.result);
+        if (s.art !== "e-rechnung-sicherung") throw new Error("keine Sicherungsdatei");
+        if (s.verkaeufer) localStorage.setItem(SPEICHER_SCHLUESSEL, JSON.stringify(s.verkaeufer));
+        if (s.kunden) kundenSchreiben(s.kunden);
+        if (s.artikel) artikelSchreiben(s.artikel);
+        if (s.rechnungen) rechnungenSchreiben(s.rechnungen);
+        statusFeld.className = "status ok";
+        statusFeld.textContent = "Wiederhergestellt: " + (s.rechnungen || []).length +
+          " Rechnungen, " + (s.kunden || []).length + " Kunden. Seite wird neu geladen.";
+        setTimeout(function () { location.reload(); }, 1200);
+      } catch (err) {
+        statusFeld.className = "status fehler";
+        statusFeld.textContent = "Das ist keine gültige Sicherungsdatei dieser Seite.";
+      }
+    };
+    leser.readAsText(datei);
+    this.value = "";
+  });
 
   document.getElementById("rechnungsform").addEventListener("submit", function (e) {
     e.preventDefault();
@@ -1173,8 +1412,12 @@
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 
+    var gemerkt = rechnungMerken(formularDaten(), xml);
     statusFeld.className = "status ok";
-    statusFeld.textContent = "Heruntergeladen als " + dateiname + " — unten sehen Sie, wie die Rechnung aussieht.";
+    statusFeld.textContent = gemerkt
+      ? "Heruntergeladen als " + dateiname + " — unten sehen Sie, wie die Rechnung aussieht."
+      : "Heruntergeladen als " + dateiname + " — konnte aber nicht in der Liste gespeichert werden "
+        + "(Browserspeicher voll oder gesperrt). Bewahren Sie die Datei sicher auf.";
 
     vorschauZeichnen();
     document.getElementById("vorschau").scrollIntoView({ behavior: "smooth", block: "start" });
@@ -1203,6 +1446,7 @@
   nummerVorschlagen();
   kundenlisteZeichnen();
   artikellisteZeichnen();
+  rechnungslisteZeichnen();
 
   /* Mit einer leeren Position starten */
   zeileHinzufuegen();
