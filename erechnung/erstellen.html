@@ -1,0 +1,612 @@
+<title>Rechnung erstellen</title>
+<link rel="stylesheet" href="fonts/plex.css">
+<style>
+  :root {
+    --ground:      #F2F1EC;
+    --surface:     #FBFAF7;
+    --surface-alt: #E9E7E0;
+    --ink:         #1A1D1B;
+    --ink-soft:    #55605A;
+    --ink-faint:   #8A938D;
+    --rule:        #D4D2C9;
+    --rule-strong: #B4B2A7;
+    --accent:      #0E5B50;
+    --accent-soft: #DCEAE6;
+    --flag:        #A93C1B;
+    --flag-soft:   #F6E3DC;
+    --shadow:      0 1px 2px rgba(26,29,27,.06), 0 8px 24px -12px rgba(26,29,27,.18);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:      #141715;
+      --surface:     #1C201E;
+      --surface-alt: #262B28;
+      --ink:         #EDEEEA;
+      --ink-soft:    #A8B2AC;
+      --ink-faint:   #6F7A74;
+      --rule:        #333B37;
+      --rule-strong: #4A544E;
+      --accent:      #5FBFAC;
+      --accent-soft: #10322C;
+      --flag:        #E08466;
+      --flag-soft:   #37201A;
+      --shadow:      0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:      #141715;
+    --surface:     #1C201E;
+    --surface-alt: #262B28;
+    --ink:         #EDEEEA;
+    --ink-soft:    #A8B2AC;
+    --ink-faint:   #6F7A74;
+    --rule:        #333B37;
+    --rule-strong: #4A544E;
+    --accent:      #5FBFAC;
+    --accent-soft: #10322C;
+    --flag:        #E08466;
+    --flag-soft:   #37201A;
+    --shadow:      0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--ground); color: var(--ink);
+    font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 15px; line-height: 1.55; overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 28px 20px 72px; min-width: 0; }
+
+  .zurueck {
+    font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--accent);
+    text-decoration: none; display: inline-block; margin-bottom: 14px;
+  }
+  .zurueck:hover { text-decoration: underline; }
+
+  header { display: flex; flex-direction: column; gap: 6px; margin-bottom: 6px; }
+  .eyebrow {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--accent);
+  }
+  h1 {
+    font-family: "IBM Plex Serif", Georgia, serif;
+    font-weight: 600; font-size: clamp(26px, 4.5vw, 34px);
+    margin: 0; line-height: 1.15; text-wrap: balance;
+  }
+  .sub { color: var(--ink-soft); max-width: 62ch; margin: 8px 0 0; }
+
+  .warnkasten {
+    display: flex; gap: 10px; align-items: flex-start;
+    margin: 20px 0 26px; padding: 13px 16px;
+    background: var(--flag-soft); border-left: 3px solid var(--flag);
+    border-radius: 0 4px 4px 0; font-size: 13.5px; color: var(--ink);
+  }
+  .warnkasten strong { display: block; margin-bottom: 3px; }
+  .warnkasten a { color: inherit; }
+
+  .privat {
+    display: flex; align-items: center; gap: 9px;
+    margin: 0 0 24px; padding: 9px 13px;
+    background: var(--accent-soft); border-left: 3px solid var(--accent);
+    border-radius: 0 4px 4px 0; font-size: 13.5px; color: var(--ink);
+  }
+  .privat svg { flex: none; }
+
+  fieldset {
+    border: 1px solid var(--rule); border-radius: 8px;
+    background: var(--surface); padding: 18px 20px 20px;
+    margin: 0 0 20px;
+  }
+  legend {
+    font-family: "IBM Plex Serif", Georgia, serif; font-weight: 600;
+    font-size: 16.5px; padding: 0 8px; color: var(--ink);
+  }
+  .zeilen2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+  .zeilen3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+  .feldgruppe { display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; }
+  .feldgruppe label {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .feldgruppe .hilfe { font-size: 12px; color: var(--ink-faint); font-family: "IBM Plex Sans", sans-serif; letter-spacing: 0; text-transform: none; }
+  select, input[type="text"], input[type="number"], input[type="date"], input[type="email"] {
+    font-family: inherit; font-size: 14.5px; color: var(--ink);
+    background: var(--ground); border: 1px solid var(--rule-strong);
+    border-radius: 4px; padding: 8px 10px; width: 100%;
+  }
+  select:focus-visible, input:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent);
+  }
+  input:required:invalid { border-color: var(--rule-strong); }
+
+  .positionen-tabelle { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  .positionen-tabelle th {
+    text-align: left; padding: 6px 6px; font-size: 10.5px;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    letter-spacing: .06em; text-transform: uppercase; color: var(--ink-faint);
+    border-bottom: 1px solid var(--rule-strong);
+  }
+  .positionen-tabelle td { padding: 6px 6px; vertical-align: top; }
+  .positionen-tabelle input, .positionen-tabelle select { padding: 6px 8px; font-size: 13.5px; }
+  .positionen-tabelle .num { text-align: right; }
+  .positionen-tabelle .loeschen {
+    background: transparent; border: 1px solid var(--rule-strong);
+    color: var(--ink-soft); border-radius: 4px; padding: 5px 9px;
+    font-size: 12px; cursor: pointer;
+  }
+  .positionen-tabelle .loeschen:hover { border-color: var(--flag); color: var(--flag); }
+  .tabelle-huelle { overflow-x: auto; }
+
+  .knopf-neu {
+    margin-top: 8px; background: transparent; border: 1px dashed var(--rule-strong);
+    color: var(--accent); border-radius: 5px; padding: 8px 14px;
+    font-size: 13.5px; font-weight: 500; cursor: pointer;
+  }
+  .knopf-neu:hover { border-color: var(--accent); }
+
+  .summenkasten {
+    display: flex; flex-direction: column; align-items: flex-end; gap: 5px;
+    margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--rule-strong);
+  }
+  .summenkasten div { display: flex; gap: 24px; justify-content: space-between; min-width: 220px; font-size: 14px; color: var(--ink-soft); }
+  .summenkasten div span:last-child { color: var(--ink); font-variant-numeric: tabular-nums; }
+  .summenkasten .gesamt { font-size: 16.5px; font-weight: 600; color: var(--ink); padding-top: 6px; border-top: 1px solid var(--rule-strong); }
+  .summenkasten .gesamt span:last-child { color: var(--ink); }
+
+  .aktionen { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 8px; }
+  button.haupt {
+    font-family: inherit; font-size: 15px; font-weight: 600;
+    padding: 12px 22px; border-radius: 6px; cursor: pointer;
+    border: 1px solid var(--accent); background: var(--accent); color: var(--ground);
+  }
+  button.haupt:hover { opacity: .88; }
+  button.haupt:disabled { opacity: .5; cursor: not-allowed; }
+  .status { font-size: 13.5px; color: var(--ink-soft); }
+  .status.fehler { color: var(--flag); }
+  .status.ok { color: var(--accent); font-weight: 500; }
+
+  footer {
+    margin-top: 34px; padding-top: 16px; border-top: 1px solid var(--rule);
+    color: var(--ink-faint); font-size: 12.5px; max-width: 70ch;
+  }
+  footer a { color: var(--ink-soft); }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+
+<div class="wrap">
+  <a class="zurueck" href="leser.html">← zurück zum Rechnungsleser</a>
+
+  <header>
+    <div class="eyebrow">Kostenlos · läuft komplett im Browser</div>
+    <h1>Eigene XRechnung erstellen</h1>
+    <p class="sub">
+      Kunde, Positionen und Beträge eintragen — Sie erhalten eine XRechnung-Datei
+      (UBL, EN 16931) zum Herunterladen, die Sie selbst per E-Mail oder Kundenportal
+      verschicken können.
+    </p>
+  </header>
+
+  <div class="privat">
+    <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path d="M8 1.5 3 3.5v4c0 3 2.1 5.8 5 6.9 2.9-1.1 5-3.9 5-6.9v-4L8 1.5Z"
+            stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+      <path d="m5.9 7.9 1.5 1.5 2.9-3" stroke="currentColor" stroke-width="1.3"
+            stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span><strong>Nichts wird hochgeladen.</strong>
+      Alle Eingaben bleiben in diesem Browser. Ihre Firmendaten werden nur lokal
+      gespeichert (damit Sie sie beim nächsten Mal nicht neu eintippen müssen).</span>
+  </div>
+
+  <div class="warnkasten">
+    <span>⚠</span>
+    <span>
+      <strong>Diese Datei wurde nicht amtlich geprüft.</strong>
+      Der Generator erzeugt eine technisch korrekt aufgebaute XRechnung, ersetzt aber
+      keine offizielle Validierung. Prüfen Sie die Datei vor dem Versand an wichtige
+      Kunden zusätzlich — Informationen und Prüfwerkzeuge dazu bietet die
+      <a href="https://xeinkauf.de/xrechnung/" target="_blank" rel="noopener">offizielle KoSIT-Seite zur XRechnung</a>.
+      Diese Seite ersetzt keine Steuerberatung.
+    </span>
+  </div>
+
+  <form id="rechnungsform" novalidate>
+    <fieldset>
+      <legend>Ihre Firma (Rechnungssteller)</legend>
+      <div class="zeilen2">
+        <div class="feldgruppe">
+          <label for="s-name">Firmenname *</label>
+          <input type="text" id="s-name" required>
+        </div>
+        <div class="feldgruppe">
+          <label for="s-strasse">Straße und Hausnummer *</label>
+          <input type="text" id="s-strasse" required>
+        </div>
+        <div class="feldgruppe">
+          <label for="s-plz">Postleitzahl *</label>
+          <input type="text" id="s-plz" required>
+        </div>
+        <div class="feldgruppe">
+          <label for="s-ort">Ort *</label>
+          <input type="text" id="s-ort" required>
+        </div>
+        <div class="feldgruppe">
+          <label for="s-ustid">USt-IdNr. *</label>
+          <input type="text" id="s-ustid" placeholder="DE123456789" required>
+        </div>
+        <div class="feldgruppe">
+          <label for="s-email">E-Mail *</label>
+          <input type="email" id="s-email" required>
+        </div>
+        <div class="feldgruppe">
+          <label for="s-iban">IBAN (für die Zahlungsangabe) *</label>
+          <input type="text" id="s-iban" placeholder="DE00 0000 0000 0000 0000 00" required>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Kunde (Rechnungsempfänger)</legend>
+      <div class="zeilen2">
+        <div class="feldgruppe">
+          <label for="k-name">Name / Firma *</label>
+          <input type="text" id="k-name" required>
+        </div>
+        <div class="feldgruppe">
+          <label for="k-strasse">Straße und Hausnummer</label>
+          <input type="text" id="k-strasse">
+        </div>
+        <div class="feldgruppe">
+          <label for="k-plz">Postleitzahl</label>
+          <input type="text" id="k-plz">
+        </div>
+        <div class="feldgruppe">
+          <label for="k-ort">Ort</label>
+          <input type="text" id="k-ort">
+        </div>
+        <div class="feldgruppe">
+          <label for="k-leitweg">Leitweg-ID</label>
+          <input type="text" id="k-leitweg">
+          <span class="hilfe">Nur bei Behörden/öffentlichen Auftraggebern nötig — teilt Ihnen der Kunde mit.</span>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Rechnungsdaten</legend>
+      <div class="zeilen3">
+        <div class="feldgruppe">
+          <label for="r-nummer">Rechnungsnummer *</label>
+          <input type="text" id="r-nummer" required>
+        </div>
+        <div class="feldgruppe">
+          <label for="r-datum">Rechnungsdatum *</label>
+          <input type="date" id="r-datum" required>
+        </div>
+        <div class="feldgruppe">
+          <label for="r-faellig">Fällig am</label>
+          <input type="date" id="r-faellig">
+        </div>
+        <div class="feldgruppe">
+          <label for="r-bestellnr">Bestellnummer</label>
+          <input type="text" id="r-bestellnr">
+        </div>
+        <div class="feldgruppe">
+          <label for="r-steuer">Umsatzsteuer</label>
+          <select id="r-steuer">
+            <option value="19">19 % (Regelsteuersatz)</option>
+            <option value="7">7 % (ermäßigt)</option>
+            <option value="0-13b">0 % — § 13b Bauleistung (Steuerschuldnerschaft Leistungsempfänger)</option>
+          </select>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Positionen</legend>
+      <div class="tabelle-huelle">
+        <table class="positionen-tabelle" id="pos-tabelle">
+          <thead>
+            <tr>
+              <th style="min-width:200px">Bezeichnung</th>
+              <th style="width:100px">Menge</th>
+              <th style="width:110px">Einheit</th>
+              <th style="width:120px">Einzelpreis (€, netto)</th>
+              <th class="num" style="width:110px">Gesamt</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="pos-koerper"></tbody>
+        </table>
+      </div>
+      <button type="button" class="knopf-neu" id="pos-hinzufuegen">+ Position hinzufügen</button>
+
+      <div class="summenkasten">
+        <div><span>Netto</span><span id="sum-netto">0,00 €</span></div>
+        <div><span>Umsatzsteuer</span><span id="sum-steuer">0,00 €</span></div>
+        <div class="gesamt"><span>Gesamtbetrag</span><span id="sum-brutto">0,00 €</span></div>
+      </div>
+    </fieldset>
+
+    <div class="aktionen">
+      <button type="submit" class="haupt" id="erzeugen-knopf">XRechnung (XML) erzeugen und herunterladen</button>
+      <span class="status" id="form-status"></span>
+    </div>
+  </form>
+
+  <footer>
+    <div>
+      Diese Datei wird nicht automatisch versendet — Sie laden sie herunter und
+      verschicken sie selbst, z. B. als E-Mail-Anhang oder über das Kundenportal.
+      Den <a href="leser.html">Rechnungsleser</a> können Sie auch nutzen, um die
+      erzeugte Datei vor dem Versand noch einmal wie ein Empfänger anzusehen.
+    </div>
+    <div style="margin-top:10px">
+      <a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutzerklärung</a>
+    </div>
+  </footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var EINHEITEN = [
+    ["C62", "Stück"], ["HUR", "Std."], ["DAY", "Tage"], ["MTR", "m"],
+    ["MTK", "m²"], ["MTQ", "m³"], ["KGM", "kg"], ["LTR", "l"],
+    ["SET", "Satz"], ["XPA", "Paket"], ["LS", "pauschal"]
+  ];
+
+  var posKoerper = document.getElementById("pos-koerper");
+  var zaehler = 0;
+
+  function esc(s) {
+    return String(s === null || s === undefined ? "" : s)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function euro(n) {
+    return (isNaN(n) ? 0 : n).toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";
+  }
+
+  function zeileHinzufuegen() {
+    zaehler++;
+    var tr = document.createElement("tr");
+    tr.dataset.id = zaehler;
+    var einheitenOptionen = EINHEITEN.map(function (e) {
+      return '<option value="' + e[0] + '">' + esc(e[1]) + "</option>";
+    }).join("");
+    tr.innerHTML =
+      '<td><input type="text" class="p-name" aria-label="Bezeichnung"></td>' +
+      '<td><input type="number" class="p-menge" value="1" min="0" step="0.01" aria-label="Menge"></td>' +
+      '<td><select class="p-einheit" aria-label="Einheit">' + einheitenOptionen + "</select></td>" +
+      '<td><input type="number" class="p-preis" value="0" min="0" step="0.01" aria-label="Einzelpreis"></td>' +
+      '<td class="num p-gesamt">0,00 €</td>' +
+      '<td><button type="button" class="loeschen" aria-label="Position entfernen">✕</button></td>';
+    posKoerper.appendChild(tr);
+
+    tr.querySelector(".loeschen").addEventListener("click", function () {
+      tr.remove();
+      summenNeuBerechnen();
+    });
+    tr.querySelectorAll(".p-menge, .p-preis").forEach(function (feld) {
+      feld.addEventListener("input", summenNeuBerechnen);
+    });
+  }
+
+  document.getElementById("pos-hinzufuegen").addEventListener("click", zeileHinzufuegen);
+
+  function steuersatz() {
+    var wert = document.getElementById("r-steuer").value;
+    return wert === "0-13b" ? 0 : parseFloat(wert);
+  }
+
+  function summenNeuBerechnen() {
+    var netto = 0;
+    posKoerper.querySelectorAll("tr").forEach(function (tr) {
+      var menge = parseFloat(tr.querySelector(".p-menge").value) || 0;
+      var preis = parseFloat(tr.querySelector(".p-preis").value) || 0;
+      var gesamt = menge * preis;
+      tr.querySelector(".p-gesamt").textContent = euro(gesamt);
+      netto += gesamt;
+    });
+    var satz = steuersatz();
+    var steuer = netto * (satz / 100);
+    var brutto = netto + steuer;
+    document.getElementById("sum-netto").textContent = euro(netto);
+    document.getElementById("sum-steuer").textContent = euro(steuer);
+    document.getElementById("sum-brutto").textContent = euro(brutto);
+    return { netto: netto, steuer: steuer, brutto: brutto };
+  }
+
+  document.getElementById("r-steuer").addEventListener("change", summenNeuBerechnen);
+
+  /* ---- Firmendaten lokal merken ---- */
+  var SPEICHER_SCHLUESSEL = "erechnung-verkaeufer-v1";
+  var SELLER_FELDER = ["s-name", "s-strasse", "s-plz", "s-ort", "s-ustid", "s-email", "s-iban"];
+  try {
+    var gespeichert = JSON.parse(localStorage.getItem(SPEICHER_SCHLUESSEL) || "{}");
+    SELLER_FELDER.forEach(function (id) {
+      if (gespeichert[id]) document.getElementById(id).value = gespeichert[id];
+    });
+  } catch (e) { /* localStorage evtl. gesperrt -- kein Problem, dann eben neu eintippen */ }
+
+  function verkaeuferSpeichern() {
+    try {
+      var daten = {};
+      SELLER_FELDER.forEach(function (id) { daten[id] = document.getElementById(id).value; });
+      localStorage.setItem(SPEICHER_SCHLUESSEL, JSON.stringify(daten));
+    } catch (e) { /* kein Problem, dann eben nicht gemerkt */ }
+  }
+
+  /* ---- XML erzeugen (UBL 2.1 Invoice, XRechnung) ---- */
+  function heute() {
+    var d = new Date();
+    return d.toISOString().slice(0, 10);
+  }
+
+  function wert(id) { return document.getElementById(id).value.trim(); }
+
+  function xmlErzeugen() {
+    var satz = steuersatz();
+    var ist13b = document.getElementById("r-steuer").value === "0-13b";
+    var summen = summenNeuBerechnen();
+
+    var zeilenXml = "";
+    var lfd = 0;
+    posKoerper.querySelectorAll("tr").forEach(function (tr) {
+      lfd++;
+      var name = tr.querySelector(".p-name").value.trim() || "Position " + lfd;
+      var menge = parseFloat(tr.querySelector(".p-menge").value) || 0;
+      var einheit = tr.querySelector(".p-einheit").value;
+      var preis = parseFloat(tr.querySelector(".p-preis").value) || 0;
+      var gesamt = menge * preis;
+      zeilenXml +=
+        "<cac:InvoiceLine>" +
+          "<cbc:ID>" + lfd + "</cbc:ID>" +
+          '<cbc:InvoicedQuantity unitCode="' + esc(einheit) + '">' + menge + "</cbc:InvoicedQuantity>" +
+          "<cbc:LineExtensionAmount currencyID=\"EUR\">" + gesamt.toFixed(2) + "</cbc:LineExtensionAmount>" +
+          "<cac:Item>" +
+            "<cbc:Name>" + esc(name) + "</cbc:Name>" +
+            "<cac:ClassifiedTaxCategory>" +
+              "<cbc:ID>" + (ist13b ? "AE" : "S") + "</cbc:ID>" +
+              "<cbc:Percent>" + satz + "</cbc:Percent>" +
+              "<cac:TaxScheme><cbc:ID>VAT</cbc:ID></cac:TaxScheme>" +
+            "</cac:ClassifiedTaxCategory>" +
+          "</cac:Item>" +
+          "<cac:Price><cbc:PriceAmount currencyID=\"EUR\">" + preis.toFixed(2) + "</cbc:PriceAmount></cac:Price>" +
+        "</cac:InvoiceLine>";
+    });
+
+    var leitweg = wert("k-leitweg");
+    var bestellXml = wert("r-bestellnr")
+      ? "<cac:OrderReference><cbc:ID>" + esc(wert("r-bestellnr")) + "</cbc:ID></cac:OrderReference>"
+      : "";
+    var faelligXml = wert("r-faellig")
+      ? "<cbc:DueDate>" + esc(wert("r-faellig")) + "</cbc:DueDate>"
+      : "";
+
+    var steuerhinweisXml = ist13b
+      ? "<cbc:TaxExemptionReasonCode>VATEX-EU-AE</cbc:TaxExemptionReasonCode>" +
+        "<cbc:TaxExemptionReason>Steuerschuldnerschaft des Leistungsempfängers gemäß § 13b UStG</cbc:TaxExemptionReason>"
+      : "";
+
+    var xml =
+'<?xml version="1.0" encoding="UTF-8"?>\n' +
+'<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2" ' +
+'xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" ' +
+'xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">' +
+  "<cbc:CustomizationID>urn:cen.eu:en16931:2017#compliant#urn:xeinkauf.de:kosit:xrechnung_3.0</cbc:CustomizationID>" +
+  "<cbc:ProfileID>urn:fdc:peppol.eu:2017:poacc:billing:01:1.0</cbc:ProfileID>" +
+  "<cbc:ID>" + esc(wert("r-nummer")) + "</cbc:ID>" +
+  "<cbc:IssueDate>" + esc(wert("r-datum")) + "</cbc:IssueDate>" +
+  faelligXml +
+  "<cbc:InvoiceTypeCode>380</cbc:InvoiceTypeCode>" +
+  "<cbc:DocumentCurrencyCode>EUR</cbc:DocumentCurrencyCode>" +
+  (leitweg ? "<cbc:BuyerReference>" + esc(leitweg) + "</cbc:BuyerReference>" : "") +
+  bestellXml +
+  "<cac:AccountingSupplierParty><cac:Party>" +
+    '<cbc:EndpointID schemeID="EM">' + esc(wert("s-email")) + "</cbc:EndpointID>" +
+    "<cac:PostalAddress>" +
+      "<cbc:StreetName>" + esc(wert("s-strasse")) + "</cbc:StreetName>" +
+      "<cbc:CityName>" + esc(wert("s-ort")) + "</cbc:CityName>" +
+      "<cbc:PostalZone>" + esc(wert("s-plz")) + "</cbc:PostalZone>" +
+      "<cac:Country><cbc:IdentificationCode>DE</cbc:IdentificationCode></cac:Country>" +
+    "</cac:PostalAddress>" +
+    "<cac:PartyTaxScheme><cbc:CompanyID>" + esc(wert("s-ustid")) + "</cbc:CompanyID>" +
+      "<cac:TaxScheme><cbc:ID>VAT</cbc:ID></cac:TaxScheme></cac:PartyTaxScheme>" +
+    "<cac:PartyLegalEntity><cbc:RegistrationName>" + esc(wert("s-name")) + "</cbc:RegistrationName></cac:PartyLegalEntity>" +
+    "<cac:Contact><cbc:ElectronicMail>" + esc(wert("s-email")) + "</cbc:ElectronicMail></cac:Contact>" +
+  "</cac:Party></cac:AccountingSupplierParty>" +
+  "<cac:AccountingCustomerParty><cac:Party>" +
+    "<cac:PostalAddress>" +
+      "<cbc:StreetName>" + esc(wert("k-strasse")) + "</cbc:StreetName>" +
+      "<cbc:CityName>" + esc(wert("k-ort")) + "</cbc:CityName>" +
+      "<cbc:PostalZone>" + esc(wert("k-plz")) + "</cbc:PostalZone>" +
+      "<cac:Country><cbc:IdentificationCode>DE</cbc:IdentificationCode></cac:Country>" +
+    "</cac:PostalAddress>" +
+    "<cac:PartyLegalEntity><cbc:RegistrationName>" + esc(wert("k-name")) + "</cbc:RegistrationName></cac:PartyLegalEntity>" +
+  "</cac:Party></cac:AccountingCustomerParty>" +
+  "<cac:PaymentMeans>" +
+    "<cbc:PaymentMeansCode>58</cbc:PaymentMeansCode>" +
+    "<cac:PayeeFinancialAccount><cbc:ID>" + esc(wert("s-iban").replace(/\s+/g, "")) + "</cbc:ID></cac:PayeeFinancialAccount>" +
+  "</cac:PaymentMeans>" +
+  "<cac:TaxTotal>" +
+    "<cbc:TaxAmount currencyID=\"EUR\">" + summen.steuer.toFixed(2) + "</cbc:TaxAmount>" +
+    "<cac:TaxSubtotal>" +
+      "<cbc:TaxableAmount currencyID=\"EUR\">" + summen.netto.toFixed(2) + "</cbc:TaxableAmount>" +
+      "<cbc:TaxAmount currencyID=\"EUR\">" + summen.steuer.toFixed(2) + "</cbc:TaxAmount>" +
+      "<cac:TaxCategory>" +
+        "<cbc:ID>" + (ist13b ? "AE" : "S") + "</cbc:ID>" +
+        "<cbc:Percent>" + satz + "</cbc:Percent>" +
+        steuerhinweisXml +
+        "<cac:TaxScheme><cbc:ID>VAT</cbc:ID></cac:TaxScheme>" +
+      "</cac:TaxCategory>" +
+    "</cac:TaxSubtotal>" +
+  "</cac:TaxTotal>" +
+  "<cac:LegalMonetaryTotal>" +
+    "<cbc:LineExtensionAmount currencyID=\"EUR\">" + summen.netto.toFixed(2) + "</cbc:LineExtensionAmount>" +
+    "<cbc:TaxExclusiveAmount currencyID=\"EUR\">" + summen.netto.toFixed(2) + "</cbc:TaxExclusiveAmount>" +
+    "<cbc:TaxInclusiveAmount currencyID=\"EUR\">" + summen.brutto.toFixed(2) + "</cbc:TaxInclusiveAmount>" +
+    "<cbc:PayableAmount currencyID=\"EUR\">" + summen.brutto.toFixed(2) + "</cbc:PayableAmount>" +
+  "</cac:LegalMonetaryTotal>" +
+  zeilenXml +
+"</Invoice>";
+
+    return xml;
+  }
+
+  function pruefen() {
+    var fehlend = [];
+    ["s-name", "s-strasse", "s-plz", "s-ort", "s-ustid", "s-email", "s-iban",
+     "k-name", "r-nummer", "r-datum"].forEach(function (id) {
+      if (!wert(id)) fehlend.push(id);
+    });
+    if (posKoerper.querySelectorAll("tr").length === 0) fehlend.push("mindestens eine Position");
+    var ibanFeld = document.getElementById("s-iban");
+    var ibanBereinigt = ibanFeld.value.replace(/\s+/g, "");
+    if (ibanBereinigt && !/^[A-Z]{2}\d{2}[A-Z0-9]{10,30}$/.test(ibanBereinigt)) {
+      fehlend.push("IBAN (Format prüfen)");
+    }
+    return fehlend;
+  }
+
+  document.getElementById("rechnungsform").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var statusFeld = document.getElementById("form-status");
+    var fehlend = pruefen();
+    if (fehlend.length) {
+      statusFeld.className = "status fehler";
+      statusFeld.textContent = "Bitte noch ausfüllen: " + fehlend.join(", ");
+      return;
+    }
+
+    verkaeuferSpeichern();
+    var xml = xmlErzeugen();
+    var blob = new Blob([xml], { type: "application/xml" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    var dateiname = "rechnung-" + (wert("r-nummer") || "entwurf").replace(/[^\w\-]+/g, "_") + ".xml";
+    a.href = url;
+    a.download = dateiname;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    statusFeld.className = "status ok";
+    statusFeld.textContent = "Heruntergeladen als " + dateiname + " — vor dem Versand prüfen.";
+  });
+
+  /* Datum-Vorschlag: heute */
+  document.getElementById("r-datum").value = heute();
+
+  /* Mit einer leeren Position starten */
+  zeileHinzufuegen();
+})();
+</script>
