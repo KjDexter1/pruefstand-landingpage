@@ -288,8 +288,14 @@
           <input type="text" id="s-ort" required>
         </div>
         <div class="feldgruppe">
-          <label for="s-ustid">USt-IdNr. *</label>
-          <input type="text" id="s-ustid" placeholder="DE123456789" required>
+          <label for="s-ustid">USt-IdNr.</label>
+          <input type="text" id="s-ustid" placeholder="DE123456789">
+          <span class="hilfe">Haben Sie keine? Dann tragen Sie rechts Ihre Steuernummer ein.</span>
+        </div>
+        <div class="feldgruppe">
+          <label for="s-steuernr">Steuernummer</label>
+          <input type="text" id="s-steuernr" placeholder="12/345/67890">
+          <span class="hilfe">Eines von beiden muss ausgefüllt sein — Kleinunternehmer haben meist nur eine Steuernummer.</span>
         </div>
         <div class="feldgruppe">
           <label for="s-email">E-Mail *</label>
@@ -353,6 +359,7 @@
           <select id="r-steuer">
             <option value="19">19 % (Regelsteuersatz)</option>
             <option value="7">7 % (ermäßigt)</option>
+            <option value="0-19ustg">Keine — Kleinunternehmer nach § 19 UStG</option>
             <option value="0-13b">0 % — § 13b Bauleistung (Steuerschuldnerschaft Leistungsempfänger)</option>
           </select>
         </div>
@@ -469,10 +476,28 @@
 
   document.getElementById("pos-hinzufuegen").addEventListener("click", zeileHinzufuegen);
 
-  function steuersatz() {
-    var wert = document.getElementById("r-steuer").value;
-    return wert === "0-13b" ? 0 : parseFloat(wert);
+  /* Steuerart nach EN 16931: Kategorie-Code, Satz und ggf. Befreiungsgrund.
+     S = Regelsteuersatz, AE = Steuerschuldnerschaft des Leistungsempfängers,
+     E = steuerbefreit (hier: Kleinunternehmer). */
+  var STEUERARTEN = {
+    "19": { satz: 19, kategorie: "S" },
+    "7":  { satz: 7,  kategorie: "S" },
+    "0-13b": {
+      satz: 0, kategorie: "AE",
+      grundCode: "VATEX-EU-AE",
+      grundText: "Steuerschuldnerschaft des Leistungsempfängers gemäß § 13b UStG"
+    },
+    "0-19ustg": {
+      satz: 0, kategorie: "E",
+      grundText: "Kein Ausweis von Umsatzsteuer, Kleinunternehmer gemäß § 19 UStG"
+    }
+  };
+
+  function steuerart() {
+    return STEUERARTEN[document.getElementById("r-steuer").value] || STEUERARTEN["19"];
   }
+
+  function steuersatz() { return steuerart().satz; }
 
   function summenNeuBerechnen() {
     var netto = 0;
@@ -496,7 +521,7 @@
 
   /* ---- Firmendaten lokal merken ---- */
   var SPEICHER_SCHLUESSEL = "erechnung-verkaeufer-v1";
-  var SELLER_FELDER = ["s-name", "s-strasse", "s-plz", "s-ort", "s-ustid", "s-email", "s-iban"];
+  var SELLER_FELDER = ["s-name", "s-strasse", "s-plz", "s-ort", "s-ustid", "s-steuernr", "s-email", "s-iban"];
   try {
     var gespeichert = JSON.parse(localStorage.getItem(SPEICHER_SCHLUESSEL) || "{}");
     SELLER_FELDER.forEach(function (id) {
@@ -521,8 +546,8 @@
   function wert(id) { return document.getElementById(id).value.trim(); }
 
   function xmlErzeugen() {
-    var satz = steuersatz();
-    var ist13b = document.getElementById("r-steuer").value === "0-13b";
+    var art = steuerart();
+    var satz = art.satz;
     var summen = summenNeuBerechnen();
 
     var zeilenXml = "";
@@ -542,7 +567,7 @@
           "<cac:Item>" +
             "<cbc:Name>" + esc(name) + "</cbc:Name>" +
             "<cac:ClassifiedTaxCategory>" +
-              "<cbc:ID>" + (ist13b ? "AE" : "S") + "</cbc:ID>" +
+              "<cbc:ID>" + art.kategorie + "</cbc:ID>" +
               "<cbc:Percent>" + satz + "</cbc:Percent>" +
               "<cac:TaxScheme><cbc:ID>VAT</cbc:ID></cac:TaxScheme>" +
             "</cac:ClassifiedTaxCategory>" +
@@ -559,10 +584,21 @@
       ? "<cbc:DueDate>" + esc(wert("r-faellig")) + "</cbc:DueDate>"
       : "";
 
-    var steuerhinweisXml = ist13b
-      ? "<cbc:TaxExemptionReasonCode>VATEX-EU-AE</cbc:TaxExemptionReasonCode>" +
-        "<cbc:TaxExemptionReason>Steuerschuldnerschaft des Leistungsempfängers gemäß § 13b UStG</cbc:TaxExemptionReason>"
-      : "";
+    var steuerhinweisXml =
+      (art.grundCode ? "<cbc:TaxExemptionReasonCode>" + art.grundCode + "</cbc:TaxExemptionReasonCode>" : "") +
+      (art.grundText ? "<cbc:TaxExemptionReason>" + esc(art.grundText) + "</cbc:TaxExemptionReason>" : "");
+
+    /* USt-IdNr. als VAT-Kennung, Steuernummer als FC-Kennung (BT-31 bzw. BT-32).
+       Kleinunternehmer haben in der Regel nur Letztere. */
+    var steuerkennungXml =
+      (wert("s-ustid")
+        ? "<cac:PartyTaxScheme><cbc:CompanyID>" + esc(wert("s-ustid")) + "</cbc:CompanyID>" +
+          "<cac:TaxScheme><cbc:ID>VAT</cbc:ID></cac:TaxScheme></cac:PartyTaxScheme>"
+        : "") +
+      (wert("s-steuernr")
+        ? "<cac:PartyTaxScheme><cbc:CompanyID>" + esc(wert("s-steuernr")) + "</cbc:CompanyID>" +
+          "<cac:TaxScheme><cbc:ID>FC</cbc:ID></cac:TaxScheme></cac:PartyTaxScheme>"
+        : "");
 
     var xml =
 '<?xml version="1.0" encoding="UTF-8"?>\n' +
@@ -586,8 +622,7 @@
       "<cbc:PostalZone>" + esc(wert("s-plz")) + "</cbc:PostalZone>" +
       "<cac:Country><cbc:IdentificationCode>DE</cbc:IdentificationCode></cac:Country>" +
     "</cac:PostalAddress>" +
-    "<cac:PartyTaxScheme><cbc:CompanyID>" + esc(wert("s-ustid")) + "</cbc:CompanyID>" +
-      "<cac:TaxScheme><cbc:ID>VAT</cbc:ID></cac:TaxScheme></cac:PartyTaxScheme>" +
+    steuerkennungXml +
     "<cac:PartyLegalEntity><cbc:RegistrationName>" + esc(wert("s-name")) + "</cbc:RegistrationName></cac:PartyLegalEntity>" +
     "<cac:Contact><cbc:ElectronicMail>" + esc(wert("s-email")) + "</cbc:ElectronicMail></cac:Contact>" +
   "</cac:Party></cac:AccountingSupplierParty>" +
@@ -610,7 +645,7 @@
       "<cbc:TaxableAmount currencyID=\"EUR\">" + summen.netto.toFixed(2) + "</cbc:TaxableAmount>" +
       "<cbc:TaxAmount currencyID=\"EUR\">" + summen.steuer.toFixed(2) + "</cbc:TaxAmount>" +
       "<cac:TaxCategory>" +
-        "<cbc:ID>" + (ist13b ? "AE" : "S") + "</cbc:ID>" +
+        "<cbc:ID>" + art.kategorie + "</cbc:ID>" +
         "<cbc:Percent>" + satz + "</cbc:Percent>" +
         steuerhinweisXml +
         "<cac:TaxScheme><cbc:ID>VAT</cbc:ID></cac:TaxScheme>" +
@@ -629,17 +664,26 @@
     return xml;
   }
 
+  var FELDNAMEN = {
+    "s-name": "Firmenname", "s-strasse": "Ihre Straße", "s-plz": "Ihre Postleitzahl",
+    "s-ort": "Ihr Ort", "s-email": "Ihre E-Mail", "s-iban": "IBAN",
+    "k-name": "Name des Kunden", "r-nummer": "Rechnungsnummer", "r-datum": "Rechnungsdatum"
+  };
+
   function pruefen() {
     var fehlend = [];
-    ["s-name", "s-strasse", "s-plz", "s-ort", "s-ustid", "s-email", "s-iban",
-     "k-name", "r-nummer", "r-datum"].forEach(function (id) {
-      if (!wert(id)) fehlend.push(id);
+    Object.keys(FELDNAMEN).forEach(function (id) {
+      if (!wert(id)) fehlend.push(FELDNAMEN[id]);
     });
-    if (posKoerper.querySelectorAll("tr").length === 0) fehlend.push("mindestens eine Position");
-    var ibanFeld = document.getElementById("s-iban");
-    var ibanBereinigt = ibanFeld.value.replace(/\s+/g, "");
+    if (!wert("s-ustid") && !wert("s-steuernr")) {
+      fehlend.push("USt-IdNr. oder Steuernummer");
+    }
+    if (posKoerper.querySelectorAll("tr").length === 0) {
+      fehlend.push("mindestens eine Position");
+    }
+    var ibanBereinigt = document.getElementById("s-iban").value.replace(/\s+/g, "");
     if (ibanBereinigt && !/^[A-Z]{2}\d{2}[A-Z0-9]{10,30}$/.test(ibanBereinigt)) {
-      fehlend.push("IBAN (Format prüfen)");
+      fehlend.push("IBAN (Format stimmt nicht)");
     }
     return fehlend;
   }
