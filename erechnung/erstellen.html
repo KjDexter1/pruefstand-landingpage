@@ -196,6 +196,109 @@
   .status.fehler { color: var(--flag); }
   .status.ok { color: var(--accent); font-weight: 500; }
 
+  /* ---------- Rechnungsvorschau ---------- */
+  .vorschau { margin-top: 30px; }
+  .vorschau-kopf {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+  .vorschau-kopf h2 {
+    font-family: "IBM Plex Serif", Georgia, serif; font-size: 20px;
+    font-weight: 600; margin: 0;
+  }
+  .druck-knopf {
+    margin-left: auto; font-family: inherit; font-size: 13.5px; font-weight: 600;
+    color: var(--accent); background: var(--accent-soft);
+    border: none; border-radius: 5px; padding: 8px 14px; cursor: pointer;
+  }
+  .druck-knopf:hover { filter: brightness(.96); }
+  @media (max-width: 480px) { .druck-knopf { margin-left: 0; width: 100%; } }
+
+  .dokument {
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 6px; box-shadow: var(--shadow); overflow: hidden;
+  }
+  .dok-kopf {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 20px; flex-wrap: wrap; padding: 20px 22px 16px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .dok-titel {
+    font-family: "IBM Plex Serif", Georgia, serif;
+    font-size: 21px; font-weight: 600; margin: 0 0 2px;
+  }
+  .dok-nummer {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 13px; color: var(--ink-soft);
+  }
+  .parteien {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    border-bottom: 1px solid var(--rule);
+  }
+  .partei { padding: 16px 22px; }
+  .partei + .partei { border-left: 1px solid var(--rule); }
+  .partei-rolle {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--ink-faint); margin-bottom: 5px;
+  }
+  .partei-name { font-weight: 600; font-size: 15.5px; }
+  .partei-zeile { color: var(--ink-soft); font-size: 13.5px; }
+  .meta {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    border-bottom: 1px solid var(--rule);
+  }
+  .meta-feld { padding: 12px 22px; }
+  .meta-feld + .meta-feld { border-left: 1px solid var(--rule); }
+  .meta-name {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--ink-faint); margin-bottom: 3px;
+  }
+  .meta-wert { font-size: 14.5px; font-variant-numeric: tabular-nums; }
+  .dok-tabelle { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .dok-tabelle thead th {
+    text-align: left; padding: 10px 12px;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--ink-faint); font-weight: 400;
+    border-bottom: 1px solid var(--rule-strong); white-space: nowrap;
+  }
+  .dok-tabelle thead th:first-child { padding-left: 22px; }
+  .dok-tabelle thead th:last-child { padding-right: 22px; }
+  .dok-tabelle tbody td { padding: 10px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  .dok-tabelle tbody td:first-child { padding-left: 22px; }
+  .dok-tabelle tbody td:last-child { padding-right: 22px; }
+  .dok-tabelle tbody tr:last-child td { border-bottom: none; }
+  .dok-tabelle .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .summen {
+    display: flex; flex-direction: column; align-items: flex-end; gap: 5px;
+    padding: 16px 22px 20px; border-top: 1px solid var(--rule-strong);
+    background: var(--surface-alt);
+  }
+  .summen-zeile {
+    display: flex; gap: 26px; justify-content: space-between;
+    min-width: 260px; font-size: 14px; color: var(--ink-soft);
+  }
+  .summen-zeile .num { color: var(--ink); }
+  .summen-zeile.gesamt {
+    font-size: 17px; font-weight: 600; color: var(--ink);
+    padding-top: 7px; margin-top: 3px;
+    border-top: 1px solid var(--rule-strong); min-width: 260px;
+  }
+  .dok-fuss {
+    padding: 14px 22px 18px; font-size: 13px; color: var(--ink-soft);
+    border-top: 1px solid var(--rule);
+  }
+  .dok-fuss div + div { margin-top: 4px; }
+
+  @media print {
+    .hero, .privat, .warnkasten, form, .vorschau-kopf, footer { display: none !important; }
+    .wrap { padding: 0 !important; max-width: none !important; margin: 0 !important; }
+    .vorschau { margin: 0 !important; }
+    .dokument { box-shadow: none; border: none; }
+  }
+
   footer {
     margin-top: 34px; padding-top: 16px; border-top: 1px solid var(--rule);
     color: var(--ink-faint); font-size: 12.5px; max-width: 70ch;
@@ -397,6 +500,14 @@
       <span class="status" id="form-status"></span>
     </div>
   </form>
+
+  <div class="vorschau" id="vorschau" hidden>
+    <div class="vorschau-kopf">
+      <h2>So sieht Ihr Kunde die Rechnung</h2>
+      <button type="button" class="druck-knopf" id="druck-knopf">Als PDF speichern / drucken</button>
+    </div>
+    <div id="vorschau-inhalt"></div>
+  </div>
 
   <footer>
     <div>
@@ -688,6 +799,96 @@
     return fehlend;
   }
 
+  /* ---------------------------------------------------------------
+     Rechnungsvorschau -- zeigt dieselben Daten so, wie der Kunde sie
+     sieht. Die XML bleibt die eigentliche Rechnung, das hier ist die
+     lesbare Fassung zum Ausdrucken oder als PDF speichern.
+  ----------------------------------------------------------------*/
+  function datumDeutsch(iso) {
+    if (!iso) return "";
+    var t = iso.split("-");
+    return t.length === 3 ? t[2] + "." + t[1] + "." + t[0] : iso;
+  }
+
+  function metaFeld(name, inhalt) {
+    if (!inhalt) return "";
+    return '<div class="meta-feld"><div class="meta-name">' + esc(name) +
+           '</div><div class="meta-wert">' + esc(inhalt) + "</div></div>";
+  }
+
+  function vorschauZeichnen() {
+    var art = steuerart();
+    var summen = summenNeuBerechnen();
+    var einheitName = {};
+    EINHEITEN.forEach(function (e) { einheitName[e[0]] = e[1]; });
+
+    var zeilen = "";
+    posKoerper.querySelectorAll("tr").forEach(function (tr, i) {
+      var name = tr.querySelector(".p-name").value.trim() || "Position " + (i + 1);
+      var menge = parseFloat(tr.querySelector(".p-menge").value) || 0;
+      var einheit = einheitName[tr.querySelector(".p-einheit").value] || "";
+      var preis = parseFloat(tr.querySelector(".p-preis").value) || 0;
+      zeilen +=
+        "<tr><td>" + esc(name) + "</td>" +
+        '<td class="num">' + menge.toLocaleString("de-DE") + " " + esc(einheit) + "</td>" +
+        '<td class="num">' + euro(preis) + "</td>" +
+        '<td class="num">' + euro(menge * preis) + "</td></tr>";
+    });
+
+    var verkaeuferZeilen =
+      '<div class="partei-zeile">' + esc(wert("s-strasse")) + "</div>" +
+      '<div class="partei-zeile">' + esc(wert("s-plz") + " " + wert("s-ort")) + "</div>" +
+      (wert("s-ustid") ? '<div class="partei-zeile">USt-IdNr. ' + esc(wert("s-ustid")) + "</div>" : "") +
+      (wert("s-steuernr") ? '<div class="partei-zeile">Steuernummer ' + esc(wert("s-steuernr")) + "</div>" : "");
+
+    var kaeuferZeilen =
+      (wert("k-strasse") ? '<div class="partei-zeile">' + esc(wert("k-strasse")) + "</div>" : "") +
+      ((wert("k-plz") || wert("k-ort"))
+        ? '<div class="partei-zeile">' + esc(wert("k-plz") + " " + wert("k-ort")) + "</div>" : "");
+
+    var steuerZeile = art.satz > 0
+      ? '<div class="summen-zeile"><span>Umsatzsteuer ' + art.satz + ' %</span><span class="num">' + euro(summen.steuer) + "</span></div>"
+      : "";
+
+    document.getElementById("vorschau-inhalt").innerHTML =
+      '<div class="dokument">' +
+        '<div class="dok-kopf"><div>' +
+          '<div class="dok-titel">' + esc(wert("s-name")) + "</div>" +
+          '<div class="dok-nummer">Rechnung ' + esc(wert("r-nummer")) + "</div>" +
+        '</div><div class="dok-nummer">' + esc(datumDeutsch(wert("r-datum"))) + "</div></div>" +
+        '<div class="parteien">' +
+          '<div class="partei"><div class="partei-rolle">Rechnungssteller</div>' +
+            '<div class="partei-name">' + esc(wert("s-name")) + "</div>" + verkaeuferZeilen + "</div>" +
+          '<div class="partei"><div class="partei-rolle">Rechnungsempfänger</div>' +
+            '<div class="partei-name">' + esc(wert("k-name")) + "</div>" + kaeuferZeilen + "</div>" +
+        "</div>" +
+        '<div class="meta">' +
+          metaFeld("Rechnungsdatum", datumDeutsch(wert("r-datum"))) +
+          metaFeld("Fällig am", datumDeutsch(wert("r-faellig"))) +
+          metaFeld("Bestellnummer", wert("r-bestellnr")) +
+          metaFeld("Leitweg-ID", wert("k-leitweg")) +
+        "</div>" +
+        '<table class="dok-tabelle"><thead><tr>' +
+          '<th>Position</th><th class="num">Menge</th>' +
+          '<th class="num">Einzelpreis</th><th class="num">Gesamt</th>' +
+        "</tr></thead><tbody>" + zeilen + "</tbody></table>" +
+        '<div class="summen">' +
+          '<div class="summen-zeile"><span>Netto</span><span class="num">' + euro(summen.netto) + "</span></div>" +
+          steuerZeile +
+          '<div class="summen-zeile gesamt"><span>Zahlbetrag</span><span class="num">' + euro(summen.brutto) + "</span></div>" +
+        "</div>" +
+        '<div class="dok-fuss">' +
+          (art.grundText ? "<div>" + esc(art.grundText) + ".</div>" : "") +
+          "<div>Zahlbar per Überweisung auf IBAN " + esc(wert("s-iban")) + "</div>" +
+          "<div>" + esc(wert("s-email")) + "</div>" +
+        "</div>" +
+      "</div>";
+
+    document.getElementById("vorschau").hidden = false;
+  }
+
+  document.getElementById("druck-knopf").addEventListener("click", function () { window.print(); });
+
   document.getElementById("rechnungsform").addEventListener("submit", function (e) {
     e.preventDefault();
     var statusFeld = document.getElementById("form-status");
@@ -712,7 +913,10 @@
     URL.revokeObjectURL(url);
 
     statusFeld.className = "status ok";
-    statusFeld.textContent = "Heruntergeladen als " + dateiname + " — vor dem Versand prüfen.";
+    statusFeld.textContent = "Heruntergeladen als " + dateiname + " — unten sehen Sie, wie die Rechnung aussieht.";
+
+    vorschauZeichnen();
+    document.getElementById("vorschau").scrollIntoView({ behavior: "smooth", block: "start" });
   });
 
   /* Datum-Vorschlag: heute */
